@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input id="file_01"  type="file">
+<p id="order">上传</p>
+<form action="http://localhost:3001/custom/bigFie" method="post" enctype="multipart/form-data">
+    <input name="files"  type="file">
+    <input type="submit">
+</form>
+</body>
+<script src="//cdn.bootcss.com/spark-md5/2.0.2/spark-md5.js"></script>
+<script>
+    function createCORSRequest(method, url) {
+        var xhr = new XMLHttpRequest();
+        if ("withCredentials" in xhr) {
+            xhr.open(method, url, true);
+
+        } else if (typeof XDomainRequest != "undefined") {
+
+            xhr = new XDomainRequest();
+            xhr.open(method, url);
+
+        } else {
+            xhr = null;
+
+        }
+        return xhr;
+    }
+    var order_=document.getElementById('order');
+    order_.onclick=function () {
+        var file_load=new FormData();
+        file_load.append('files',document.getElementById('file_01').files[0]);
+        console.log(file_load);
+        var xhr = createCORSRequest('POST', 'http://localhost:3000/custom/bigFie');
+        xhr.withCredentials=true;//是否传cookie服务器也要配置
+        //xhr.setRequestHeader('X-Custom-Header', 'value');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 ) {
+                var responseText = xhr.responseText;
+                console.log(responseText);
+            }
+        }
+        if (!xhr) {
+            throw new Error('CORS not supported');
+        }
+        xhr.send(file_load);
+    }
+
+</script>
+</html>

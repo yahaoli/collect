@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body,html,div{margin: 0;padding: 0}
+        #tanchu{
+            width: 100%;
+            height: 2000px;
+        }
+        .yinying{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            opacity: 0.3;
+            display: none;
+            z-index: 2;
+        }
+        .neirong{
+            height: 100px;
+            width: 200px;
+            background-color: white;
+            z-index: 2;
+            position: absolute;
+            top: -100px;
+                 }
+    </style>
+</head>
+<body>
+<div id="tanchu"><span>弹出</span></div>
+<div class="yinying"></div>
+<div class="neirong">qqqqq</div>
+</body>
+<script src="js/jquery.min.js"></script>
+<script>
+    $(function(){
+        $('#tanchu span').click(function(){
+            $('.yinying').show();
+            $('.neirong').css({
+                'left':($(window).width()-$('.neirong').width())/2+$(window).scrollLeft()
+            });
+            donghua('.neirong');
+            function donghua(a){
+                $(a).stop();
+                $(a).animate({
+                    'left':($(window).width()-$('.neirong').width())/2+$(window).scrollLeft(),
+                    'top':($(window).height()-$('.neirong').height())/2+$(window).scrollTop()
+                },200)
+            }
+            $(window).scroll(function(){
+                donghua('.neirong');
+            });
+            $(window).resize(function(){
+                donghua('.neirong');
+            })
+        })
+    })
+</script>
+</html>

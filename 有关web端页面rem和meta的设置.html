@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=no">
+    <title>Title</title>
+    <style>
+        .ceshi{height: 2rem;width: 100%;background-color: red}
+    </style>
+    <script>
+        //设备像素比
+        function initSize(){
+            var scale = 1 / window.devicePixelRatio;
+            document.querySelector('meta[name="viewport"]').setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+            console.log(window.devicePixelRatio);
+            document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
+        }
+        window.addEventListener('load',initSize,false);
+        window.addEventListener('resize',initSize,false);
+    </script>
+</head>
+<body>
+<div id="test" class="ceshi ceshi1">
+
+</div>
+<img style="width: 5.7rem" src="images/1.jpg" alt="">
+</body>
+<script>
+    window.onload=function(){
+        var a=document.getElementById('test');
+        a.onmousedown=function (event) {
+            console.log(event.button)
+        }
+    }
+   
+</script>
+</html>

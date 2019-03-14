@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*内含元素的margin重叠的设置*/
+        .box{background-color: greenyellow;width: 200px;}
+        .box1{margin-top: 20px} /*造成父亲元素向上top*/
+        .box2{margin-top: 20px;margin-bottom: 20px}/*造成父亲元素向下top*/
+     /*   解决办法:
+        1)在父层div加上：overflow:hidden；
+
+        2)把margin-top外边距改成padding-top内边距;
+
+        3)父元素产生边距重叠的边有不为 0 的 padding 或宽度不为 0 且 style 不为 none 的 border v
+                                             父层div加： padding-top: 1px,或者 border-top:1px ;
+
+        4)设置父元素或子元素浮动（left/right）
+
+        5)设置父元素dispaly:inline-block或者display:table-cell;*/
+        .box_bottom{background-color: red;width: 200px;height: 200px}
+        /*非含元素的margin重叠的设置*/
+  /*      1）给最后面的元素加上浮动（left/right）
+
+        2)给最后一个元素加上display:inline-block;但是IE6和IE7下不完全支持display:inline-block，所以要加上*display:inline;zoom:1即可解决IE6、7的bug;*/
+        .div1{background-color: red;width: 200px;height: 200px;margin-bottom: 10px}
+        .div2{background-color: green;width: 200px;height: 200px;margin-top: 20px;display: inline-block}
+    </style>
+</head>
+<body>
+<!--<div class="box">
+    <div class="box1">显然这不是我们要的结果,只在标准浏览器下(FirfFox、Chrome、Opera、Sarfi)产生问题，IE6/7下反而表现良好。例子可以查看下面代码(IE下表现“正常”，标准浏览器下查看出现“bug”)</div>
+    <div class="box2">显然这不是我们要的结果,只在标准浏览器下(FirfFox、Chrome、Opera、Sarfi)产生问题，IE6/7下反而表现良好。例子可以查看下面代码(IE下表现“正常”，标准浏览器下查看出现“bug”)</div>
+</div>
+<div class="box_bottom">
+
+</div>-->
+<div class="div1"></div>
+<div class="div2"></div>
+</body>
+</html>

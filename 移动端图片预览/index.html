@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>帖子发布</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/weui.min.css">
+    <link rel="stylesheet" href="css/jquery-weui.css">
+    <link rel="stylesheet" href="./css/app.css">
+    <style>
+        .upload-img{
+            width: 25px;
+            height: 25px;
+        }
+        .picBox{
+            position: relative;
+            width: 90px;
+            margin-right: 10px;
+            height: 60px;
+            overflow: hidden;
+        }
+        .picBox img{
+            height: 60px;
+        }
+        .delBtn {
+            position: absolute;
+            top: 0;
+            right:10px;
+            width: 22px;
+            height: 22px;
+            background: url('img/icon_del.png') no-repeat center;
+            background-size: 100% 100%;
+            border-radius: 50%;
+        }
+        #fileupload{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 10px;
+            margin: 0 auto;
+            height: 25px;
+            display: none;
+        }
+    </style>
+</head>
+<body ontouchstart>
+<div class="weui-tab">
+    <div class="weui-tab__bd" style="background-color: #f2f5f5">
+        <div class="app-back-title app-top-bottom">
+            <div class="app-back app-font-grey">
+                <span style="float: left">返回</span>
+            </div>
+            <span class="app-13-black">帖子发布</span>
+            <span id="forum-add" class="app-back-right app-font-blue">发布</span>
+        </div>
+        <div class="app-bg-white" style="padding-top: 40px;margin-bottom: 10px">
+            <a class="weui-cell weui-cell_access" href="javascript:;">
+                <div class="weui-cell__bd">
+                    <input placeholder="选择分类" class="weui-input" id="forum-name" type="text" value="">
+                </div>
+                <div class="weui-cell__ft">
+                </div>
+            </a>
+        </div>
+        <div>
+            <div class="app-common-padding app-bg-white">
+                <textarea class="weui-textarea" placeholder="请输入文本" rows="5"></textarea>
+                <div class="picIn weui-flex">
+                </div>
+            </div>
+            <div></div>
+            <div class="app-common-padding" style="margin-top: 10px">
+                <img class="upload-img" src="img/icon_addPic.png" alt="">
+                <input type="file" id="fileupload" name="file" multiple>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/jquery-weui.min.js"></script>
+<script src="js/common.js"></script>
+<script>
+    $(function() {
+        var fileALl=[]
+        homePage()
+        function homePage(){
+            common_.ajax_({
+                url:'bbs/getCategoryList',
+                type:'get',
+                dataType:'json'
+            }).then(function (res) {
+                var option={
+                    values:[],
+                    displayValues:[]
+                }
+                $.each(res,function (index,val) {
+                    option.values.push(val.id)
+                    option.displayValues.push(val.name)
+                })
+                $("#forum-name").picker({
+                    title: "请选择分类",
+                    formatValue:function (self,val1,val2) {
+                        $(self.input).attr('data-id',val1)
+                        return val2
+                    },
+                    cols: [
+                        {
+                            textAlign: 'center',
+                            values:option.values,
+                            displayValues:option.displayValues
+                        }
+                    ]
+                });
+            })
+        }
+        function creatImg(imgRUL) {
+            var imgHtml=''
+            for(var i=0;i<imgRUL.length;i++){
+                imgHtml+= `<div class="picBox">
+				<img src="` + imgRUL[i] + `">
+				<div class="delBtn"></div>
+				<div class="uploadProgress"></div>
+			</div>`
+            }
+            $('.picIn').append(imgHtml);
+        }
+        $('.app-back').click(function () {
+            window.history.back(-1)
+        })
+        $('.picIn').on('click','.delBtn',function () {
+            $(this).parent().remove()
+            fileALl.splice($(this).parent().index(),1)
+        })
+        $('.upload-img').click(function () {
+            $('#fileupload').click()
+        })
+        function getImg(node) {
+            var imgURL = [];
+            for(var i=0;i<node.files.length;i++){
+                fileALl.push(node.files[i])
+                try {
+                    var file = null;
+                    if (node.files && node.files[i]) {
+                        file = node.files[i];
+                    } else if (node.files && node.files.item(i)) {
+                        file = node.files.item(i);
+                    }
+                    try {
+                        imgURL.push(file.getAsDataURL()) ;
+                    } catch (e) {
+                        imgURL.push(window.URL.createObjectURL(file));
+                    }
+                } catch (e) {
+                    if (node.files && node.files[i]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            imgURL.push(e.target.result);
+                        };
+                        reader.readAsDataURL(node.files[i]);
+                    }
+                }
+            }
+            creatImg(imgURL);
+        }
+        function isImg(file){
+            for (var i=0;i<file.length;i++){
+                if((file[i].type).indexOf("image/")===-1){
+                    $.toast("只能选择图片", "text");
+                    return false
+                }
+            }
+            return true
+        }
+        $('#fileupload').change(function () {
+            var imgLength=fileALl.length+this.files.length
+            if(typeof FileReader !== 'undefined'){
+                if(!isImg(this.files)){
+                    return
+                }
+            }
+            if(imgLength>3){
+                $.toast("最多上传三张图片", "text");
+                $(this).val('');
+                return
+            }
+            getImg(this);
+            $(this).val('');
+        });
+        $('#forum-add').on('click', function () {
+            var categoryId=$('#forum-name').val(),
+                content=$('textarea').val()
+            if(!categoryId||!content){
+                $.toast('请填写完整', 'text')
+                return
+            }
+            var defaultData={
+                userId:common_.getCookie('userId'),
+                categoryId:$('#forum-name').attr('data-id'),
+                content:content
+            }
+            var data=null
+            if(fileALl.length){
+                data=new FormData()
+                for(var i=0;i<fileALl.length;i++){
+                    data.append('imgs',fileALl[i])
+                }
+                data.append('userId',defaultData.userId)
+                data.append('categoryId',defaultData.categoryId)
+                data.append('content',defaultData.content)
+            }
+            common_.ajax_({
+                url:'bbs/addNote',
+                type:'post',
+                data:data||defaultData,
+                processData: false,
+                contentType: false,
+                dataType:'json'
+            }).then(function () {
+                $.toast('发布成功', 'text')
+                setTimeout(function () {
+                    window.history.back(-1)
+                },1000)
+            })
+        })
+    })
+</script>
+</html>

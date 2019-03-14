@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /*public*/
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        a {
+            color:#98a61a
+        }
+        a:hover {
+            color:#006acd
+        }
+        ul {
+            list-style:none
+        }
+
+        /*样式开始 */
+        .tablist {
+            position:relative;
+            margin:200px;                      /*为了效果*/
+            width: 632px;                    /*宽度为单个文本框宽度+padding+border*/
+            height:200px;                    /*高度为单个文本框高度+padding*/
+        }
+        .tabmenu {
+            position:absolute;
+            top:100%;                        /*标签选项在文本框下面显示*/
+            margin:0;
+        }
+        .tabmenu li{
+            display:inline-block;            /*标签选项并排显示*/
+        }
+        .tabmenu li a {
+            display:block;
+            padding:5px 10px;
+            margin:0 10px 0 0;                  /*为了效果    */
+            border:1px solid #91a7b4;         /*边框效果    */
+            border-radius:0 0 5px 5px;
+            -moz-border-radius:0 0 5px 5px;
+            -webkit-border-radius:0 0 5px 5px;  /*圆角效果*/
+            color:#333;                         /*字体颜色*/
+            background:#e3f1f8;                /*背景颜色*/
+        }
+        .tab_content {
+            position: absolute;
+            width:600px;
+            height:170px;                    /*大小*/
+            padding:15px;                    /*为了效果*/
+            border:1px solid #91a7b4;        /*边框效果    */
+            border-radius:3px;
+            -moz-border-radius:3px;
+            -webkit-border-radius:3px;         /*圆角效果*/
+            box-shadow:0 2px 3px rgba(0,0,0,0.1);
+            -moz-box-shadow:0 2px 3px rgba(0,0,0,0.1);
+            -webkit-box-shadow:0 2px 3px rgba(0,0,0,0.1);         /*阴影效果*/
+            word-wrap: break-word;                                 /*超出换行*/
+            font-size:18px;                    /*字体大小*/
+            line-height:27px;
+            color:#666;                        /*字体颜色*/
+            background:#fff;                /*背景颜色*/
+        }
+
+        /*核心代码 */
+        #tab1:target, #tab2:target, #tab3:target {
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<div class="tablist" >
+    <ul class="tabmenu">
+        <li><a href="#tab1">tab1</a></li>
+        <li><a href="#tab2">tab2</a></li>
+        <li><a href="#tab3">tab3</a></li>
+    </ul>
+    <div id="tab1" class="tab_content">tab1</div>
+    <div id="tab2" class="tab_content">tab2tab2</div>
+    <div id="tab3" class="tab_content">tab3tab3tab3</div>
+</div>
+</body>
+</html>

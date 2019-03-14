@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #curvedarrow {
+            position: relative;
+            width: 0;
+            height: 0;
+            border-top: 9px solid transparent;
+            border-right: 9px solid red;
+            -webkit-transform: rotate(10deg);
+            -moz-transform: rotate(10deg);
+            -ms-transform: rotate(10deg);
+            -o-transform: rotate(10deg);
+        }
+        #curvedarrow:after {
+            content: "";
+            position: absolute;
+            border: 0 solid transparent;
+            border-top: 3px solid red;
+            border-radius: 20px 0 0 0;
+            top: -12px;
+            left: -9px;
+            width: 12px;
+            height: 12px;
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            -o-transform: rotate(45deg);
+        }
+        #trapezoid {
+            border-bottom: 100px solid red;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            height: 0;
+            width: 100px;
+        }
+        #parallelogram {
+            width: 150px;
+            height: 100px;
+            -webkit-transform: skew(20deg);
+            -moz-transform: skew(20deg);
+            -o-transform: skew(20deg);
+            background: red;
+        }
+        #star-six {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 100px solid red;
+            position: relative;
+        }
+        #star-six:after {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-top: 100px solid red;
+            position: absolute;
+            content: "";
+            top: 30px;
+            left: -50px;
+        }
+        #star-five {
+            margin: 50px 0;
+            position: relative;
+            display: block;
+            color: red;
+            width: 0px;
+            height: 0px;
+            border-right:  100px solid transparent;
+            border-bottom: 70px  solid red;
+            border-left:   100px solid transparent;
+            -moz-transform:    rotate(35deg);
+            -webkit-transform: rotate(35deg);
+            -ms-transform:     rotate(35deg);
+            -o-transform:      rotate(35deg);
+        }
+        #star-five:before {
+            border-bottom: 80px solid red;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            position: absolute;
+            height: 0;
+            width: 0;
+            top: -45px;
+            left: -65px;
+            display: block;
+            content: '';
+            -webkit-transform: rotate(-35deg);
+            -moz-transform:    rotate(-35deg);
+            -ms-transform:     rotate(-35deg);
+            -o-transform:      rotate(-35deg);
+
+        }
+        #star-five:after {
+            position: absolute;
+            display: block;
+            color: red;
+            top: 3px;
+            left: -105px;
+            width: 0px;
+            height: 0px;
+            border-right: 100px solid transparent;
+            border-bottom: 70px solid red;
+            border-left: 100px solid transparent;
+            -webkit-transform: rotate(-70deg);
+            -moz-transform:    rotate(-70deg);
+            -ms-transform:     rotate(-70deg);
+            -o-transform:      rotate(-70deg);
+            content: '';
+        }
+        #heart {
+            position: relative;
+            width: 100px;
+            height: 90px;
+        }
+        #heart:before,
+        #heart:after {
+            position: absolute;
+            content: "";
+            left: 50px;
+            top: 0;
+            width: 50px;
+            height: 80px;
+            background: red;
+            -moz-border-radius: 50px 50px 0 0;
+            border-radius: 50px 50px 0 0;
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            -o-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+            -webkit-transform-origin: 0 100%;
+            -moz-transform-origin: 0 100%;
+            -ms-transform-origin: 0 100%;
+            -o-transform-origin: 0 100%;
+            transform-origin: 0 100%;
+        }
+        #heart {
+            position: relative;
+            width: 100px;
+            height: 90px;
+        }
+        #heart:before,
+        #heart:after {
+            position: absolute;
+            content: "";
+            left: 50px;
+            top: 0;
+            width: 50px;
+            height: 80px;
+            background: red;
+            -moz-border-radius: 50px 50px 0 0;
+            border-radius: 50px 50px 0 0;
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            -o-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+
+        }
+        #heart:after {
+            left:0;
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            -o-transform: rotate(45deg);
+            transform: rotate(45deg);
+            -webkit-transform-origin: 100% 100%;
+            -moz-transform-origin: 100% 100%;
+            -ms-transform-origin: 100% 100%;
+            -o-transform-origin: 100% 100%;
+            transform-origin :100% 100%;
+        }
+        #pacman {
+            width: 0px;
+            height: 0px;
+            border-right: 60px solid transparent;
+            border-top: 60px solid red;
+            border-left: 60px solid red;
+            border-bottom: 60px solid red;
+            border-top-left-radius: 60px;
+            border-top-right-radius: 60px;
+            border-bottom-left-radius: 60px;
+            border-bottom-right-radius: 60px;
+        }
+        #talkbubble {
+            width: 120px;
+            height: 80px;
+            background: red;
+            position: relative;
+            -moz-border-radius:    10px;
+            -webkit-border-radius: 10px;
+            border-radius:         10px;
+            left: 40px;
+        }
+        #talkbubble:before {
+            content:"";
+            position: absolute;
+            right: 100%;
+            top: 26px;
+            width: 0;
+            height: 0;
+            border-top: 13px solid transparent;
+            border-right: 26px solid red;
+            border-bottom: 13px solid transparent;
+        }
+        #space-invader{
+            box-shadow:
+                    0 0 0 1em red,
+                    0 1em 0 1em red,
+                    -2.5em 1.5em 0 .5em red,
+                    2.5em 1.5em 0 .5em red,
+                    -3em -3em 0 0 red,
+                    3em -3em 0 0 red,
+                    -2em -2em 0 0 red,
+                    2em -2em 0 0 red,
+                    -3em -1em 0 0 red,
+                    -2em -1em 0 0 red,
+                    2em -1em 0 0 red,
+                    3em -1em 0 0 red,
+                    -4em 0 0 0 red,
+                    -3em 0 0 0 red,
+                    3em 0 0 0 red,
+                    4em 0 0 0 red,
+                    -5em 1em 0 0 red,
+                    -4em 1em 0 0 red,
+                    4em 1em 0 0 red,
+                    5em 1em 0 0 red,
+                    -5em 2em 0 0 red,
+                    5em 2em 0 0 red,
+                    -5em 3em 0 0 red,
+                    -3em 3em 0 0 red,
+                    3em 3em 0 0 red,
+                    5em 3em 0 0 red,
+                    -2em 4em 0 0 red,
+                    -1em 4em 0 0 red,
+                    1em 4em 0 0 red,
+                    2em 4em 0 0 red;
+
+            background: red;
+            width: 1em;
+            height: 1em;
+            overflow: hidden;
+            margin: 50px 0 70px 65px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="curvedarrow"></div>
+<div id="trapezoid"></div>
+<div id="parallelogram"></div>
+<div id="star-six"></div>
+<div id="star-five"></div>
+<div id="heart"></div>
+<div id="pacman"></div>
+<div id="talkbubble"></div>
+<div id="space-invader"></div>
+</body>
+</html>

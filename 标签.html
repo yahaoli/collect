@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<span class="test1">test1</span>
+<span class="test1">test2</span>
+<span class="test2">test3</span>
+</body>
+<script src="js/jquery.min.js"></script>
+<script>
+    var a=$('.test1')
+    var b=$('<span class="test1">test1</span>')
+    var c=document.getElementsByClassName('test1')[0]
+    console.log(a)
+    console.log(b)
+    console.log(c.getAttribute('class'))
+</script>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        @media (min-width: 600px) and (max-width: 1200px) {
+            .div1{
+                font-size: calc(1.4rem+ (2 - 1.4) * ((100vw - 600px) / (1200 - 800)));
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="div1">
+    对这个式子我也解释一下，可以看到，其中有个表达式是 100vw - 600px，这是什么意思呢？
+
+    转换成文字：浏览器可视区域的宽度减去最小宽度。
+
+    其实理解起来很简单，举个例子：假设现在屏幕宽度为 1000px，那么，100vw - 600px 得到的结果为 400px，然后，除以 600，最后得到的是 2 / 3。然后，这个值去乘以 0.4rem，那么，这样就能计算出增加的字体大小值了，然后加上 1.4rem，就能得到最终的一个 font-size了。
+
+    所以，就这样，我们就对 font-size 实现了响应式。不用再通过各种屏幕大小的媒体查询来变化了。
+
+    值得庆幸的是，此规则对于 line-height 同样适用。
+
+    以下是完整的 SCSS 代码：
+</div>
+</body>
+</html>

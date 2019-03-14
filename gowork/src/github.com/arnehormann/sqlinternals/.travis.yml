@@ -1,0 +1,17 @@
+sudo: false
+language: go
+go:
+  - 1.6
+  - 1.7
+  - 1.8
+  - tip
+  
+notifications:
+  email: false
+
+install:
+  - go get github.com/go-sql-driver/mysql
+
+before_script:
+  # for github.com/go-sql-driver/mysql
+  - mysql -e 'create database gotest;'

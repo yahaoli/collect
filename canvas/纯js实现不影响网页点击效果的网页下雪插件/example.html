@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="background-color: lightgrey;height: 1200px">
+</body>
+<script>
+    /*  var a=document.getElementById('example')
+     console.log(window.innerWidth)
+     console.log(window.innerHeight)
+     console.log(window.scrollX)
+     console.log(window.scrollY)
+     console.log(a.offsetTop)
+     console.log(a.offsetLeft)*/
+    //console.log(document.body.offsetWidth)
+    //console.log(document.body.clientWidth)
+    function createImg() {
+        this.img = document.createElement('img');
+        this.img.src = 'images/Snowflake.png';
+        this.img.style.position = 'absolute';
+        this.img.style.display = 'block';
+        this.size = Math.random() * 20 + 10;
+        this.img.style.width=Math.round(this.size)+'px';
+        this.img.style.height=Math.round(this.size)+'px';
+        this.top=window.scrollY+1;
+        this.left=(document.body.offsetWidth - Math.round(Math.random()*20+10))*Math.random();
+        document.body.appendChild(this.img);
+
+    }
+    createImg.prototype={
+        move:function () {
+            this.top+=0.5;
+            //this.left+=Math.random()*10;
+        },
+        draw:function () {
+            this.img.style.top=Math.round(this.top)*10+'px';
+            this.img.style.left=Math.round(this.left)*10+'px';
+        }
+    };
+    var b=[];
+    var c=setInterval(function () {
+        b.push(new createImg());
+        for(var i=b.length-1;i>=0;i--){
+            b[i].move();
+            b[i].draw()
+        }
+        if(!b.length){
+            clearInterval(c)
+        }
+    },20);
+</script>
+</html>

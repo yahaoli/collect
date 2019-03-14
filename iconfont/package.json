@@ -1,0 +1,19 @@
+{
+  "name": "iconfont",
+  "version": "1.0.0",
+  "description": "小岛字体图标库",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node_modules/.bin/gulp"
+  },
+  "author": "liyahao",
+  "license": "ISC",
+  "devDependencies": {
+    "font-carrier": "0.0.12",
+    "gulp": "^3.9.1",
+    "gulp-iconfont": "^10.0.2",
+    "gulp-iconfont-css": "^2.3.0",
+    "gulp-template": "^5.0.0"
+  }
+}

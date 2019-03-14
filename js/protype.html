@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div><span class="huoqu">获取</span>
+    <a href="http://gc.ditu.aliyun.com/geocoding?a=苏州市 ">111</a></div>
+</body>
+<script src="jquery.min.js"></script>
+<script>
+    $(function(){
+        $.ajax({
+            type : "get",
+            async : false,
+            url : "http://192.168.0.68:8000/Desktop/saoma_activity/json/yanzhengma.json", //实际上访问时产生的地址为: ajax.ashx?callbackfun=jsonpCallback&id=10
+            cache : false, //默认值true
+            dataType : "jsonp",
+            jsonp: "callbackfun",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(默认为:callback)
+            jsonpCallback:"jsonpCallback",
+            //自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
+            //如果这里自定了jsonp的回调函数，则success函数则不起作用;否则success将起作用
+            success : function(json){
+                alert(json);
+            },
+            error:function(){
+                alert("error");
+            }
+        });
+
+    })
+</script>
+</html>

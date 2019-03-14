@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript">
+            function selectAll(checkbox) {
+                $('input[type=checkbox]').prop('checked', $(checkbox).prop('checked'));
+            }
+        </script>
+</head>
+<body>
+<input type="checkbox" value="全选" onclick="selectAll(this);" /><br/>
+<input type="checkbox"/><br/>
+<input type="checkbox"/><br/>
+<input type="checkbox"/><br/>
+<input type="checkbox"  /><br/>
+<input type="checkbox"  /><br/>
+<input type="checkbox"  /><br/>
+<input type="datetime-local">
+</body>
+</html>

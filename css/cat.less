@@ -1,0 +1,43 @@
+.cat {
+  background: url(http://stash.rachelnabors.com/24ways2012/cat_sprite.png) -800px 0 no-repeat;
+  height: 200px;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+body {
+  background: #e5e6e9;
+  color: #071933;
+  font-family: 'Lato', sans-serif;
+  font-size: 1em;
+  line-height: 1.5em;
+  margin: 1em 1em;
+  text-align: center;
+  width: 100%;
+}
+
+button {
+  background: #2d0d3c;
+  border: 0;
+  color: #f7e6ff;
+  cursor: pointer;
+  font-size: .9em;
+  padding: .7em 2em;
+}
+
+
+a:link { color: #1954c0; } a:visited {color: #702096; }
+a:hover, a:active, a:focus {
+  color: #646d97;
+}
+
+.flexCat {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-around;
+  .cat {
+    flex: 1 1 400px;
+  }
+}

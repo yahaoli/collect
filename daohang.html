@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <style>
+        .yiji > li {
+            list-style: none;
+            float: left;
+        }
+
+        .yiji span {
+            background-color: #1abad7;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .erji {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .erji > li {
+            list-style: none;
+            background-color: #0d0d0d;
+            color: white;
+            padding: 10px 20px;
+
+        }
+
+        .caidan ul {
+            padding: 0;
+        }
+
+        .caidan {
+            height: 1000px;
+        }
+    </style>
+</head>
+<body>
+<div class="caidan">
+    <ul class="yiji">
+        <li><span>11</span>
+            <!--<ul class="erji">
+                <li>11</li>
+                <li>12</li>
+                <li>13</li>
+            </ul>-->
+        </li>
+        <li>
+            <span>22</span>
+            <ul class="erji">
+                <li>21</li>
+                <li>22</li>
+                <li>23</li>
+            </ul>
+        </li>
+        <li><span>33</span>
+            <!--<ul class="erji">
+                <li>31</li>
+                <li>32</li>
+                <li>33</li>
+            </ul>-->
+        </li>
+        <li><span>44</span>
+            <ul class="erji">
+                <li>41</li>
+                <li>42</li>
+                <li>43</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+</body>
+<script src="js/jquery.min.js"></script>
+<script>
+    $(function () {
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                alert('bottom!!');
+
+            }
+        });
+        $('.yiji li span').mouseover(function () {
+            $(this).css({
+                'background-color': '#1bcd03',
+                'cursor': 'pointer'
+            }).parent().siblings().find('span').css({'background-color': '#1abad7'});
+            if ($(this).next().length == true) {
+                $(this).next('.erji').show().parent().siblings().find('.erji').hide();
+            } else {
+                $('.erji').hide();
+                $(this).click(function () {
+                    window.location.href = 'https://www.baidu.com/'
+                })
+            }
+
+        });
+        $('.erji li').mouseover(function () {
+            $(this).parent().prev().css({'background-color': '#1bcd03'});
+            $(this).css({
+                'background-color': '#1bcd03',
+                'cursor': 'pointer'
+            }).siblings().css({'background-color': '#0d0d0d'});
+            $(this).parent().show()
+        });
+        $('.erji,.yiji li span').mouseout(function () {
+            $('.erji li').css({
+                'background-color': '#0d0d0d'
+            });
+            $('.yiji span').css({'background-color': '#1abad7'});
+            $('.erji').hide();
+        });
+    })
+</script>
+</html>

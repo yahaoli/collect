@@ -1,0 +1,205 @@
+/*弹窗css*/
+.weui-mask_transparent{
+    position:fixed;
+    z-index:1000;
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+}
+.weui-dialog,
+.weui-toast {
+    -webkit-transition-duration: .2s;
+    transition-duration: .2s;
+    opacity: 0;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    visibility: hidden;
+    margin: 0;
+    top: 45%;
+    z-index: 2000;
+}
+.weui-toast{
+    position:fixed;
+    left:50%;
+    background:rgba(17, 17, 17, 0.7);
+    text-align:center;
+    border-radius:5px;
+    color:#FFFFFF;
+}
+.weui-dialog__title{
+    font-weight:400;
+    font-size:18px;
+}
+.weui-dialog{
+    position:fixed;
+    z-index:5000;
+    width:80%;
+    max-width:300px;
+    top:50%;
+    left:50%;
+    -webkit-transform:translate(-50%, -50%);
+    transform:translate(-50%, -50%);
+    background-color:#FFFFFF;
+    text-align:center;
+    border-radius:3px;
+    overflow:hidden;
+}
+.weui-dialog.weui-dialog--visible,
+.weui-toast.weui-dialog--visible,
+.weui-toast.weui-toast--visible {
+    opacity: 1;
+    visibility: visible;
+}
+.weui-toast--text {
+    min-height: initial;
+    font-size: 14px;
+    padding: 8px 16px;
+    width: auto;
+    top: 40%;
+}
+.weui-dialog__btn{
+    display:block;
+    -webkit-box-flex:1;
+    -webkit-flex:1;
+    flex:1;
+    color:#3CC51F;
+    text-decoration:none;
+    -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+    position:relative;
+}
+.weui-dialog__btn:active{
+    background-color:#EEEEEE;
+}
+.weui-dialog__btn:after{
+    content:" ";
+    position:absolute;
+    left:0;
+    top:0;
+    width:1px;
+    bottom:0;
+    border-left:1px solid #D5D5D6;
+    color:#D5D5D6;
+    -webkit-transform-origin:0 0;
+    transform-origin:0 0;
+    -webkit-transform:scaleX(0.5);
+    transform:scaleX(0.5);
+}
+.weui-dialog__btn:first-child:after{
+    display:none;
+}
+.weui-dialog .weui-dialog__btn.default,
+.weui-toast .weui-dialog__btn.default {
+    color: #5f646e;
+}
+.weui-dialog .weui-dialog__btn + .weui-dialog__btn,
+.weui-toast .weui-dialog__btn + .weui-dialog__btn {
+    position: relative;
+}
+.weui-dialog .weui-dialog__btn + .weui-dialog__btn:after,
+.weui-toast .weui-dialog__btn + .weui-dialog__btn:after {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    border-left: 1px solid #D5D5D6;
+    color: #D5D5D6;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleX(0.5);
+    transform: scaleX(0.5);
+}
+.weui-mask {
+    position:fixed;
+    z-index:1000;
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+    background:rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s;
+    visibility: hidden;
+}
+.weui-mask.weui-mask--visible {
+    opacity: 1;
+    visibility: visible;
+}
+.weui-dialog__hd{
+    padding:1.3em 1.6em 0.5em;
+}
+.weui-dialog__bd{
+    padding:0 1.6em 0.8em;
+    min-height:40px;
+    font-size:15px;
+    line-height:1.3;
+    word-wrap:break-word;
+    word-break:break-all;
+    color:#999999;
+}
+.weui-dialog__bd:first-child{
+    padding:2.7em 20px 1.7em;
+    color:#353535;
+}
+.weui-dialog__ft{
+    position:relative;
+    line-height:48px;
+    font-size:18px;
+    display:-webkit-box;
+    display:-webkit-flex;
+    display:flex;
+}
+.weui-dialog__ft:after{
+    content:" ";
+    position:absolute;
+    left:0;
+    top:0;
+    right:0;
+    height:1px;
+    border-top:1px solid #D5D5D6;
+    color:#D5D5D6;
+    -webkit-transform-origin:0 0;
+    transform-origin:0 0;
+    -webkit-transform:scaleY(0.5);
+    transform:scaleY(0.5);
+}
+.weui-loading{
+    display:inline-block;
+    -webkit-animation:weuiLoading 1s steps(12, end) infinite;
+    animation:weuiLoading 1s steps(12, end) infinite;
+    background:transparent url("data:image/svg+xml;charset=utf8, %3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 100 100'%3E%3Cpath fill='none' d='M0 0h100v100H0z'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23E9E9E9' rx='5' ry='5' transform='translate(0 -30)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23989697' rx='5' ry='5' transform='rotate(30 105.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%239B999A' rx='5' ry='5' transform='rotate(60 75.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23A3A1A2' rx='5' ry='5' transform='rotate(90 65 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23ABA9AA' rx='5' ry='5' transform='rotate(120 58.66 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23B2B2B2' rx='5' ry='5' transform='rotate(150 54.02 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23BAB8B9' rx='5' ry='5' transform='rotate(180 50 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23C2C0C1' rx='5' ry='5' transform='rotate(-150 45.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23CBCBCB' rx='5' ry='5' transform='rotate(-120 41.34 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23D2D2D2' rx='5' ry='5' transform='rotate(-90 35 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23DADADA' rx='5' ry='5' transform='rotate(-60 24.02 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23E2E2E2' rx='5' ry='5' transform='rotate(-30 -5.98 65)'/%3E%3C/svg%3E") no-repeat;
+    background-size:100%;
+}
+.weui-icon_toast.weui-loading{
+    width:38px;
+    height:38px;
+    vertical-align:baseline;
+}
+.weui_loading{
+    padding: 10px;
+}
+@-webkit-keyframes weuiLoading{
+    0%{
+        -webkit-transform:rotate3d(0, 0, 1, 0deg);
+        transform:rotate3d(0, 0, 1, 0deg);
+    }
+    100%{
+        -webkit-transform:rotate3d(0, 0, 1, 360deg);
+        transform:rotate3d(0, 0, 1, 360deg);
+    }
+}
+@keyframes weuiLoading{
+    0%{
+        -webkit-transform:rotate3d(0, 0, 1, 0deg);
+        transform:rotate3d(0, 0, 1, 0deg);
+    }
+    100%{
+        -webkit-transform:rotate3d(0, 0, 1, 360deg);
+        transform:rotate3d(0, 0, 1, 360deg);
+    }
+}

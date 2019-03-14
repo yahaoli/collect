@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="width: 100px;height: 100px;background-color: red" id="scroll">
+
+</div>
+</body>
+<script>
+    function dynamicLoad()
+    {
+        var _doc=document.getElementsByTagName('head')[0];
+        var script=document.createElement('script');
+        script.setAttribute('src','./jquery.js');
+        _doc.appendChild(script);
+        script.onload=script.onreadystatechange=function(){
+            if(!this.readyState||this.readyState==='loaded'||this.readyState==='complete'){
+               console.log(22222)
+            }
+            script.onload=script.onreadystatechange=null;
+        };
+    }
+    window.onload=function () {
+        dynamicLoad()
+    };
+    function T(c) {
+        this.id = "Object";
+        this.dom = document.getElementById("scroll");
+    }
+    T.prototype = {
+        init: function() {
+            //①
+            this.dom.onmouseover = function() {
+                console.log("Over-->"+this.id);
+            }
+            //②
+            this.dom.onmouseout = function() {
+                console.log("Out -->"+this.id);
+            } .bind(this)
+        }
+    };
+    (new T()).init();
+</script>
+</html>

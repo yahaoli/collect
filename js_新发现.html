@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box{width:100px; height:100px; position:absolute; background:#06c; left:0;filter:alpha(opacity=30); opacity:0.3;}
+    </style>
+</head>
+<body>
+<p> 1111111111111111111111111111122222333333333333344444555555555</p>
+<div id="box">
+</div>
+<div data-pig="111"  id="rules" style="height: 300px;border: solid 1px;box-sizing: border-box;margin-top: 50px;overflow-y: scroll">
+
+    <div style="width: 100%;height: 2000px;background: green;">
+        <p>11111</p>
+        <input type="text" id="my-checkbox" />
+
+        <input onkeypress="if (event.keyCode!=46 && event.keyCode!=45 && (event.keyCode<48 || event.keyCode>57)) event.returnValue=false" />
+        <ul>
+            <li>111</li>
+            <li>222</li>
+            <li>333</li>
+            <li>444</li>
+            <li>555</li>
+        </ul>
+    </div>
+</div>
+<div id="output" style="min-height: 200px;border: 1px solid black;">
+    //   文件拖拉到这里
+    // </div>
+<form name="myForm" action="">
+    <select name="mySelector" id="">
+    </select>
+</form>
+<canvas id="myCanvas" width="400" height="200">
+    您的浏览器不支持canvas！
+</canvas>
+</body>
+<!--<script src="js/jquery.min.js"></script>-->
+<script>
+    if(window.Worker){
+
+    }else {
+
+    }
+    //blob类型
+   /* var blob = new Blob(["Hello World"]);
+
+    var a = document.createElement("a");
+    a.href = window.URL.createObjectURL(blob);
+    a.download = "hello-world.txt";
+    a.textContent = "Download Hello World!";
+    document.body.appendChild(a);*/
+   /* var canvas = document.getElementById('myCanvas');
+
+    if (canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+    }
+    ctx.beginPath(); // 开始路径绘制
+    ctx.moveTo(20, 20); // 设置路径起点，坐标为(20,20)
+    ctx.lineTo(200, 20); // 绘制一条到(200,20)的直线
+    ctx.lineWidth = 1.0; // 设置线宽
+    ctx.strokeStyle = '#CC0000'; // 设置线的颜色
+    ctx.stroke(); // 进行线的着色，这时整条线才变得可见
+    ctx.fillStyle = 'yellow';
+    ctx.fillRect(50, 50, 200, 100);*/
+    /*var userData = [
+        { id: "1", name: "Tapas", age: 33, email: "tapas@example.com" },
+        { id: "2", name: "Bidulata", age: 55, email: "bidu@home.com" }
+    ];
+    for (var i in userData) {
+      /!*  var item = new Option(
+                userData[i].name,  // 显示的文本，即 text 属性
+                userData[i].name,  // 向服务器发送的值，即 value 属性
+                false,    // 是否为默认选项，即 defaultSelected 属性
+                false   // 是否已经选中，即 selected 属性
+        );*!/
+
+        // 获取 Selector 对象
+        var mySelector = document.forms.myForm.mySelector;
+        mySelector.options[mySelector.options.length]= new Option(
+                userData[i].name,  // 显示的文本，即 text 属性
+                userData[i].name,  // 向服务器发送的值，即 value 属性
+                false,    // 是否为默认选项，即 defaultSelected 属性
+                false   // 是否已经选中，即 selected 属性
+        );;
+    }*/
+
+
+ /*   //通知消息提示
+    if(window.Notification && Notification.permission !== "denied") {
+        Notification.requestPermission(function(status) {
+            var n = new Notification('收到新邮件', {
+                body: '您总共有3封未读邮件。'});
+            n.onshow = function () {
+                setTimeout(n.close.bind(n), 5000);
+            };
+            n.onclick=function(){
+                alert('已点击')
+            }
+        });
+    }*/
+    /*if("indexedDB" in window) {
+       console.log('支持');
+        var openRequest = indexedDB.open("test",2);
+        var db;
+        var userData = [
+            { id: "1", name: "Tapas", age: 33, email: "tapas@example.com" },
+            { id: "2", name: "Bidulata", age: 55, email: "bidu@home.com" }
+        ];
+        openRequest.onsuccess = function(e) {
+            console.log("Success!");
+            db = e.target.result;
+            indexedDB.deleteDatabase('test');
+        };
+        openRequest.onupgradeneeded = function(event) {
+            console.log("Upgrading...");
+            var objectStore = event.target.result.createObjectStore("users", {keyPath: "id"});
+            for (var i in userData) {
+                objectStore.add(userData[i]);
+            }
+            indexedDB.deleteDatabase('test');
+        };
+        openRequest.onerror = function(e) {
+
+            console.log("Error");
+            console.dir(e);
+        };
+    } else {
+        console.log('不支持');
+        // 不支持
+    }*/
+    /*$(function(){
+        $('p').click(function(){
+            $("#box").slideToggle("slow");
+        })
+
+    });*/
+   /* window.moveTo(0, 0)
+    window.moveBy(25, 50)*/
+   /* function getstyle(obj,name){
+        if(obj.currentStyle){
+            return obj.currentStyle[name];
+        }else{
+            return getComputedStyle(obj,false)[name];
+        }
+    }
+
+    window.onload = function(){
+        var box = document.getElementById("box");
+        box.onmouseover = function(){
+            startrun(box,"width",200,function(){
+                startrun(box,"height",200,function(){
+                    startrun(box,"opacity","100")
+                });
+            });
+        }
+        box.onmouseout = function(){
+            startrun(box,"height",100,function(){
+                startrun(box,"width",100,function(){
+                    startrun(box,"opacity","30");
+                });
+            });
+        }
+    }
+
+    function startrun(obj,attr,target,fn){
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function(){
+            var cur = 0;
+            if(attr == "opacity"){
+                cur = Math.round(parseFloat(getstyle(obj,attr))*100);
+            }else{
+                cur = parseInt(getstyle(obj,attr));
+            }
+            var speed = (target-cur)/8;
+            speed = speed>0?Math.ceil(speed):Math.floor(speed);
+
+            if(cur == target){
+                clearInterval(obj.timer);
+                if(fn){
+                    fn();
+                }
+            }else{
+                if(attr == "opacity"){
+                    obj.style.filter = "alpha(opacity="+(cur+speed)+")";
+                    obj.style.opacity = (cur+speed)/100;
+                }else{
+                    obj.style[attr] = cur + speed + "px";
+                }
+            }
+
+        },30)
+    }
+    var div =document.getElementsByTagName('div')[0];*/
+   /* div.style.cssText += 'background-color: red;'
+            + 'border: 1px solid black;';*/
+   /* div.setAttribute(
+            'style',
+            'background-color:red;' + 'border:1px solid black;'
+    );*/
+    /*//限制scoll事件次数一秒60次
+    (function() {
+        var throttle = function(type, name, obj) {
+            var obj = obj || window;
+            var running = false;
+            var func = function() {
+                if (running) { return; }
+                running = true;
+                requestAnimationFrame(function() {
+                    obj.dispatchEvent(new CustomEvent(name));
+                    running = false;
+                });
+            };
+            obj.addEventListener(type, func);
+        };
+
+        // 将scroll事件重定义为optimizedScroll事件
+        throttle('scroll', 'optimizedScroll');
+    })();*/
+   /* window.addEventListener('beforeunload', function (e) {
+        var confirmationMessage = '确认关闭窗口？';
+        e.returnValue = confirmationMessage;
+        return confirmationMessage;
+    });*/
+    /*var div = document.getElementById('output');
+
+    div.addEventListener("dragenter", function( event ) {
+        div.textContent = '';
+        event.stopPropagation();
+        event.preventDefault();
+    }, false);
+
+    div.addEventListener("dragover", function( event ) {
+        event.stopPropagation();
+        event.preventDefault();
+    }, false);
+
+   /!* div.addEventListener("drop", function( event ) {
+        event.stopPropagation();
+        event.preventDefault();
+        var files = event.dataTransfer.files;
+        for (var i = 0; i < files.length; i++) {
+            div.textContent += files[i].name + ' ' + files[i].size + '字节\n';
+        }
+    }, false);*!/
+    div.addEventListener('drop', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        var fileList = e.dataTransfer.files;
+        if (fileList.length > 0) {
+            var file = fileList[0];
+            var reader = new FileReader();
+            reader.onloadend = function(e) {
+                if (e.target.readyState == FileReader.DONE) {
+                    var content = reader.result;
+                    div.innerHTML = "File: " + file.name + "\n\n" +'<img src="'+e.target.result+'" alt="">';
+                }
+            }
+            reader.onprogress=function(e){
+                if (e.lengthComputable) {
+                    var percentComplete = e.loaded / e.total;
+                    console.log(percentComplete);
+                } else {
+                    console.log('不能计算进度');
+                }
+            }
+            reader.readAsDataURL(file);
+        }
+    });*/
+    /*function checkName(e) {
+        /!*if (e.charCode < 97 || e.charCode > 122) {
+            e.preventDefault();
+        }*!/
+        console.log(e.key);
+    }
+    var cb = document.getElementById('my-checkbox');
+
+    cb.addEventListener(
+            'keyup',
+            checkName,
+            false
+    );*/
+/*
+    function showCoords(evt){
+                console.log(
+                        "screenX value: " + evt.screenX + "\n"
+                        + "screenY value: " + evt.screenY + "\n"
+                );
+    }*/
+   /* var cb = document.getElementById('my-checkbox');
+
+    cb.addEventListener(
+            'click',
+            function (e){ e.preventDefault(); },
+            false
+    );*/
+   /* var ul = document.querySelector('ul');
+
+    ul.addEventListener('click',function(event) {
+        if (event.target.tagName.toLowerCase() === 'li') {
+           console.log(event.target.textContent)
+        }
+    });*/
+  /*  var rules = document.getElementById('rules');
+    rules.onscroll = checking;
+    console.log(rules.dataset.pig);
+    if (rules.children.length) {
+        var children = rules.children;
+        for (var i = 0; i < children.length; i++) {
+            console.log(111);
+        }
+    }
+    if (rules.childNodes.length) {
+        var children = rules.childNodes;
+        for (var i = 0; i < children.length; i++) {
+            console.log(222);
+        }
+    }*/
+    function checking(){
+
+    /*// 网页总高度
+        document.documentElement.offsetHeight
+        document.documentElement.scrollHeight
+        document.body.offsetHeight
+        document.body.scrollHeight
+
+// 网页总宽度
+        document.documentElement.offsetWidth
+        document.documentElement.scrollWidth
+        document.body.offsetWidth
+        document.body.scrollWidth*/
+      /*  // 视口高度
+        window.innerHeight // 包括滚动条
+        document.documentElement.clientHeight // 不包括滚动条
+
+       // 视口宽度*/
+       /* console.log(window.innerHeight) // 包括滚动条
+        console.log(this.getBoundingClientRect().left)//左坐标
+        console.log(this.getBoundingClientRect().top)*/
+        /*document.documentElement.clientWidth // 不包括滚动条
+        console.log(this.offsetTop)
+        console.log(this.clientLeft)
+        console.log(this.clientTop)
+        console.log(this.clientHeight)*/
+        /*console.log(this.scrollHeight);
+        console.log(this.scrollTop);
+        console.log(this.clientHeight);
+        if (this.scrollHeight - this.scrollTop === this.clientHeight) {
+            console.log('谢谢阅读');
+        } else {
+            console.log('您还未读完');
+        }*/
+    }
+</script>
+</html>

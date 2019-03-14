@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片上传</title>
+    <style>
+        .delete_img:hover{
+            cursor: pointer;
+        }
+        .file {
+            position: relative;
+            display: inline-block;
+            background: #D0EEFF;
+            border: 1px solid #99D3F5;
+            border-radius: 4px;
+            padding: 4px 12px;
+            overflow: hidden;
+            color: #1E88C7;
+            text-decoration: none;
+            text-indent: 0;
+            line-height: 20px;
+        }
+        .file input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+        }
+        .file:hover {
+            background: #AADFFD;
+            border-color: #78C3F3;
+            color: #004974;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div style="text-align: center">
+    <a href="javascript:;" class="file">选择文件
+        <input type="file" name="" id="">
+    </a>
+        <input hidden style="" type="file" id="file" onchange='upload()' multiple>
+        <div id="imgshow">
+            <input id="submit" type="button" value="上传">
+        </div>
+</div>
+<form action="/upload"></form>
+</body>
+<script src="js/jquery.min.js"></script>
+<script>
+    $('').on('change',function () {
+
+    })
+    var file,a= 0,picture_index=0;
+    var file_all=[];
+    var file_64={
+        img1:[]};
+    //检查图片格式和大小
+    function filter (files) {
+        var arrFiles = [];
+        for (var i = 0, file; file = files[i]; i++) {
+            if (file.type.indexOf("image") == 0) {
+                if (file.size >= 512000) {
+                    alert('您这张"'+ file.name +'"图片大小过大，应小于500k');
+                } else {
+                    arrFiles.push(file);
+                }
+            } else {
+                alert('文件"' + file.name + '"不是图片。');
+            }
+        }
+        return arrFiles;
+    }
+    //检查图片是否重复
+    /*function cover(file){
+        if(file_all.length>0){
+        }
+    }*/
+            function upload () {
+                var files=document.getElementById('file').files;
+                file=filter(files)[picture_index];
+                var oFReader = new window.FileReader();
+                if(file){
+                    file_all.push(file);
+                        oFReader.onload = function (e) {
+                            $('#imgshow input').before('<div style="float: left"><div><strong>' + file.name + '</strong><strong style="float: right" class="delete_img">删除</strong></div><img id="img' + a + '" style="float: left" src=" ' + e.target.result + ' " alt=""></div>');
+                            picture_index++;
+                            a++;
+                            upload();
+                        };
+                            oFReader.readAsDataURL(file);
+
+                }else {
+                    picture_index=0
+                }
+        }
+    $(function(){
+        $(document).on('click','.delete_img',function(){
+            $(this).parent().parent().remove();
+        });
+        $('#submit').click(function(){
+            var file_load=new FormData();
+            for(var i=0;i<file_all.length;i++){
+                console.log(file_all[i]);
+                file_load.append('files',file_all[i])
+            }
+            file_load.append('name','liyahao');
+            console.log(file_load)
+            function createCORSRequest(method, url) {
+                var xhr = new XMLHttpRequest();
+                if ("withCredentials" in xhr) {
+
+                    // Check if the XMLHttpRequest object has a "withCredentials" property.
+                    // "withCredentials" only exists on XMLHTTPRequest2 objects.
+                    xhr.open(method, url, true);
+
+                } else if (typeof XDomainRequest != "undefined") {
+
+                    // Otherwise, check if XDomainRequest.
+                    // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+                    xhr = new XDomainRequest();
+                    xhr.open(method, url);
+
+                } else {
+
+                    // Otherwise, CORS is not supported by the browser.
+                    xhr = null;
+
+                }
+                return xhr;
+            }
+
+            var xhr = createCORSRequest('POST', 'http://localhost:3000/custom/uphotoimg');
+            xhr.withCredentials=true;//是否传cookie服务器也要配置
+            //xhr.setRequestHeader('X-Custom-Header', 'value');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 ) {
+                    var responseText = xhr.responseText;
+                    console.log(responseText);
+                }
+            }
+            if (!xhr) {
+                throw new Error('CORS not supported');
+            }
+            xhr.send(file_load);
+            /*$.ajax({
+                type:'POST',
+                url:'http://localhost:3000/custom/uphotoimg',
+                data:file_load,
+                //dataType: "jsonp",
+                processData: false,// *重要,确认为false
+                contentType: false,
+                timeout:5000,
+                success:function(data){
+                    alert(data);
+                },
+                error:function(){
+                    alert('registajax'+'error');
+                }
+            })*/
+        });
+        /*$('#submit').click(function(){
+                $.ajax({
+                    type:'GET',
+                    url:'http://localhost:3000/custom/uphotopicture',
+                    data:file_64,
+                    dataType: "jsonp",
+                    jsonpCallback:'aaaa',
+                    timeout:5000,
+                    success:function(data){
+                        alert(data);
+                    },
+                    error:function(){
+                        alert('registajax'+'error');
+                    }
+                })
+        })*/
+    });
+</script>
+</html>

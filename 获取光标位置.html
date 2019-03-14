@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .div1{
+            width: 100%;
+            height: 500px;
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+<div class="div1">
+
+</div>
+</body>
+<script>
+    (function(){
+        var div1=document.getElementsByClassName("div1")[0];
+                div1.addEventListener('click',function(e){
+                    console.log('start');
+                    console.log(e.clientX);
+                    console.log(e.clientY)
+                },false)
+    })()
+</script>
+</html>

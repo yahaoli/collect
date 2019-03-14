@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    var getmap=function(){
+        if(!navigator.geolocation) throw "不支持";
+        var image=document.createElement('img');
+        navigator.geolocation.getCurrentPosition(setMapURL);
+        return image;
+        function  setMap(pos){
+            var latitude=pos.coords.latitude;
+            var longitude =pos.coords.longitude;
+            var accuracy=pos.coords.accuracy;
+            var url="http://maps.google.com/maps/api/staticmap"+"?center="+latitude+","+longitude+"&size=640x640&sensor=true";
+            var zoomlevel=20;
+            if(accuracy>80) zoomlevel-=Math.round(Math.log(accuracy/50)/Math.LN2);
+            url+="&zoom=" +zoomlevel;
+            image.src=url;
+        }
+
+    };
+    getmap();
+</script>
+</html>

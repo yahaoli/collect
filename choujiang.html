@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>抽奖系统</title>
+    <script src="js/jquery.js"></script>
+    <style>
+        #box{
+            width:450px;
+            margin:0 auto;
+        }
+        .show{
+            width:100px;
+            height:55px;
+            text-align:center;
+            background:#ff0;
+            line-height:55px;
+            border:1px solid #000;
+            border-radius:5px;
+            font-size:20px;
+            font-family:微软雅黑;
+            float:left;
+            margin:5px 5px 0px 5px;
+        }
+        #person{
+            width:450px;
+            height:100px;
+            background:#ff0;
+            text-align:center;
+            line-height:100px;
+            font-size:45px;
+            margin:0 auto;
+            margin-top:25px;
+            border:1px dotted #000;
+            font-family:楷体;
+            border-radius:10px;
+        }
+        p{
+            margin-top:25px;
+            text-align:center;
+        }
+        button{
+            width:65px;
+            height:35px;
+            text-align:center;
+            border:0px;
+            border-radius:5px;
+            background:#f36;
+            font-size:16px;
+            color:#fff;
+            cursor:pointer;
+        }
+        .active{
+            background:#f00;
+        }
+    </style>
+</head>
+<body>
+<div id='box'>
+    <div class="show">吴泽辉</div>
+    <div class="show">李景亮</div>
+    <div class="show">李志伟</div>
+    <div class="show">潘雅静</div>
+    <div class="show">王建华</div>
+    <div class="show">高强</div>
+    <div class="show">秦英</div>
+    <div class="show">高文幸</div>
+    <div class="show">李雪</div>
+    <div class="show">高丹</div>
+    <div class="show">崔小刚</div>
+    <div class="show">赵艳萍</div>
+    <div class="show">于晓丽</div>
+    <div class="show">于洋</div>
+    <div class="show">胡小萌</div>
+    <div class="show">武渊</div>
+</div>
+<div style="clear:both"></div>
+<div id="person">
+    获奖者
+</div>
+<p>
+    <button id="btn">开始</button>
+</p>
+</body>
+<script>
+    var showlen=$('.show').length; //获取人员总数
+    var time=null; //初始化计时器
+
+    $('#btn').click(function(){
+        var flag=$(this).html();
+        flag=flag=='开始'?'停止':'开始'; //交换按钮上的内容
+        $(this).html(flag);
+
+        switch(flag)
+        {
+            case '停止': //这里是开始作抽奖
+                getIndex(0);
+                break;
+
+            case '开始': //这里是停止循环
+                getIndex(1);
+                $('#person').html('恭喜:'+$("#person").html()); //汇报结果
+                break;
+        }
+    });
+
+    function getIndex(mark)
+    {
+        if(mark==1)
+        {
+            clearInterval(time); //终止计时器
+        }
+        else
+        {
+            time=setInterval(show,1); //开启计时器
+        }
+
+        function show()
+        {
+            var idx=Math.floor(Math.random()*showlen); //生成随机数
+            for(var i=0;i<showlen;i++)
+            {
+                $('.show').eq(i).css({'background':'#ff0'}); //去掉所有的背景色
+            }
+            $('.show').eq(idx).css({'background':'#f00'});  //为当前选中的人加背景色
+            $("#person").html($('.show').eq(idx).html());  //将当前选中的人的名字显示在下面的框内
+        }
+    }
+</script>
+</html>

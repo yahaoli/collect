@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .delete{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div id="before" style="float: left"></div>
+    <div id="after">
+    <select name="" id="select">
+        <option value="11111">11111</option>
+        <option value="22222">22222</option>
+        <option value="33333">33333</option>
+        <option value="44444">44444</option>
+        <option value="55555">55555</option>
+    </select>
+            <p class="ceshi">1</p>
+    </div>
+</div>
+</body>
+<script src="js/jquery.min.js"></script>
+<script>
+    $(function(){
+        var a=[], index1, index= 0,i=0;
+        var o={x:1,y:2,z:3};
+        //for(a[i++] in o)
+        for(j in o)console.log(o[j]);
+        /*index1=(i<1?2:0);
+        var a=[1,2,3];
+        alert(4 in a);
+        alert(typeof a);
+        for(var j in a){
+            alert(a[j])
+        }*/
+        $('#select').change(function(){
+            if($('#before').children().length>0){
+                for(i=0;i<$('#before').children().length;i++){
+                    if($('#before').children().eq(i).children().eq(0).text()==$('#select').val()){
+                        alert('已经存在');
+                        break;
+                    }
+                    else if(i==parseInt($('#before').children().length)-1) {
+                        $('#before').append('<div style="float: left"><span id="aaaa'+index+'">'+$(this).val()+'</span><span class="delete" style="color: red">X</span></div>');
+                        index++;
+                        break;
+                    }
+                }
+            }else {
+                $('#before').append('<div style="float: left"><span id="aaaa'+index+'">'+$(this).val()+'</span><span class="delete" style="color: red">X</span></div>');
+                index++;
+            }
+
+
+        });
+        $(document).on('click','.delete',function(){
+            $(this).parent().remove();
+        })
+    })
+</script>
+</html>

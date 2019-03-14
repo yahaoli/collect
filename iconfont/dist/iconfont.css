@@ -1,0 +1,72 @@
+@font-face {
+  font-family: "iconfont";
+  src: url('https://xiangyuanhui.oss-cn-hangzhou.aliyuncs.com/html/iconfont/iconfont.eot');
+  src: url('https://xiangyuanhui.oss-cn-hangzhou.aliyuncs.com/html/iconfont/iconfont.eot?#iefix') format('eot'),
+  url('https://xiangyuanhui.oss-cn-hangzhou.aliyuncs.com/html/iconfont/iconfont.woff') format('woff'),
+  url('https://xiangyuanhui.oss-cn-hangzhou.aliyuncs.com/html/iconfont/iconfont.ttf') format('truetype'),
+  url('https://xiangyuanhui.oss-cn-hangzhou.aliyuncs.com/html/iconfont/iconfont.svg#iconfont') format('svg');
+}
+
+.newIcon:before {
+  font-family: "iconfont";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+
+
+.newIcon-add:before {
+  content: "\E001";
+}
+
+.newIcon-birthday:before {
+  content: "\E002";
+}
+
+.newIcon-breakfast:before {
+  content: "\E003";
+}
+
+.newIcon-card9:before {
+  content: "\E004";
+}
+
+.newIcon-discount:before {
+  content: "\E005";
+}
+
+.newIcon-gift_bag:before {
+  content: "\E006";
+}
+
+.newIcon-location:before {
+  content: "\E007";
+}
+
+.newIcon-minus:before {
+  content: "\E008";
+}
+
+.newIcon-plus:before {
+  content: "\E009";
+}
+
+.newIcon-Shape:before {
+  content: "\E00A";
+}
+
+.newIcon-steward:before {
+  content: "\E00B";
+}
+
+.newIcon-tickets:before {
+  content: "\E00C";
+}
+
+.newIcon-wifi:before {
+  content: "\E00D";
+}

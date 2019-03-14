@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function updateTime(){
+            var now=new Date();
+            var second=now.getSeconds();
+            var min=now.getMinutes()+second/60;
+            var hour=(now.getHours()%12) + min/60;
+            var secondangle=second*6;//一秒6度
+            var minangle=min*6;  //一分6度
+            var hourangle=hour*30; //一小时30度
+            //获取表示时钟时针和分针的SVG元素
+            var minhand=document.getElementById('minutehand');
+            var hourhand=document.getElementById('hourhand');
+            var secondhand=document.getElementById('secondhand');
+            //设置这些元素的SVG属性，将它们移动到钟面上
+            secondhand.setAttribute('transform','rotate('+secondangle+',50,50)');
+            minhand.setAttribute('transform','rotate('+minangle+',50,50)');
+            hourhand.setAttribute('transform','rotate('+hourangle+',50,50)');
+            setTimeout(updateTime,1000)
+        }
+    </script>
+    <style >
+        #clock{
+            stroke: black; /*黑线*/
+            stroke-linecap: round; /*圆角*/
+            fill: #eef; /*背景*/
+        }
+        #face{stroke-width: 3px} /*外边距*/
+        #ticks{stroke-width: 2; }
+        #hourhand{stroke-width: 5px}
+        #minutehand{stroke-width: 3px }
+        #secondhand{stroke-width: 1px}
+        #numbers{
+            font-family: sans-serif; font-size: 7pt; font-weight: bold;
+            text-anchor: middle;stroke: none;fill: black;
+        }
+    </style>
+</head>
+<body onload="updateTime()">
+    <!--viewBox是坐标系，width和height是指屏幕大小-->
+    <svg id="clock" viewBox="0 0 100 100" width="500" height="500">
+        <defs> <!--定义下拉阴影滤镜-->
+            <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur"/>
+                <feOffset in="blur" dx="1" dy="1" />
+                <feMerge>
+                    <feMergeNode in="SourceGraphic" /><feMergeNode in="shadow" />
+                </feMerge>
+            </filter>
+        </defs>
+        <circle id="face" cx="50" cy="50" r="45"></circle>   <!--钟面-->
+        <g id="ticks">                <!--12小时的刻度-->
+            <line x1="50" y1="5.000" x2="50.00" y2="10.00"/>
+            <line x1="72.50" y1="11.03" x2="70.00" y2="15.36"/>
+            <line x1="88.97" y1="27.50" x2="84.64" y2="30.00"/>
+            <line x1="95.00" y1="50.00" x2="90.00" y2="50.00"/>
+            <line x1="88.97" y1="72.50" x2="84.64" y2="70.00"/>
+            <line x1="72.50" y1="88.97" x2="70.00" y2="84.00"/>
+            <line x1="50.00" y1="95.00" x2="50.00" y2="90.00"/>
+            <line x1="27.50" y1="88.97" x2="30.00" y2="84.64"/>
+            <line x1="11.03" y1="72.50" x2="15.36" y2="70.00"/>
+            <line x1="5.000" y1="50.00" x2="10.00" y2="50.00"/>
+            <line x1="11.03" y1="27.50" x2="15.36" y2="30.00"/>
+            <line x1="27.50" y1="11.03" x2="30.00" y2="15.36"/>
+        </g>
+        <g id="numbers">
+            <text x="50" y="18">12</text><text x="85" y="53">3</text>
+            <text x="50" y="88">6</text><text x="15" y="53">9</text>
+        </g>
+        <g id="hands" filter="url(#shadow)">
+            <line id="hourhand" x1="50" y1="50" x2="50" y2="24"/>
+            <line id="minutehand" x1="50" y1="50" x2="50" y2="20"/>
+            <line id="secondhand" x1="50" y1="50" x2="50" y2="15"/>
+        </g>
+    </svg>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <style>
+        /*轮播插件样式设置*/
+        .slider{display:none;}
+        .slider ul { padding-left:0; }
+        /*未选中状态*/
+        .focus span{
+            width:4px;
+            height:4px;
+            margin-right: 7px;
+            border-radius:50%;
+            border: solid 1px white;
+            font-size:0
+        }
+        /*选中状态*/
+        .focus span.current{
+            width:5px;
+            height:1px;
+            border-radius: 1px;
+            border: none;
+            background-color: white;
+            margin-top: 2.5px;
+        }
+    </style>
+</head>
+<body>
+<div class="slider">
+    <ul>
+        <li><img src="./banner@2x.png" alt=""></li>
+        <li><img src="./banner@2x.png" alt=""></li>
+        <li><img src="./banner@2x.png" alt=""></li>
+    </ul>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="yxMobileSlider.js"></script>
+<script>
+    $(function () {
+        //轮播图 参数详见源码
+        $(".slider").yxMobileSlider({width:750,height:241,during:3000})
+    })
+</script>
+</html>

@@ -1,0 +1,28 @@
+body {
+    background: #F9F9F9;
+    font-family: PingFangSC-Regular;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6,form,input, textarea, p, th, td, hr, button{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+a:link {text-decoration:none;}
+a:visited {text-decoration:none;}
+a:hover {text-decoration:none;}
+input[type='text'], select, textarea {
+    border: 0;
+    -webkit-appearance: none;
+    appearance: none;
+
+}
+
+a, button, input, textarea {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+body,html {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden
+}

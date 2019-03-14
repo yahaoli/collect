@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet/less" type="text/css" href="css/cat.less">
+    <script src="js/less.min.js"></script>
+</head>
+<body>
+<div id="WAAPICats">
+    <div class="cat" id="withWAAPI"></div>
+    <button onclick="animateNewCatWithWAAPI()">Add a Cat</button>
+</div>
+</body>
+<script>
+    var keyframes = [
+        {backgroundPosition: "-800px 0"},
+        {backgroundPosition: "-800px -2591px"}
+    ];
+    var timing = {
+        duration: 750,
+        iterations: Infinity,
+        easing: "steps(13, end)"
+    };
+
+    var catRunning = document.getElementById ("withWAAPI").animate(keyframes, timing);
+
+    function addCat(){
+        var newCat = document.createElement("div");
+        newCat.classList.add("cat");
+        return newCat;
+    }
+    var flex = document.createElement("div");
+    flex.classList.add("flexCat");
+    var WAAPICats=document.getElementById('WAAPICats');
+    WAAPICats.appendChild(flex);
+    function animateNewCatWithWAAPI() {
+        var newCat = addCat();
+        var newAnimationPlayer = newCat.animate(keyframes, timing);
+        newAnimationPlayer.startTime = catRunning.startTime;
+        flex.appendChild(newCat);
+    }
+</script>
+</html>

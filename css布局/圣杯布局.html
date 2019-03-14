@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{margin: 0;padding: 0}
+        #main {
+            float: left;
+            width: 100%;
+        }
+        #mainContainer {
+            margin: 0 230px;
+            height: 200px;
+            background: green;
+        }
+        #left {
+            float: left;
+            margin-left: -100%;
+            width: 230px
+        }
+
+        #right {
+            float: left;
+            margin-left: -230px;
+            width: 230px;
+        }
+
+        #left .inner,
+        #right .inner {
+            background: orange;
+            margin: 0 10px;
+            height: 200px;
+        }
+        .right,.left {
+            float: left;
+            width: 220px;
+            height: 200px;
+            background: blue;
+        }
+
+        .right{
+            float: right;
+        }
+
+        .main {
+            margin: 0 220px;
+            background: red;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+
+<!--<div id="main">
+    <div id="mainContainer">main content</div>
+</div>
+<div id="left">
+    <div id="leftContainer" class="inner">left content</div>
+</div>
+<div id="right">
+    <div id="rightContainer" class="inner">right</div>
+</div>-->
+    <div class="left">左边栏</div>
+    <div class="right">右边栏</div>
+    <div class="main">中间弹性区</div>
+</body>
+</html>

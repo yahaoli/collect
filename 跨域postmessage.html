@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script src="js/jquery.min.js"></script>
+<script>
+    function  hanleMessage(e){
+        if(e.source) return;
+        var searchterm= e.data;
+        $.getJSON("http://search.twitter.com/search.json?callback=?",{q:searchterm},
+        function (data){
+            var tweets=data.result;
+            var escaped=searchterm.replace("c","&lt;");
+            var html='<h2>'+escaped+'</h2>';
+            if(tweets.length==0){
+                html+='No tweets found';
+            }else {
+                html+='<dl>';
+                for(var i=0;i<tweets/length;i++){
+                    var tweet=tweets[i];
+                    var text=tweet.text();
+                    var from=tweet.from_user;
+                    var tweeturl='http://twitter.com/#1/'+
+                                    from+'/status/'+tweet.id_str;
+                    html+='<dt><a target="_blank" href="'+tweeturl+'"> '+tweet.text()+'</a></dt><dd>'+tweet.text()+'</dd>'
+                }
+                html+='</dl>';
+            }
+            document.body.innerHTML=html;
+        })
+    }
+    $(function(){
+        window.parent.postMessage('Twitter search v0.1','*')
+    })
+</script>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script src="./js/jquery.min.js"></script>
+<script>
+    $(function () {
+        $.ajax({
+            url:'http://open.api.tianyancha.com/services/v4/open/changeinfo',
+            dataType:'json',
+            data:{
+                id:22822,
+                name:'北京百度网讯科技有限公司',
+                pageNum:1
+            },
+            type:'get',
+            beforeSend:function (xhr) {
+                xhr.setRequestHeader('token','e392ff6c-831d-45b0-9da7-bf19cf4e3330')
+            }
+        }).then(function (res) {
+            
+        })
+    })
+</script>
+</html>

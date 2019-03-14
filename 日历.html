@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <title>tryMyOwnCalendar酒店网站入住日期选择插件</title>
+    <style>
+        *{ margin:0; padding:0;}
+        .choosecal{ width:96%; margin:3% auto; overflow:hidden;}
+        .ccaltop{ width:99%; border-radius:5px; border:1px solid #000;}
+        .caltline1,.caltline2{ width:94%; background-color:#F90; overflow:hidden; padding:2% 3%;}
+        .caltline1 p,.caltline2 p{ float:left; width:10%; font-weight:700; text-align:right;}
+        .caltline1 .bookdate{ width:90%; text-align:left;}
+        .caltline2{ background-color:#FFF; display:none;}
+        .caltline2 p{ width:20%;}
+        .caltline2 .datetext{ width:35%; border:1px solid #000; background-color:#FFF; font-weight:700;}
+        .calender{ width:100%; margin-top:3%; overflow:hidden; display:none;}
+        .selectmouth{ background-color:#F30; width:94%; overflow:hidden;padding:2% 3%;border-radius:5px 5px 0 0;}
+        .selectmouth p{ float:left; width:33%; color:#FFF; font-weight:700; cursor:pointer;}
+        .selectmouth .selectdate{ width:100%; background-color:#F30; border:none; color:#FFF; font-weight:700; text-align:center;}
+        .data_table{ width:100%;border:1px solid #cccccc;border-collapse:collapse; }
+        .data_table thead{ background-color:#333;}
+        .data_table thead td{ color:#FFF; text-align:center;border:1px solid #333;border-collapse:collapse; padding:1% 0;}
+        .data_table tbody td{border:1px solid #cccccc;border-collapse:collapse; text-align:center;color:#0C6;padding:1% 0;}
+        .data_table tbody td.orderdate{ color:#000;}
+        .data_table tbody td.tdselect{ color:#fff;background-color:#999}
+    </style>
+</head>
+<body>
+<div class="choosecal">
+    <div class="ccaltop">
+        <div class="caltline1">
+            <p class="bookdate">选择入住日期……</p>
+            <p><img src="images/iconpoint.png" /></p>
+        </div>
+        <div class="caltline2">
+            <p style=" width:80%; text-align:left;">
+                <input type="text" value="" class="datetext datetoday" readonly=readonly />
+                至
+                <input type="text" value="" class="datetext dateendday" readonly=readonly />
+            </p>
+            <p><input type="button" value="确定" class="btsure" /></p>
+        </div>
+    </div>
+    <div class="calender">
+        <div class="selectmouth">
+            <p style="text-align:right" class="lastmonth"><</p>
+            <p><input type="text" class="selectdate" value="2014年2月" readonly=readonly /></p>
+            <p class="nextmonth">></p>
+        </div>
+        <table class="data_table" cellspacing="0px">
+            <thead>
+            <tr>
+                <td>日</td><td>一</td><td>二</td><td>三</td><td>四</td><td>五</td><td>六</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>1</td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>1</td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>1</td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>1</td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+                <td>1</td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="js/jquery.js"></script>
+<script>
+    window.onload=function(){
+        var mydate=new Date();
+        var thisyear=mydate.getFullYear();
+        var thismonth=mydate.getMonth()+1;
+        var thisday=mydate.getDate();
+        var mydate1=new Date();
+        var thisyear1=mydate1.getFullYear();
+        var thismonth1=mydate1.getMonth()+1;
+        var thisday1=mydate1.getDate();
+        var selectday=thisday; //标记日期
+        var indate=thisday; //入住日期
+        var inmonth=thismonth;//入住月份
+        var outdate=thisday+1; //退房日期fc
+        var outmonth=thismonth; //退房月份rr
+        var datetxt="datetoday";
+        var datefirst;
+        var datesecond;
+        function initdata(){//日期初始填充
+            var tdheight=$(".data_table tbody tr").eq(0).find("td").height();
+            $(".data_table tbody td").css("height",tdheight);
+            $(".selectdate").val(thisyear+"年"+thismonth+"月");
+            var days=getdaysinonemonth(thisyear,thismonth);
+            var weekday=getfirstday(thisyear,thismonth);
+            setcalender(days,weekday);
+            markdate(thisyear,thismonth,selectday);
+            orderabledate(thisyear,thismonth,thisday);
+        }
+        initdata();
+        $(".datetoday").val(thisyear+"-"+thismonth+"-"+thisday);
+        $(".dateendday").val(thisyear+"-"+thismonth+"-"+(thisday+1));
+        function orderabledate(thisyear,thismonth,thisday){//能预订的日期
+            if(thisyear<thisyear1){
+                $(".data_table tbody td").addClass("orderdate");
+                $(".data_table tbody td").removeClass("usedate");
+            }else if(thisyear==thisyear1){
+                if(thismonth<thismonth1){
+                    $(".data_table tbody td").addClass("orderdate");
+                    $(".data_table tbody td").removeClass("usedate");
+                }else if(thismonth==thismonth1){
+                    for(var j=0;j<6;j++){
+                        for(var i=0;i<7;i++){
+                            var tdhtml=$(".data_table tbody tr").eq(j).find("td").eq(i).html();
+                            if(tdhtml<thisday){
+                                $(".data_table tbody tr").eq(j).find("td").eq(i).addClass("orderdate");
+                                $(".data_table tbody tr").eq(j).find("td").eq(i).removeClass("usedate");
+                            }else{
+                                $(".data_table tbody tr").eq(j).find("td").eq(i).removeClass("orderdate");
+                            }
+                        }
+                    }
+                }else{
+                    $(".data_table tbody td").removeClass("orderdate");
+                }
+            }else{
+                $(".data_table tbody td").removeClass("orderdate");
+            }
+        }
+        function markdate(thisyear,thismonth,thisday){//标记日期
+            var datetxt=thisyear+"年"+thismonth+"月";
+            var thisdatetxt=thisyear1+"年"+thismonth1+"月";
+            $(".data_table td").removeClass("tdselect");
+            if(datetxt==thisdatetxt){
+                for(var j=0;j<6;j++){
+                    for(var i=0;i<7;i++){
+                        var tdhtml=$(".data_table tbody tr").eq(j).find("td").eq(i).html();
+                        if(tdhtml==thisday){
+                            $(".data_table tbody tr").eq(j).find("td").eq(i).addClass("tdselect");
+                        }
+                    }
+                }
+            }
+        }
+        function getdaysinonemonth(year,month){ //算某个月的总天数
+            month=parseInt(month,10);
+            var d=new Date(year,month,0);
+            return d.getDate();
+        }
+        function getfirstday(year,month){//算某个月的第一天是星期几
+            month=month-1;
+            var d=new Date(year,month,1);
+            return d.getDay();
+        }
+        function setcalender(days,weekday){//往日历中填入日期
+            var a=1;
+            for(var j=0;j<6;j++){
+                for(var i=0;i<7;i++){
+                    if(j==0&&i<weekday){
+                        $(".data_table tbody tr").eq(0).find("td").eq(i).html("");
+                        $(".data_table tbody tr").eq(0).find("td").eq(i).removeClass("usedate");
+                    }else{
+                        if(a<=days){
+                            $(".data_table tbody tr").eq(j).find("td").eq(i).html(a);
+                            $(".data_table tbody tr").eq(j).find("td").eq(i).addClass("usedate");
+                            a++;
+                        }else{
+                            $(".data_table tbody tr").eq(j).find("td").eq(i).html("");
+                            $(".data_table tbody tr").eq(j).find("td").eq(i).removeClass("usedate");
+                            a=days+1;
+                        }
+                    }
+                }
+            }
+        }
+        function errorreset(){//日期报错后，数据重置
+            thisyear=thisyear1;
+            thismonth=thismonth1;
+            thisday=thisday1;
+            selectday=thisday1;
+            indate=thisday1;
+            inmonth=thismonth1;
+            outdate=thisday1+1;
+            outmonth=thismonth1;
+            initdata();
+        }
+        $(".data_table tbody td.usedate").on("click",function(){//点击日期的效果
+            var thishtml=parseInt($(this).html());
+            $(".data_table td").removeClass("tdselect");
+            $(this).addClass("tdselect");
+            selectday=thishtml;
+            if(datetxt=="datetoday"){
+                $(".datetoday").val(thisyear+"-"+thismonth+"-"+selectday);
+                indate=selectday;
+                inmonth=thismonth;
+            }else{
+                $(".dateendday").val(thisyear+"-"+thismonth+"-"+selectday);
+                outdate=selectday;
+                outmonth=thismonth;
+                if(outmonth<inmonth){
+                    alert("日期填写错误");
+                    $(".datetoday").val(thisyear1+"-"+thismonth1+"-"+thisday1);
+                    $(".dateendday").val(thisyear1+"-"+thismonth1+"-"+(thisday1+1));
+                    errorreset();
+                }else if(outmonth==inmonth){
+                    if(outdate<=indate){
+                        alert("日期填写错误");
+                        $(".datetoday").val(thisyear1+"-"+thismonth1+"-"+thisday1);
+                        $(".dateendday").val(thisyear1+"-"+thismonth1+"-"+(thisday1+1));
+                        errorreset();
+                    }
+                }
+            }
+        });
+        $(".datetoday").click(function(){//选择入住日期
+            datetxt="datetoday";
+        });
+        $(".dateendday").click(function(){//选择退房日期
+            datetxt="dateendday";
+        });
+        $(".lastmonth").click(function(){//上一个月
+            thismonth--;
+            if(thismonth==0){
+                thismonth=12;
+                thisyear--;
+            }
+            initdata();
+        });
+        $(".nextmonth").click(function(){//上一个月
+            thismonth++;
+            if(thismonth==13){
+                thismonth=1;
+                thisyear++;
+            }
+            initdata();
+        });
+        $(".btsure").click(function(){//确定日期
+            var start = new Date($(".datetoday").val());
+            var end = new Date($(".dateendday").val());
+            var diff = parseInt((end - start) / (1000*3600*24));
+            $(".bookdate").html(inmonth+"月"+indate+"日至"+outmonth+"月"+outdate+"日("+diff+")晚")
+        });
+        $(".caltline1").click(function(){
+            $(this).toggle(
+                    function(){
+                        $(".caltline2").slideDown(500);
+                        $(".calender").fadeIn(500);
+                        errorreset();
+                    }
+            );
+        })
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #donghua{
+            width: 130px;
+            height: 117px;
+            background: url("image/cartoon22.png") no-repeat;
+            background-size: cover;
+            animation: donghua 2s;
+            animation-iteration-count: 5;
+            animation-direction: alternate;
+        }
+        @keyframes donghua {
+            from {
+                -webkit-transform:rotate(0deg);
+                transform:rotate(0deg);
+            }
+            to {
+                -webkit-transform:rotate(360deg);
+                transform:rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="donghua">
+
+</div>
+</body>
+</html>

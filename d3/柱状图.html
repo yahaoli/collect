@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+    (function () {
+        var width = 600, height = 600;
+        var dataset = [30, 20, 45, 12, 21];
+        var svg = d3.select("body").append("svg");
+        svg.selectAll("rect")
+            .data(dataset)
+            .enter()
+            .append("rect")
+            .attr("x",10)
+            .attr("y",function(d,i){
+                return i * 30;
+            })
+            .attr("width",function(d,i){
+                return d * 10;
+            })
+            .attr("height",28)
+            .attr("fill","green");
+    })()
+</script>
+</html>

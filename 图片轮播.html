@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .imageRotation{
+            height:270px;
+            width:570px;
+            overflow:hidden;  /*--超出容器的所有元素都不可见--*/
+            position:relative;  /*--相对定位--*/
+            border:10px solid #eee;
+            bodrer-radius:5px;
+            -webkit-border-radius:5px;
+            -moz-border-radius:5px;
+        }
+        /*-------------图片容器---------------*/
+        .imageBox{
+            position:absolute;  /*--固定定位--*/
+            height:270px;
+            top:0px;
+            left:0px;
+            overflow:hidden;
+        }
+        .imageBox img {
+            display:block;
+            height:270px;
+            width:570px;
+            float:left;
+            border:none;
+        }
+        /*-------------标题容器---------------*/
+        .titleBox{
+            position:absolute;  /*--固定定位--*/
+            bottom:0px;
+            width:570px;
+            height:40px;
+            overflow:hidden;
+        }
+        .titleBox p{
+            position:absolute;   /*--固定定位--*/
+            bottom:-40px;
+            width:550px;
+            height:40px;
+            margin:0px;
+            padding:0px 10px;
+            line-height:40px;
+            z-index:1;
+            background-color:#000;
+            color:#fff;
+            font-family:"微软雅黑","yahei";
+            opacity:0.5;
+            -moz-opacity:0.5;
+            -webkit-opacity:0.5;
+            filter:alpha(opacity=50);
+        }
+        .titleBox p span{
+            opacity:1;
+            -moz-opacity:1;
+            -webkit-opacity:1;
+            filter:alpha(opacity=100);
+        }
+        .titleBox p.active{
+            bottom:0px;
+        }
+        /*-------------图标容器---------------*/
+        .icoBox{
+            position:absolute;  /*--固定定位--*/
+            bottom:14px;
+            right:15px;
+            width:76px;
+            height:12px;
+            text-align:center;
+            z-index:2;
+        }
+        .icoBox span{
+            display:block;
+            float:left;
+            height:12px;
+            width:12px;
+            margin-left:3px;
+            overflow:hidden;
+            background:url("images/ico.png") 0px 0px no-repeat;
+            cursor:pointer;
+        }
+        .icoBox span.active {
+            background-position:0px -12px;
+            cursor:default;
+        }
+    </style>
+</head>
+<body>
+<div class="imageRotation">
+    <div class="imageBox">
+        <a target="_blank"><img src="images/1.jpg" /></a>
+        <a target="_blank"><img src="images/2.jpg" /></a>
+        <a target="_blank"><img src="images/3.jpg" /></a>
+        <a target="_blank"><img src="images/4.jpg" /></a>
+        <a target="_blank"><img src="images/5.jpg" /></a>
+    </div>
+    <div class="titleBox">
+        <p class="active"><span>第一张图片标题</span></p>
+        <p>第二张图片标题</p>
+        <p>第三张图片标</p>
+        <p>第四张图片标题</p>
+        <p>第五张图片标题</p>
+    </div>
+    <div class="icoBox">
+        <span class="active" rel="1"></span>
+        <span rel="2"></span>
+        <span rel="3"></span>
+        <span rel="4"></span>
+        <span rel="5"></span>
+    </div>
+</div>
+</body>
+<script src="js/jquery.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".imageRotation").each(function(){
+            // 获取有关参数
+            var imageRotation = this,  // 图片轮换容器
+                    imageBox = $(imageRotation).children(".imageBox"),  // 图片容器
+                    titleBox = $(imageRotation).children(".titleBox"),  // 标题容器
+                    titleArr = $(titleBox).children(),  // 所有标题（数组）
+                    icoBox = $(imageRotation).children(".icoBox"),  // 图标容器
+                    icoArr = $(icoBox).children(),  // 所有图标（数组）
+                    imageWidth = $(imageRotation).width(),  // 图片宽度
+                    imageNum = $(imageBox).children().size(),  // 图片数量
+                    imageReelWidth = imageWidth*imageNum,  // 图片容器宽度
+                    activeID = parseInt($($(icoBox).children(".active")).attr("rel")),  // 当前图片ID
+                    nextID = 0,  // 下张图片ID
+                    setIntervalID,  // setInterval() 函数ID
+                    intervalTime = 4000,  // 间隔时间
+                    imageSpeed =500,  // 图片动画执行速度
+                    titleSpeed =250;  // 标题动画执行速度
+            // 设置 图片容器 的宽度
+            $(imageBox).css({'width' : imageReelWidth + "px"});
+            // 图片轮换函数
+            var rotate=function(clickID){
+                if(clickID){ nextID = clickID; }
+                else{ nextID=activeID<=4? activeID+1 : 1; }
+                // 交换图标
+                $(icoArr[activeID-1]).removeClass("active");
+                $(icoArr[nextID-1]).addClass("active");
+                // 交换标题
+                $(titleArr[activeID-1]).animate(
+                        {bottom:"-40px"},
+                        titleSpeed,
+                        function(){
+                            $(titleArr[nextID-1]).animate({bottom:"0px"} , titleSpeed);
+                        }
+                );
+                // 交换图片
+                $(imageBox).animate({left:"-"+(nextID-1)*imageWidth+"px"} , imageSpeed);
+                // 交换IP
+                activeID = nextID;
+            };
+            setIntervalID=setInterval(rotate,intervalTime);
+            $(imageBox).hover(
+                    function(){ clearInterval(setIntervalID); },
+                    function(){ setIntervalID=setInterval(rotate,intervalTime); }
+            );
+            $(icoArr).click(function(){
+                clearInterval(setIntervalID);
+                var clickID = parseInt($(this).attr("rel"));
+                rotate(clickID);
+                setIntervalID=setInterval(rotate,intervalTime);
+            });
+        });
+    });
+</script>
+</html>

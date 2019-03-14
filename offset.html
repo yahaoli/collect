@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="animate" hidden style="width: 400px;height: 400px;background: green;border: solid 10px red">
+<p style="padding-left: 20px">234444</p>
+</div>
+<h1>111111</h1>
+<h1>111111</h1>
+<h1>111111</h1>
+<h1>111111</h1>
+<h1>111111</h1>
+<a href="">22222</a>
+<a href="">22222</a>
+<a href="">22222</a>
+<a href="">22222</a>
+<div id="copy" style="background: blue"></div>
+</body>
+<script src="js/jquery.js"></script>
+<script>
+    $(function(){
+        $('h1').offset(function(index,curpos){
+            return {left:curpos.left + 25*index,top:curpos.top}
+        });
+        console.log($(window).width());
+        console.log($('div').width());
+        console.log($('div').innerWidth());
+        console.log($('div').outerWidth());
+        console.log($('div').outerWidth(true));
+        $('a').clone().appendTo('#copy');
+        $('#animate').fadeIn(2000).delay(200).queue(function(next){
+            $(this).html('22334455');
+            next();
+        }).animate({'border-Width':'+=10px'})
+
+    })
+</script>
+</html>
