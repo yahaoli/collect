@@ -33,6 +33,7 @@
 
   // http://blog.alexmaccaw.com/css-transitions
   $.fn.emulateTransitionEnd = function (duration) {
+    console.log(duration)
     var called = false
     var $el = this
     $(this).one('bsTransitionEnd', function () { called = true })

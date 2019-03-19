@@ -89,13 +89,11 @@
     if (!$.support.transition) return complete.call(this)
 
     var scrollSize = $.camelCase(['scroll', dimension].join('-'))
-    console.log(scrollSize)
-    console.log(this.$element[0])
-    console.log(this.$element[0][scrollSize])
 
-   /* this.$element
+
+    this.$element
       .one('bsTransitionEnd', $.proxy(complete, this))
-      .emulateTransitionEnd(Collapse.TRANSITION_DURATION)[dimension](this.$element[0][scrollSize])*/
+      .emulateTransitionEnd(Collapse.TRANSITION_DURATION)[dimension](this.$element[0][scrollSize])
   }
 
   Collapse.prototype.hide = function () {

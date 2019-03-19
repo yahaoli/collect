@@ -84,7 +84,7 @@
         .el-menu .el-icon-arrow-down {
             margin-top: -3px;
             border-style: solid dashed dashed;
-            border-color: rgba(255,255,255,.7) transparent transparent;
+            border-color: rgba(255, 255, 255, .7) transparent transparent;
         }
 
         .el-menu .el-icon-arrow-up {
@@ -96,15 +96,28 @@
         .el-menu-item:hover {
             background: rgb(67, 74, 80) !important;
         }
-        .test{
-            width: 200px;
-            height: 20px;
-            background: green;
-            overflow: hidden;
-            transition: height 3s;
+
+        .collapse {
+            display: none;
         }
-        .test:hover {
-            height: 200px;
+
+        .collapse.in {
+            display: block;
+        }
+
+        .collapsing {
+            position: relative;
+            height: 0;
+            overflow: hidden;
+            -webkit-transition-timing-function: ease;
+            -o-transition-timing-function: ease;
+            transition-timing-function: ease;
+            -webkit-transition-duration: .35s;
+            -o-transition-duration: .35s;
+            transition-duration: .35s;
+            -webkit-transition-property: height, visibility;
+            -o-transition-property: height, visibility;
+            transition-property: height, visibility;
         }
     </style>
 </head>
@@ -114,13 +127,13 @@
         <li class="el-submenu">
             <div class="el-submenu__title">
                 <span>导航一</span><span class="el-submenu__icon-arrow el-icon-arrow-down"></span></div>
-            <ul class="el-menu el-menu--inline" style="display: none">
+            <ul class="el-menu el-menu--inline collapse">
                 <li class="el-menu-item-group">
                     <ul>
-                        <li  class="el-menu-item">
+                        <li class="el-menu-item">
                             选项1
                         </li>
-                        <li  class="el-menu-item">
+                        <li class="el-menu-item">
                             选项2
                         </li>
                     </ul>
@@ -132,13 +145,13 @@
                         </li>
                     </ul>
                 </li>
-                <li  aria-haspopup="true" class="el-submenu">
+                <li aria-haspopup="true" class="el-submenu">
                     <div class="el-submenu__title"
                          style="padding-left: 40px;">
                         选项4<i class="el-submenu__icon-arrow el-icon-arrow-down"></i></div>
-                    <ul role="menu" class="el-menu el-menu--inline"
-                        style="background-color: rgb(84, 92, 100); display: none;">
-                        <li  tabindex="-1" class="el-menu-item"
+                    <ul role="menu" class="el-menu el-menu--inline collapse"
+                        style="background-color: rgb(84, 92, 100);">
+                        <li tabindex="-1" class="el-menu-item"
                             style="padding-left: 60px;">
                             选项1
                         </li>
@@ -149,13 +162,13 @@
         <li class="el-submenu">
             <div class="el-submenu__title">
                 <span>导航一</span><span class="el-submenu__icon-arrow el-icon-arrow-down"></span></div>
-            <ul class="el-menu el-menu--inline" style="display: none">
+            <ul class="el-menu el-menu--inline collapse">
                 <li class="el-menu-item-group">
                     <ul>
-                        <li  class="el-menu-item">
+                        <li class="el-menu-item">
                             选项1
                         </li>
-                        <li  class="el-menu-item">
+                        <li class="el-menu-item">
                             选项2
                         </li>
                     </ul>
@@ -167,26 +180,26 @@
                         </li>
                     </ul>
                 </li>
-                <li  aria-haspopup="true" class="el-submenu">
+                <li aria-haspopup="true" class="el-submenu">
                     <div class="el-submenu__title"
                          style="padding-left: 40px;">
                         选项4<i class="el-submenu__icon-arrow el-icon-arrow-down"></i></div>
-                    <ul role="menu" class="el-menu el-menu--inline"
-                        style="background-color: rgb(84, 92, 100); display: none;">
-                        <li  tabindex="-1" class="el-menu-item"
+                    <ul role="menu" class="el-menu el-menu--inline collapse"
+                        style="background-color: rgb(84, 92, 100); ">
+                        <li tabindex="-1" class="el-menu-item"
                             style="padding-left: 60px;">
                             选项1
                         </li>
                     </ul>
                 </li>
-                <li  aria-haspopup="true" class="el-submenu">
+                <li aria-haspopup="true" class="el-submenu">
                     <div class="el-submenu__title"
                          style="padding-left: 40px;">
                         选项4<i class="el-submenu__icon-arrow el-icon-arrow-down"></i></div>
-                    <ul role="menu" class="el-menu el-menu--inline"
-                        style="background-color: rgb(84, 92, 100); display: none;">
-                        <li  tabindex="-1" class="el-menu-item"
-                             style="padding-left: 60px;">
+                    <ul role="menu" class="el-menu el-menu--inline collapse"
+                        style="background-color: rgb(84, 92, 100); ">
+                        <li tabindex="-1" class="el-menu-item"
+                            style="padding-left: 60px;">
                             选项1
                         </li>
                     </ul>
@@ -194,15 +207,10 @@
             </ul>
         </li>
     </ul>
-    <div class="test">
-        111111111111
-        111111111111
-        111111111111
-        111111111111
-    </div>
 </div>
 </body>
 <script src="jquery.min.js"></script>
+<script src="./bootstrap-3.3.7/js/transition.js"></script>
 <script>
     $(function () {
         var defaultOptions = {
@@ -211,16 +219,35 @@
         $('.el-submenu__title').click(function () {
             var currentDom = $(this);
             var _this = currentDom.find('.el-submenu__icon-arrow');
+            var element = currentDom.next('ul');
+            var parent=currentDom.parent('li');
             if (_this.hasClass('el-icon-arrow-up')) {
                 _this.attr('class', 'el-submenu__icon-arrow el-icon-arrow-down');
-                currentDom.next('ul').hide();
+                element.height(element.height())
+                    .addClass('collapsing')
+                    .removeClass('collapse in')
+                    .height(0)
+                    .one('bsTransitionEnd', function () {
+                        element
+                            .removeClass('collapsing')
+                            .addClass('collapse');
+                        parent.attr('aria-expanded', false)
+                    })
+                    .emulateTransitionEnd(350);
             } else {
                 _this.attr('class', 'el-submenu__icon-arrow el-icon-arrow-up');
-                currentDom.next('ul').show();
+                element.removeClass('collapse')
+                    .addClass('collapsing').height(0)
+                    .one('bsTransitionEnd', function () {
+                        element
+                            .removeClass('collapsing')
+                            .addClass('collapse in').height('');
+                        parent.attr('aria-expanded', true)
+                    })
+                    .emulateTransitionEnd(350).height(element[0].scrollHeight);
                 if (defaultOptions.uniqueOpened) {
-                    var other = currentDom.parent('li').siblings();
-                    other.children('ul.el-menu').hide();
-                    other.children('.el-submenu__title').find('.el-submenu__icon-arrow').attr('class', 'el-submenu__icon-arrow el-icon-arrow-down');
+                    var other = parent.siblings('[aria-expanded=true]');
+                    other.children('.el-submenu__title').click();
                 }
             }
         })
