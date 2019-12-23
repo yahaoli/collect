@@ -1,0 +1,4 @@
+<div>
+	<h1>回执单打印模板配置</h1>
+	<edit-tool :type='type' :tool-list='toolList' :plan-list="planList" :init-current-use-plan='initCurrentUsePlan' v-on:modify-planlist='modifyPlanList'></edit-tool>
+</div>

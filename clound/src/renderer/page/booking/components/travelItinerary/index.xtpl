@@ -1,0 +1,93 @@
+<div class='travelItinerary-detail'>
+	<div class="search-co">
+		<el-row :gutter="20">
+			<el-col :span="12">
+				<h4>行程单{{itinerary.bianhao}}</h4>
+				<div>
+					<p class="co-title">基本信息</p>
+					<el-row class="co-info">
+						<el-col :span="12">
+							<p>
+								<span class="text-grey">导游证号:</span>
+								<span class="text-black">{{itinerary.license_num}}</span>
+							</p>
+							<p>
+								<span class="text-grey">团队数量:</span>
+								<span class="text-black">{{itinerary.team_num}}</span>
+							</p>
+						</el-col>
+						<el-col :span="12">
+							<div class="grid-content bg-purple-light"></div>
+						</el-col>
+					</el-row>
+
+				</div>
+				<div v-if="itinerary.tour_guide&&itinerary.tour_guide.length">
+					<p class="co-title">导游信息</p>
+					<el-table class="admin-table" stripe :data="itinerary.tour_guide" max-height="400">
+						<el-table-column align="center" prop="name" label="姓名"></el-table-column>
+						<el-table-column align="center" prop="gendername" label="性别"></el-table-column>
+						<el-table-column align="center" prop="license" label="证号"></el-table-column>
+						<el-table-column align="center" prop="mobile" label="手机号"></el-table-column>
+						<el-table-column align="center" prop="fullphotopath" label="导游照片">
+							<template slot-scope="scope">
+								<span v-if="scope.row.fullphotopath==='暂无'||$isNull(scope.row.fullphotopath)">暂无</span>
+								<img v-else :src="scope.row.fullphotopath">
+							</template>
+						</el-table-column>
+					</el-table>
+				</div>
+				<div v-if="itinerary.team">
+					<p class="co-title">团队信息</p>
+					<el-row class="co-info">
+						<el-col :span="12">
+							<p>
+								<span class="text-grey">编号:</span>
+								<span class="text-black">{{itinerary.team.id}}</span>
+							</p>
+							<p>
+								<span class="text-grey">行程开始日期:</span>
+								<span class="text-black">{{itinerary.team.beginday}}</span>
+							</p>
+							<p>
+								<span class="text-grey">行程结束日期:</span>
+								<span class="text-black">{{itinerary.team.endday}}</span>
+							</p>
+
+						</el-col>
+						<el-col :span="12">
+							<p>
+								<span class="text-grey">填写人:</span>
+								<span class="text-black">-</span>
+							</p>
+							<p>
+								<span class="text-grey">成人数:</span>
+								<span class="text-black">{{itinerary.team.adultnum}}</span>
+							</p>
+							<p>
+								<span class="text-grey">儿童数:</span>
+								<span class="text-black">{{itinerary.team.childrennum}}</span>
+							</p>
+						</el-col>
+						<el-col :span="24">
+							<span class="text-grey">所属部门:</span>
+							<span class="text-black">{{itinerary.team.name}}</span>
+						</el-col>
+					</el-row>
+
+				</div>
+			</el-col>
+			<el-col :span="12">
+				<div v-if="itinerary.tourist&&itinerary.tourist.length">
+					<p class="co-title">游客信息</p>
+					<el-table class="admin-table" stripe :data="itinerary.tourist" max-height="400">
+						<el-table-column align="center" prop="name" label="姓名"></el-table-column>
+						<el-table-column align="center" prop="sex" label="性别"></el-table-column>
+						<el-table-column align="center" prop="card_type" label="证件类型"></el-table-column>
+						<el-table-column align="center" prop="card_id" label="证件号"></el-table-column>
+					</el-table>
+				</div>
+			</el-col>
+		</el-row>
+	</div>
+</div>

@@ -1,0 +1,105 @@
+<!-- 支付界面 -->
+<el-dialog title="票类购买" :visible="dialogVisible" width="80%" :before-close='toggle'>
+    <div class='buyContainer'>
+        <p>产品名称：{{commonInfo.ltitle}}</p>
+        <el-row style='margin-top:20px;'>
+            <el-col :span="7" >客源地：{{orderData.province}}{{orderData.city}}{{orderData.county}}</el-col>
+        </el-row>
+        <el-row style='margin-top:20px;'>
+            <el-col :span="5">手机号：{{commonInfo.ordertel}}</el-col>
+            <el-col :span="5">联系人：{{commonInfo.ordername}}</el-col>
+            <el-col :span="7">下单时间：{{commonInfo.ordertime}}</el-col>
+            <el-col :span="7">有效期：{{commonInfo.begintime}} 至 {{commonInfo.endtime}}</el-col>
+        </el-row>
+        <el-row style='margin-top:20px;'>
+            <el-col :span="5">订单号：{{commonInfo.ordernum}}</el-col>
+            <el-col :span="5">凭证号：{{commonInfo.code}}</el-col>
+            <el-col :span="7">订单状态：{{computeOrderMode(commonInfo.pay_status,commonInfo.status,commonInfo.ifprint)}}</el-col>
+            <el-col :span="7">支付方式：{{computePayMode(commonInfo.pmode,commonInfo.member)}}</el-col>
+        </el-row>
+    </div>
+
+    <el-table :data="orderData" style="width: 100%" class='buyContainerTable'>
+        <el-table-column prop="ttitle" label="门票名称" width='600'></el-table-column>
+        <el-table-column label="单价（元）">
+            <template slot-scope="scope">
+                {{$NP.divide(scope.row.tprice,100)}}
+            </template>
+        </el-table-column>
+        <el-table-column prop="tnum" label="总票数"></el-table-column>
+        <el-table-column label="总价（元）">
+            <template slot-scope="scope">
+                {{$NP.times($NP.divide(scope.row.tprice,100),scope.row.tnum)}}
+            </template>
+        </el-table-column>
+    </el-table>
+    <!-- <el-table :data="userInfo" style="width: 100%" class='buyContainerTable'>
+            <el-table-column prop="date" label="序号" width='80' type="index"></el-table-column>
+            <el-table-column prop="name" label="姓名" width='200'>
+                <template slot-scope="scope">
+                    <el-input v-model="scope.row.name" placeholder="请输入内容"></el-input>
+                </template>
+            </el-table-column>
+            <el-table-column prop="address" label="身份证" width='300'>
+                <template slot-scope="scope">
+                    <el-input v-model="scope.row.idcard" placeholder="请输入内容"></el-input>
+                </template>
+            </el-table-column>
+            <el-table-column prop="address" label="对应票类" width='300'>
+                <template slot-scope="scope">
+                    <el-select v-model="scope.row.ttitle" placeholder="请选择">
+                        <el-option :label="scope.row.ttitle" :value="scope.row.ttitle"></el-option>
+                    </el-select>
+                </template>
+            </el-table-column>
+            <el-table-column prop="address" label="操作">
+                <template slot-scope="scope">
+                    <i class="el-icon-close" style='color:#F55656;font-size:26px;font-weight:600;'></i>
+                </template>
+            </el-table-column> -->
+    </el-table>
+
+    <span slot="footer" class="dialog-footer">
+        <span class='needPay'>
+            <em>需支付（元）：</em>
+            <em style='color: #f38561;font-size: 30px;font-weight:600;'>{{totalMoney}}</em>
+        </span>
+        <el-button v-if="$store.getters.checkStatus('pay_type','cash')" @click="goPay('cash')" style='background:#F55656;color:#fff;'>现金支付</el-button>
+        <el-button v-if="$store.getters.checkStatus('pay_type','alipay') && $store.getters.checkStatus('pay_type','alipay')" @click="goPay('online')" style='background:#1ca9ea;color:#fff;'>移动支付</el-button>
+        <el-button v-if="$store.getters.checkStatus('pay_type','alipay') && !$store.getters.checkStatus('pay_type','wx')" @click="goPay('alipay')" style='background:#34ABE1;color:#fff;'>支付宝支付</el-button>
+        <el-button v-if="$store.getters.checkStatus('pay_type','wx') && !$store.getters.checkStatus('pay_type','alipay')" type="primary" @click="goPay('wx')" style='background:#00C900;color:#fff;'>微信支付</el-button>
+        <el-button v-if="$store.getters.checkStatus('pay_type','tlpos') && $store.getters.checkStatus('pay_type','alipay')" @click="goPay('tlpos')" style='background:#00b03a;color:#fff;'>银行卡支付</el-button>
+    </span>
+
+    <transition name="slidedown">
+        <div class="payStatusPop" v-show="orderStatusPopShow">
+            <div v-if="orderStatus==100 || orderStatus==202" flex="cross:center" class="con">
+                <i class="el-icon-loading"></i>
+                <span class="t" v-if="orderStatus==100">正在提交订单，请稍后..</span>
+                <span class="t" v-if="orderStatus==202">正在支付，请稍后..</span>
+            </div>
+            <div v-else-if="orderStatus==400">
+                <div flex="cross:center" class="con error">
+                    <i class="el-icon-error"></i>
+                    <span class="t error">{{orderStatusText}}</span>
+                </div>
+                <a @click="closeStatusPop(orderStatus)" class="closeBtn">关闭</a>
+            </div>
+            <div v-else-if="orderStatus==201">
+                <div flex="cross:center" class="con error">
+                   
+                    <img v-if="payTypeDialogs=='tlpos'" src="~@/assets/image/pay_pos_code.png" alt="" style="width:106px;height:40px;">
+                    <img v-else src="~@/assets/image/pay_run_code.gif" alt="">
+
+                    <span  v-if="payTypeDialogs=='tlpos'"  class="t" style="margin-left:15px;">等待刷卡，请勿关闭此窗口</span>
+                    <span  v-else class="t" style="margin-left:15px;">等待扫描支付宝或微信付款码，请勿关闭此窗口</span>
+                </div>
+                <a @click="closeStatusPop(orderStatus)" class="closeBtn">取消</a>
+            </div>
+        </div>
+    </transition>
+    <transition name="fade">
+        <div class="payStatusMask" v-show="orderStatusPopShow"></div>
+    </transition>
+
+</el-dialog>

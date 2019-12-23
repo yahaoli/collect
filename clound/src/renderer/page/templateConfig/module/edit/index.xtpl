@@ -1,0 +1,189 @@
+<div class='tplContainer'>
+	<!-- 当前采用的方案 -->
+	<div class='current'>
+		<span>当前采用方案：</span>
+		<el-select :value='currentUsePlan' placeholder="请选择" size='small' no-data-text='无可选方案' @change='usePlanChange'>
+			<el-option v-for='(item,index) in planList' :label="item.title" :key="item.title" :value="index" size='small'>
+			</el-option>
+		</el-select>
+	</div>
+
+	<!-- 当前正在编辑的方案 -->
+	<div class='current' flex='cross:center'>
+		<span>当前正在编辑方案：</span>
+		<span style='color:#3d83de;margin-right:20px;font-size: 20px;'>{{currentEditPlan !== ''?planList[currentEditPlan].title :'无'}}</span>
+		<el-dropdown type="primary" @command="changeCurrentEditPlan">
+			<el-button type="primary" size='small' @click='planList.length == 0?$alert("没有可以选择的方案，请先新建方案","提示"):null'>
+				选择
+				<i class="el-icon-arrow-down el-icon--right"></i>
+			</el-button>
+			<el-dropdown-menu slot="dropdown">
+				<el-dropdown-item v-for='(item,index) in planList' :key='item.title' :command='index'>{{item.title}}</el-dropdown-item>
+			</el-dropdown-menu>
+		</el-dropdown>
+		<i class="el-icon-edit" @click='planNameChange'></i>
+	</div>
+
+	<!-- 按钮控件 -->
+	<div class='buttonBox'>
+		<el-button size='small' @click='clear' class='button' :disabled='currentEditPlan === ""'>清空画布</el-button>
+		<el-button size='small' @click='save' type="primary" class='button' :disabled='currentEditPlan === ""'>保存修改</el-button>
+		<el-button size='small' @click='create' class='button'>新建方案</el-button>
+		<el-button size='small' @click='anotherSave' class='button' :disabled='currentEditPlan === ""'>另存为方案</el-button>
+		<el-button size='small' @click='deletePlan' type="danger" class='button' :disabled='currentEditPlan === ""'>删除</el-button>
+		<!-- <el-button size='small' @click='print' t class='button' :disabled='currentEditPlan === ""'>模拟打印</el-button> -->
+	</div>
+
+	<!-- 编辑区域 -->
+	<div  style='padding:20px;width: 1080px; overflow: hidden;' >
+
+		<!-- 工具栏 -->
+		<div class='toolContainer' id='toolContainer'>
+			<ul class='toolPart' v-for='(item,index) in toolList'>
+				<h4>{{item.title}}</h4>
+				<li v-for='(son,i) in item.data' class='toolItem' :key='son.title' :aria-index="`${index},${i}`" >
+					<!-- <div v-if="son.type =='table'">
+						<i class="el-icon-tickets"></i>
+						<span>{{son.title}}</span>
+					</div>
+					<div v-else-if="son.type =='qrcode'">
+						<i class="el-icon-menu"></i>
+						<span>{{son.title}}</span>
+					</div> -->
+					<span>{{son.title}}</span>
+				</li>
+			</ul>
+		</div>
+
+		<!-- 画布 -->
+		<div class='contentContainer' id='contentContainer'>
+			<el-popover placement="bottom" width="420" trigger="click" v-for='item,index in activeList' :key='item.id'>
+				<!-- 修改选项区域 -->
+				<el-form v-if='item.type == "default" || item.type == "text"'>
+					<el-form-item label="标题：" label-width="100px">
+						<el-input v-model='item.title' style='width: 200px;' size='small' :disabled="item.disabled"></el-input>
+					</el-form-item>
+					<el-form-item label="内容：" label-width="100px">
+						<el-input v-if="item.type =='text'" style='width: 200px;' size='small' v-model='item.content' :disabled="item.disabled" :placeholder='item.placeholder'></el-input>
+						<el-input v-else style='width: 200px;' size='small' disabled value='由后台生成，不可编辑'></el-input>
+					</el-form-item>
+					<el-form-item label="字号：" label-width="100px">
+						<el-slider :min='8' :max='24' v-model='item.font_size' @change='fontSizeChange(index)'>
+						</el-slider>
+					</el-form-item>
+					<el-form-item label='样式：' label-width="100px">
+						<el-radio-group v-model="item.font_type" @change='fontTypeChange(index)'>
+							<el-radio :label="0">正常</el-radio>
+							<el-radio :label="1">加粗</el-radio>
+							<el-radio :label="2">斜体</el-radio>
+							<el-radio :label="4">下划线</el-radio>
+							<!-- <el-radio :label="8">中线</el-radio> -->
+						</el-radio-group>
+					</el-form-item>
+
+					<el-form-item label='标题位置：' label-width="100px">
+						<el-radio-group v-model="item.printseat">
+							<el-radio :label="1">左</el-radio>
+							<el-radio :label="2">右</el-radio>
+							<el-radio :label="0">无</el-radio>
+						</el-radio-group>
+					</el-form-item>
+
+					<el-form-item label='移动方向：' label-width="100px">
+						<el-radio-group v-model="item.lockDirection" @change='lockDirectionChange(index)'>
+							<el-radio label="free">自由</el-radio>
+							<el-radio label="x">水平</el-radio>
+							<el-radio label="y">垂直</el-radio>
+						</el-radio-group>
+					</el-form-item>
+					<el-form-item style='text-align: right'>
+						<el-button style='margin-left: 20px;' type="danger" size='small' @click='deleteItem(index)'>删除</el-button>
+					</el-form-item>
+				</el-form>
+
+				<el-form v-else-if='item.type=="qrcode" || item.type == "barcode"'>
+					<el-form-item label="值：" label-width="100px">
+						<el-select v-model="item.name" >
+							<el-option v-for="son in item.selectList" :key="son.value" :label="son.name" :value="son.value">
+							</el-option>
+						</el-select>
+					</el-form-item>
+					<el-form-item label="尺寸：" label-width="100px">
+						<el-slider :min='2' :max='10' v-model='item.codeSize' @change='codeSizeChange(index)'>
+						</el-slider>
+					</el-form-item>
+					<el-form-item label='移动方向：' label-width="100px">
+						<el-radio-group v-model="item.lockDirection" @change='lockDirectionChange(index)'>
+							<el-radio label="free">自由</el-radio>
+							<el-radio label="x">水平</el-radio>
+							<el-radio label="y">垂直</el-radio>
+						</el-radio-group>
+					</el-form-item>
+
+					<el-form-item style='text-align: right'>
+						<el-button style='margin-left: 20px;' type="danger" size='small' @click='deleteItem(index)'>删除</el-button>
+					</el-form-item>
+				</el-form>
+
+				<el-form v-else-if='item.type=="dashed"'>
+					<el-form-item label="长度：" label-width="100px">
+						<el-slider :min='1' :max='20' v-model='item.dashedLength' @change='dashedLengthChange(index)'>
+						</el-slider>
+					</el-form-item>
+					<el-form-item label='移动方向：' label-width="100px">
+						<el-radio-group v-model="item.lockDirection" @change='lockDirectionChange(index)'>
+							<el-radio label="free">自由</el-radio>
+							<el-radio label="x">水平</el-radio>
+							<el-radio label="y">垂直</el-radio>
+						</el-radio-group>
+					</el-form-item>
+
+					<el-form-item style='text-align: right'>
+						<el-button style='margin-left: 20px;' type="danger" size='small' @click='deleteItem(index)'>删除</el-button>
+					</el-form-item>
+				</el-form>
+
+				<el-form v-else-if='item.type=="table"'>
+					<el-form-item label='移动方向：' label-width="100px">
+						<el-radio-group v-model="item.lockDirection" @change='lockDirectionChange(index)'>
+							<el-radio label="free" disabled>自由</el-radio>
+							<el-radio label="x" disabled>水平</el-radio>
+							<el-radio label="y">垂直</el-radio>
+						</el-radio-group>
+					</el-form-item>
+
+					<el-form-item style='text-align: right'>
+						<el-button style='margin-left: 20px;' type="danger" size='small' @click='deleteItem(index)'>删除</el-button>
+					</el-form-item>
+				</el-form>
+
+				<!-- 把手区域 -->
+				<div slot="reference" :class='item.type' :id='item.id' v-if='item.type=="table"'>
+					<div class='content' style='display: block;'>&lt-- 表格区域 --&gt</div>
+				</div>
+
+				<div slot="reference" :class='item.type' :id='item.id' v-else-if='item.type=="qrcode" || item.type=="barcode"'>
+					<div class="content"></div>
+					<!-- <i class="el-icon-menu"></i> -->
+				</div>
+
+				<div slot="reference" :class='item.type' :id='item.id' v-else-if='item.type=="dashed"'>
+					<div class="content"></div>
+					<!-- <i class="el-icon-menu"></i> -->
+				</div>
+
+				<div slot="reference" :class='item.type' :id='item.id' v-else>
+					<span v-if="item.printseat =='1'">{{item.title}}：</span>
+					<span>
+						<div class='content' v-if="item.content || item.placeholder">{{item.content || item.placeholder}}</div>
+						<div class='content' v-else-if="item.name == 'Watchmaker' || item.name == 'Conductor' || item.name == 'employeeName'">{{$store.state.userInfo.member_name}}</div>
+						<div class='content' v-else>&lt--内容--&gt</div>
+					</span>
+
+					<span v-if="item.printseat =='2'">({{item.title}})</span>
+				</div>
+			</el-popover>
+		</div>
+	</div>
+
+</div>

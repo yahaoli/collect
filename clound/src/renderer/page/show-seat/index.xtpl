@@ -1,0 +1,14 @@
+<div id="selectShowPage" class="selectShowPage page" :class="[$route.name]" flex="dir:top box:first">
+	<div v-show="$route.name!='ShowOrder'" class="tabHead">
+		<router-link :to="{name:'ShowOnline'}"><span>选座售票</span></router-link>
+		<router-link :to="{name:'ShowPreset'}"><span>预留座位</span></router-link>
+	</div>
+	<transition name="router-slide-fade" mode="out-in">
+		<keep-alive>
+			<router-view v-if="$route.meta.keepAlive"></router-view>
+		</keep-alive>
+	</transition>
+	<transition name="router-slide-fade" mode="out-in">
+		<router-view v-if="!$route.meta.keepAlive"></router-view>
+	</transition>
+</div>

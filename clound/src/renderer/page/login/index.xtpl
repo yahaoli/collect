@@ -1,0 +1,14 @@
+<div class="page Page_Login" flex="main:center cross:center">
+    <div class="loginBox">
+        <img class="bjImg" src="~@/assets/image/bj.jpg"/>
+        <div @keyup.enter="onLogin" class="con">
+            <el-input  @keyup.native="accountChange($event)" v-model="account" ref="input" placeholder="请输入帐号"></el-input>
+			<el-input style="margin-top:15px;" v-model="password" type="password" placeholder="请输入密码"></el-input>
+			<el-select @focus="siteFocus" v-model="siteId" filterable placeholder="无站点" style="width: 100%;margin-top:15px;">
+				<el-option v-for="item in siteList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+			</el-select>
+			<div style="margin-top: 10px;"><el-checkbox v-model="isSavePwd" label="记住密码"></el-checkbox></div>
+            <el-button @click="onLogin" :loading="loading" style="margin-top:10px; width:100%" type="primary">登 录</el-button>
+        </div>
+    </div>
+</div>

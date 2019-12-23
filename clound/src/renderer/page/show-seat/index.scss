@@ -1,0 +1,25 @@
+
+
+#selectShowPage{
+	position: relative;
+	height: 100%;
+	.tabHead{
+		padding: 10px 0 10px 25px;
+		background: #fff;
+		border-bottom: 1px solid #e5e5e5;
+		a{
+			display: inline-block;
+			padding: 7px 20px;
+			margin-right: 20px;
+			border: 1px solid #e5e5e5;
+			border-radius: 3px;
+			color: #333;
+			&.router-link-exact-active{
+				background: #dfe5ed;
+				border-color: #dfe5ed;
+				color: #2A98DA
+			}
+		}
+	}
+}
+

@@ -1,0 +1,834 @@
+$-tbody-size: 14px;
+.Page_Booking {
+	padding-bottom: 80px;
+	.focusColor{
+		color: #3d83de;
+	}
+	.colRig {
+		width: 300px;
+		background: #fff;
+		.subtotal {
+			border-bottom: 1px solid #e5e5e5;
+			padding: 20px;
+			h4 {
+				font-size: 14px;
+				margin-bottom: 10px;
+			}
+			.subtotalLine {
+				margin: 10px;
+			}
+		}
+		.relation {
+			border-bottom: 1px solid #e5e5e5;
+			padding: 20px;
+			font-weight: bold;
+			font-size: 14px;
+			h1 {
+				color: #3d83de;
+				font-size: 24px;
+				margin-top: 10px;
+				line-height: 1.5;
+				font-weight: normal;
+			}
+		}
+		.mainNumber {
+			padding: 20px;
+			background: #fff;
+			border-bottom: 1px solid #e5e5e5;
+			margin-bottom: 10px;
+			.label {
+				font-size: 16px;
+				margin-bottom: 20px;
+			}
+			.ticketNumber {
+				color: #02c902;
+				font-size: 36px;
+			}
+			.needMoney {
+				color: #f55656;
+				font-size: 36px;
+			}
+			.searchBtn {
+				width: 100%;
+				margin: 10px 0;
+				font-size: 16px;
+			}
+		}
+		.memberInfo {
+			background: #fff;
+			padding: 20px;
+			margin-bottom: 10px;
+			border-bottom: 1px solid #e5e5e5;
+			line-height: 30px;
+			.memberName {
+				margin-top: 20px;
+				height: 30px;
+				img {
+					height: 40px;
+				}
+			}
+			.infoValue {
+				margin-top: 20px;
+				padding: 20px;
+				border-top: 1px solid #e5e5e5;
+				.el-form-item {
+					width: 40%;
+				}
+			}
+			.clearSearchBtn {
+			}
+		}
+		.orderForm {
+			background: #fff;
+			padding: 20px;
+			padding-top: 0px;
+			margin-bottom: 10px;
+			border-bottom: 1px solid #e5e5e5;
+			.memberDiscount {
+				padding: 20px 0;
+				.el-form-item {
+					width: 32%;
+					margin: 0px;
+				}
+				.moneyNum {
+					color: #F55656;
+					text-align: right;
+				}
+			}
+		}
+		.payMoney {
+			background: #fff;
+			padding: 20px;
+			& > div {
+				margin-bottom: 20px;
+			}
+			label {
+				display: inline-block;
+				width: 110px;
+				text-align: center;
+			}
+			.input {
+				display: inline-block;
+				margin: 0 10px;
+			}
+			.button:not(:first-child) {
+				margin-top: 15px;
+			}
+		}
+		.websocketErrorTip {
+			height: 36px;
+			line-height: 36px;
+			padding: 0 15px;
+			background: #fef0f0;
+			color: #f56c6c;
+			margin-bottom: 10px;
+			border: 1px solid #f3e2e2;
+			border-radius: 3px;
+			.reConnectBtn {
+				cursor: pointer;
+			}
+		}
+		.condWrap {
+			border-top: 1px solid #e5e5e5;
+			.item {
+				padding-left: 10px;
+				border: 1px solid #e5e5e5;
+				background: #fff;
+				border-top: 0 none;
+				&.right {
+					border-left: 0 none;
+				}
+			}
+			.el-select {
+				width: 100%;
+			}
+			input {
+				border: 0 none;
+			}
+			.roundItem.disabled {
+				background: #f5f7fa;
+				color: #c0c4cc;
+				cursor: not-allowed;
+			}
+			.inpCon {
+				input {
+					height: 22px;
+					line-height: 22px;
+					padding: 11px 30px 11px 5px;
+				}
+			}
+		}
+
+	}
+	.colLeft {
+		margin-right: 15px;
+
+	}
+	.condWrap {
+		border-top: 1px solid #e5e5e5;
+		.flag-plus {
+			display: inline-block;
+			padding: 5px 15px;
+			background: #3d83de;
+			border-top-right-radius: 20px;
+			border-bottom-right-radius: 20px;
+			color: white;
+		}
+		.item {
+			padding-left: 10px;
+			border: 1px solid #e5e5e5;
+			background: #fff;
+			border-top: 0 none;
+			&.right {
+				border-left: 0 none;
+			}
+		}
+		.el-select {
+			width: 100%;
+		}
+		input {
+			height: 42px;
+			border: 0 none;
+		}
+		.roundItem.disabled {
+			background: #f5f7fa;
+			color: #c0c4cc;
+			cursor: not-allowed;
+		}
+		.inpCon {
+			input {
+				width: 100%;
+				box-sizing: border-box;
+				height: 44px;
+				line-height: 22px;
+				padding: 11px 30px 11px 5px;
+			}
+		}
+	}
+	.travelItinerary{
+		border: 1px solid #e5e5e5;
+		background: white;
+		padding: 0 10px;
+		margin-top: 15px;
+		height: 95px;
+		overflow: hidden;
+		position: relative;
+		.el-form-item__tip{
+			color: #e6a23c;
+			font-size: 12px;
+			line-height: 1;
+			position: absolute;
+			top: 100%;
+			left: 0;
+		}
+		.switch-img{
+			width: 24px;
+			vertical-align: middle;
+			padding-right: 10px;
+			cursor: pointer;
+		}
+		.divider{
+			height: 80%;
+			background: #e5e5e5;
+			width: 1px;
+			margin-right: 10px;
+		}
+
+	}
+	.modify {
+		.el-input__inner {
+			text-align: center;
+		}
+	}
+	.el-input__inner {
+		height: 44px;
+		padding-left: 5px;
+	}
+	.playDateDatePicker .el-input__prefix {
+		display: none !important;
+	}
+
+	.ticketUl {
+		margin-top: 15px;
+		.ticketItem {
+			position: relative;
+			display: inline-block;
+			width: 220px;
+			border: 1px solid #e5e5e5;
+			border-radius: 3px;
+			margin-right: 10px;
+			background: #fff;
+			margin-bottom: 10px;
+			cursor: pointer;
+			overflow: hidden;
+			.shortcutKeys {
+				position: absolute;
+				color: black;
+				font-size: 16px;
+				border: 1px solid #e5e5e5;
+				padding:2px;
+				width: 16px;
+				text-align: center;
+				left: 0;
+				top: 0;
+			}
+			.shortcutKeys ~ .line{
+				padding-left: 30px;
+			}
+			.line {
+				height: 40px;
+				line-height: 40px;
+				padding: 0 10px 0 20px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				&:first-child {
+					border-bottom: 1px solid #e5e5e5;
+				}
+				&:last-child {
+					font-size: 14px;
+				}
+			}
+			.triWrap {
+				display: none;
+				position: absolute;
+				top: 0;
+				right: 0;
+				width: 25px;
+				height: 25px;
+				.tri {
+					display: block;
+					width: 0;
+					height: 0;
+					border-top: 25px solid #3d83de;
+					border-left: 25px solid transparent;
+				}
+				i {
+					position: absolute;
+					top: 2px;
+					right: 2px;
+					color: #fff;
+				}
+			}
+			&.selected {
+				.triWrap {
+					display: block;
+					.tri {
+						border-top-color: #00c800
+					}
+				}
+			}
+			&.active {
+				.triWrap {
+					display: block;
+					top: 8px;
+					right: 8px;
+					width: 10px;
+					height: 10px;
+					background-color: #3d83de;
+					border-radius: 50%;
+					.tri, i {
+						display: none
+					}
+				;
+				}
+				border-color: #3d83de;
+				color: #3d83de;
+				.line:first-child {
+					border-color: #3d83de;
+				}
+			}
+		}
+		&.empty {
+			height: 150px;
+			line-height: 150px;
+			text-align: center;
+		}
+	}
+
+	.ticketSelectedContainer {
+		margin-top: 15px;
+		border-radius: 3px;
+		overflow: hidden;
+		.clearAllCartBtn {
+			cursor: pointer;
+			i {
+				font-size: 18px;
+				color: rgba(255, 255, 255, 0.8);
+			}
+			&:hover i {
+				color: #fff
+			}
+		}
+		table {
+			width: 100%;
+			text-align: center;
+		}
+		table.title th {
+			padding: 15px 0;
+			background: #3d83de;
+			color: #fff;
+			font-weight: normal;
+		}
+		th.prod {
+			.roundFlag {
+				font-weight: 400;
+				border: 1px solid #3d83de;
+				color: #3d83de;
+				padding: 2px 6px;
+				border-radius: 3px;
+				margin-left: 10px;
+			}
+		}
+		td, th.prod {
+			padding: 15px 10px;
+			border-bottom: 1px solid #e5e5e5;
+			border-right: 1px solid #e5e5e5;
+			background: #fff;
+		}
+		table.list:first-child th.prod {
+			border-top: 0 none
+		}
+		th.prod {
+			text-align: left;
+			padding-left: 15px;
+			border-top: 1px solid #e5e5e5;
+		}
+		tbody {
+			background: #fff;
+			font-size: $-tbody-size;
+			tr.selected td {
+				background: #f0feff;
+			}
+		}
+		.col.col_1 {
+			text-align: left;
+			padding-left: 15px;
+		}
+		.removeBtn {
+			cursor: pointer;
+			i {
+				font-size: 18px;
+			}
+			&:hover i {
+				color: #3d83de;
+			}
+		}
+		.removeBtn:hover {
+			text-decoration: underline;
+		}
+		.nameInp {
+			width: 70px;
+			text-align: center;
+			font-size: 14px;
+		}
+		.idcardInp {
+			text-align: center;
+			font-size: 14px;
+		}
+
+		.countInp {
+			width: 60px;
+			text-align: center;
+			margin: 0 5px;
+			padding-left: 0;
+			padding-right: 0;
+			&.notCount {
+				width: 130px;
+			}
+		}
+		.nameInp.disabled,
+		.idcardInp.disabled,
+		.countInp.disabled {
+			cursor: not-allowed;
+			background: #ebebeb;
+			&:focus {
+				box-shadow: none;
+				border-color: #dbdbdb;
+			}
+		}
+		.countBox {
+			width: 100%;
+		}
+		.countBtn {
+			height: 100%;
+			width: 28px;
+			line-height: 28px;
+			border: 1px solid #3d83de;
+			text-align: center;
+			border-radius: 3px;
+			color: #3d83de;
+			font-size: 22px;
+			cursor: pointer;
+			&.disabled {
+				color: #bebebe;
+				border-color: #bebebe;
+				cursor: not-allowed;
+				pointer-events: none
+			}
+		}
+		.modifyBtn, .resetBtn {
+			color: #3d83de;
+			margin-left: 5px;
+			cursor: pointer;
+			&:hover {
+				text-decoration: underline
+			}
+		}
+	}
+
+	.payStatusPop {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		z-index: 101;
+
+		transform: translate(-50%, -50%);
+		transition: all 0.3s;
+		background: #fff;
+		border-radius: 3px;
+		text-align: center;
+		.con {
+			padding: 20px 30px;
+		}
+		.el-icon-loading {
+			font-size: 24px;
+		}
+		.el-icon-error, .el-icon-success {
+			font-size: 22px;
+		}
+		.el-icon-error {
+			color: #e04d4d
+		}
+		.el-icon-success {
+			color: #00b03a
+		}
+		.t {
+			margin-left: 8px;
+			font-size: 14px;
+			line-height: 1.35;
+			text-align: left
+		}
+		.t.error {
+			color: #e04d4d
+		}
+		.t.success {
+			color: #00b03a
+		}
+		.closeBtn {
+			display: block;
+			height: 40px;
+			line-height: 40px;
+			cursor: pointer;
+			border-top: 1px solid #e5e5e5;
+		}
+		.cancelBtn {
+			display: block;
+			height: 30px;
+			width: 70px;
+			line-height: 30px;
+			cursor: pointer;
+			float: right;
+			padding: 0 15px;
+			border-radius: 3px;
+			white-space: nowrap;
+			cursor: pointer;
+			background: #fff;
+			border: 1px solid #dcdfe6;
+			color: #606266;
+			margin: 0px 5px 15px 5px;
+		}
+		.okBtn {
+			cursor: pointer;
+			display: block;
+			height: 30px;
+			min-width: 70px;
+			padding: 0 15px;
+			line-height: 30px;
+			cursor: pointer;
+			color: #fff;
+			background-color: #409eff;
+			border-color: #409eff;
+			border-top: 1px solid #409EFF;
+			float: right;
+			border-radius: 3px;
+			margin: 0 20px 15px 5px;
+		}
+		.checkAgain {
+			p {
+				height: 50px;
+				line-height: 50px;
+				font-size: 17px;
+				font-weight: 800;
+				border-bottom: 2px solid #e5e5e5;
+			}
+			span {
+				float: left;
+				width: 100px;
+				height: 100px;
+				border-radius: 15px;
+				line-height: 100px;
+				color: #fff;
+				text-align: center;
+				margin: 50px 10px;
+				cursor: pointer;
+			}
+			.cashW {
+				background-color: #F55656;
+			}
+			.moblieW {
+				background-color: #1ca9ea;
+			}
+			.bankCardW {
+				background-color: #00b03a;
+			}
+			.authorizationW {
+				background-color: #f37777;
+			}
+		}
+	}
+
+	.payStatusMask {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 100;
+		background: rgba(0, 0, 0, 0.6);
+	}
+	.slidedown-enter-active {
+		opacity: 1;
+		margin-top: 0;
+		transition: all 0.3s;
+	}
+	.slidedown-leave-active {
+		opacity: 0;
+		margin-top: -40px;
+		transition: all 0.3s;
+	}
+	.slidedown-enter {
+		opacity: 0;
+		margin-top: -40px;
+	}
+	.fade-enter-active, .fade-leave-active {
+		transition: opacity .3s;
+	}
+	.fade-enter, .fade-leave-to {
+		opacity: 0;
+	}
+
+	#recentOrderList {
+		margin-top: 20px;
+		.empty {
+			height: 100px;
+			line-height: 100px;
+			text-align: center;
+			background: #fff;
+		}
+		.tit {
+			padding: 15px 0 15px 15px;
+			background: #3d83de;
+			color: #fff;
+			border-top-left-radius: 3px;
+			border-top-right-radius: 3px;
+		}
+		.refreshBtn {
+			margin-right: 20px;
+			color: #fff;
+			cursor: pointer;
+		}
+		table {
+			width: 100%;
+			text-align: left;
+			.col {
+				padding: 12px 0 12px 10px;
+				background: #fff;
+				// border-left: 1px solid #e5e5e5;
+				border-bottom: 1px solid #e5e5e5;
+				// border-right: 1px solid #e5e5e5;
+				line-height: 1.4
+			}
+			tbody {
+				font-size: $-tbody-size;
+			}
+			.col.col_1 {
+				padding-left: 15px;
+			}
+			.col.col_6 {
+				text-align: center
+			}
+			.star {
+				position: relative;
+				top: 2px
+			}
+			.btn {
+				display: inline-block;
+				padding: 5px 7px;
+				border: 1px solid #2A98DA;
+				border-radius: 3px;
+				margin-right: 5px;
+				cursor: pointer;
+				&:last-child {
+					margin-right: 0
+				}
+			}
+			.yen {
+				font-size: 10px;
+				margin-right: 1px;
+			}
+		}
+	}
+
+	.submitBtn {
+		display: block;
+		height: 40px;
+		line-height: 40px;
+		text-align: center;
+		color: #fff;
+		border-radius: 3px;
+		font-size: 16px;
+		cursor: pointer;
+		&.iconBtn {
+			text-align: left;
+			padding-left: 51px;
+			.t {
+				position: relative;
+				top: -11px;
+				font-size: 16px;
+				margin-left: 12px;
+			}
+		}
+		&.crash {
+			background-color: #F55656;
+		}
+		&.credit {
+			background-color: #f37777;
+		}
+		&.alipay {
+			background-color: #1ca9ea;
+		}
+		&.wx {
+			background-color: #00c800;
+		}
+		&.couldpay {
+			background-color: #f82218;
+		}
+		&.yuyue {
+			background-color: #fca844;
+		}
+		&.tlpos {
+			background-color: #00b03a;
+		}
+
+	}
+
+	.customSelectBox{
+		position: absolute;
+		top: 42px;
+		left: 0;
+		right: 0;
+		width: 100%;
+		background: #fff;
+		.con{
+			width: 100%;
+			max-height: 320px;
+			overflow-y: auto;
+		}
+		.empty{
+			height: 60px;
+			line-height: 60px;
+			text-align: center;
+			color: #999;
+			font-size: 14px;
+		}
+		.loading{
+			height: 60px;
+			color: #999;
+			.t{
+				margin-left: 5px;
+			}
+		}
+		.popper__arrow{
+			top: -6px;
+		}
+		.listUl{
+			padding: 6px 0;
+			.optionItem{
+				font-size: 14px;
+			}
+		}
+	}
+
+
+
+}
+
+.yushouPop_ModifyPrice {
+	.yushouPopCon_input {
+		width: 130px;
+		height: 22px;
+		line-height: 22px;
+		border: 1px solid #dbdbdb;
+		border-radius: 3px;
+		padding: 5px 10px;
+		&:focus {
+			border-color: #2A98DA;
+			color: #2A98DA
+		}
+
+	}
+	.priceLine {
+		margin: 12px 0 0 14px;
+	}
+}
+
+.keyuandi .el-cascader {
+	width: 50%;
+	float: left;
+}
+
+.el-form-item {
+	margin-bottom: 2px;
+}
+
+.Page_Booking .colRig .memberInfo .infoValue {
+	margin-top: 20px;
+	padding: 20px 0 0 0;
+	border-top: 1px solid #e5e5e5;
+	line-height: 20px;
+}
+
+.memberinfo .el-form-item {
+	display: inline-block;
+	margin-right: 22px;
+	vertical-align: top;
+}
+
+.Page_Booking .colRig .orderForm .memberDiscount {
+	padding: 0;
+}
+
+.Page_Booking .colRig .subtotal .subtotalLine {
+	margin: 15px 0px;
+}
+
+.Page_Booking .colRig .mainNumber .searchBtn {
+	width: 100%;
+	margin: 10px 0 0;
+	font-size: 16px;
+}
+
+.Page_Booking .colRig .payMoney {
+	background: #fff;
+	padding: 5px 20px;
+}
+
+.el-input-number--mini {
+	width: 100px;
+	line-height: 26px;
+}
+
+.Page_Booking .el-input__inner {
+	height: 34px;
+}

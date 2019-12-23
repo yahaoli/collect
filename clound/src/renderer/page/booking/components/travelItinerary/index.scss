@@ -1,0 +1,35 @@
+.travelItinerary-detail {
+	.text-grey{
+		color: grey;
+	}
+	.text-black{
+		color: black;
+	}
+	.search-co{
+		background: white;
+		display: inline-block;
+		width: 100%;
+		.admin-table img{
+			width: 30px;
+		}
+		h4{
+			font-size: 16px;
+			font-weight: bold;
+			line-height: 2;
+			color: black;
+		}
+		.co-title{
+			color: #457ed8;
+			line-height: 2;
+		}
+		.text-border{
+			border-bottom: 1px solid #e5e5e5;
+		}
+		.co-info{
+			line-height: 1.8;
+			padding-bottom: 10px;
+			font-size: 14px;
+			word-break:break-all;word-wrap:break-word
+		}
+	}
+}

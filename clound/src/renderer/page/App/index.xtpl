@@ -1,0 +1,69 @@
+<div>
+	<template v-if="$route.path.substring(1)!='login'">
+		<div id="appFixHead" class="appFixHead" flex="dir:left main:cneter cross:center box:last">
+			<div class="logo" flex="cross:center">
+				<img :src="logo">
+				<span class="appName">{{title}}</span>
+			</div>
+			<div class="ctrlGroup" flex="cross:center">
+				<div class="userBox" flex="cross:center">
+					<span class="userPhotoBox">
+						<img src="~@/assets/image/user_tou.png" alt="">
+					</span>
+					<span class="userName">{{$store.state.userInfo && $store.state.userInfo.member_name}}</span>
+				</div>
+				<el-dropdown class="btn" trigger="click" @command="settingChange">
+					<img src="~@/assets/image/sehzhi.png">
+					<el-dropdown-menu slot="dropdown">
+						<el-dropdown-item command="changeSettingStatusAction">个人设置</el-dropdown-item>
+						<el-dropdown-item divided command="receiptTemplateConfig">回执单模板配置</el-dropdown-item>
+						<el-dropdown-item divided command="invoiceTemplateConfig">发票模板配置</el-dropdown-item>
+						<el-dropdown-item divided command="switchAccount">切换帐号</el-dropdown-item>
+						<el-dropdown-item :disabled="checkingForUpdate" divided command="checkForUpdate">
+							{{checkingForUpdate ? "正在检查.." : "检查更新"}}
+						</el-dropdown-item>
+						<el-dropdown-item divided command="reload">重启</el-dropdown-item>
+					</el-dropdown-menu>
+				</el-dropdown>
+				<!-- <a class="btn">
+					<img src="~@/assets/image/rightup_1.png">
+				</a>
+				<a class="btn">
+					<img src="~@/assets/image/rightup_2.png">
+				</a>
+				<a @click="onLogout" class="btn">
+					<img src="~@/assets/image/rightup_3.png">
+				</a> -->
+			</div>
+		</div>
+
+		<nav class="appFixLeftbar" flex='dir:top cross:center'>
+			<router-link v-if="$store.getters.navShow(item.link.split('/')[1])" v-for='item in navList' :to='item.link' flex='dir:top main:center cross:center'
+			 :key='item.link'>
+				<img :src="$route.path.includes(item.link) ? item.activeImg : item.img" />
+				<p :style="$route.path.includes(item.link) ? 'color:#457ED8' : 'color:black'">{{item.name}}</p>
+			</router-link>
+		</nav>
+
+	</template>
+	<div v-loading="pageLoading" id="appContainer" class="appContainer" :class="{login:$route.path.substring(1)=='login'}">
+		<div class="websocketErrorTip" v-if="websocketReadyState==3 && $route.path.substring(1)!='login'" flex="cross:center box:last">
+			<span>pft服务未开启或服务连接失败，请重新开启服务后尝试重连接</span>
+			<a @click="reConnectWebsocket" class="reConnectBtn">已重启服务，重新连接</a>
+		</div>
+		<transition name="router-fade" mode="out-in">
+			<keep-alive>
+				<router-view class="app-route" v-if="$route.meta.keepAlive"></router-view>
+			</keep-alive>
+		</transition>
+		<transition name="router-fade" mode="out-in">
+			<router-view class="app-route" v-if="!$route.meta.keepAlive"></router-view>
+		</transition>
+	</div>
+	<!-- 此处用v-if 销毁组件 -->
+	<setting v-if="$store.state.setting.show"></setting>
+	<el-dialog title="下载进度" :close-on-click-modal="false" :visible.sync="updateProgress" width="500px" class='modify'>
+		<el-progress :percentage="percentage"></el-progress>
+	</el-dialog>
+	<print-progress></print-progress>
+</div>

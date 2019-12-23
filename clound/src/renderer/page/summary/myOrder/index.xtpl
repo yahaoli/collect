@@ -1,0 +1,78 @@
+<div class='myOrderContainer'>
+    <div class='filterBar'>
+        <h1 style='margin-top:0;'>关键字查询：</h1>
+        <div flex='main:left' class='line'>
+            <div flex='main:center box:first' class='field'>
+                <label>关键字：</label>
+                <el-input v-model='key_word' placeholder="订单号/手机号/凭证号/身份证/联系人姓名"></el-input>
+            </div>
+            <el-button slot="suffix" style='background:#457ED8;color:#fff;margin-left:10px;' @click="plantOrderSearch(1)">凭证号查询</el-button>
+            <el-button style='background:#457ED8;color:#fff;margin-left:10px;' @click="plantOrderSearch(2)">其他条件查询</el-button>
+        </div>
+        <h1>汇总查询：</h1>
+        <div flex='main:left' style='margin-bottom:20px;margin-top:20px;'>
+            <el-button class='timeButton' @click='chooseToday'>今天</el-button>
+            <el-button class='timeButton' @click='chooseYesterday'>昨天</el-button>
+            <el-button class='timeButton' @click='chooseWeek'>本周</el-button>
+            <el-button class='timeButton' @click='chooseMonth'>本月</el-button>
+            <el-date-picker style='margin-left:10px;' v-model="timeRange" type="datetimerange" align="right" start-placeholder="开始日期"
+                 end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']">
+            </el-date-picker>
+            </el-date-picker>
+        </div>
+        <div flex='main:left' class='line'>
+            <div flex='main:center box:first' class='field'>
+                <label>分销商：</label>
+                <el-autocomplete v-model="distributorName" :fetch-suggestions="queryDistributorAsync" :select-when-unmatched='true' placeholder="请输入内容"
+                    @select="handleDistributorSelect"></el-autocomplete>
+                <!-- <el-input placeholder="" v-model='queryParams.distributor'></el-input> -->
+            </div>
+            <div flex='main:center box:first' class='field'>
+                <label>产品名称：</label>
+                <el-select v-model="queryParams.lid" filterable placeholder="请选择" popper-class='productList'>
+                    <el-option v-for="item in scenicList" :key="item.id" :label="item.title" :value="item.id">
+                    </el-option>
+                </el-select>
+            </div>
+        </div>
+        <div flex='main:left' class='line'>   
+            <div flex='main:center box:first' class='field'>
+                <label>票名称：</label>
+                <el-autocomplete v-model="ticketName" :fetch-suggestions="queryTicketAsync" :select-when-unmatched='true' placeholder="请输入内容"
+                    @select="handleTicketSelect"></el-autocomplete>
+            </div>
+            <div flex='main:center box:first' class='field'>
+                <label>支付类型：</label>
+                <el-select v-model='queryParams.pay_mode' filterable placeholder="请选择" :default-first-option='true'>
+                    <el-option label="全部" value="-1"> </el-option>
+                    <el-option :label="item.label" :value="item.value" :key='item.value' v-for='item in payWayList'> </el-option>
+                </el-select>
+            </div>
+        </div>
+        <div flex='main:left' class='line'>
+            
+            <!--
+            <div flex='main:center box:first' class='field'>
+                <label>操作方式：</label>
+                <el-select v-model='queryParams.action' filterable placeholder="请选择" :default-first-option='true'>
+                    <el-option label="全部" value="-1"> </el-option>
+                    <el-option :label="item.label" :value="item.value" :key='item.value' v-for='item in actionList'> </el-option>
+                    </el-option>
+                </el-select>
+            </div>
+            -->
+            <div style="margin:10px auto 0">
+                <el-button style='background:#457ED8;color:#fff;width:98px' @click="myOrderSearch()">查  询</el-button>
+                <el-button @click='csvExport'>导出数据</el-button>
+            </div>
+            
+        </div>
+    </div>
+
+   
+    <summary-table v-if='plantOrderData && searchType == 3' :order-data='plantOrderData'></summary-table>
+    <keyword-table v-if='myOrderData && (searchType == 1 || searchType == 2 || searchType == 4)' :order-data='myOrderData'></keyword-table>
+
+    <!-- 分页器 -->
+    <el-pagination layout="prev, pager, next" :total="parseInt(total)" v-if='total' :page-size='PAGE_SIZE' @current-change='changePage'></el-pagination>
+</div>

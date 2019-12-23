@@ -1,0 +1,81 @@
+.keywordTable {
+	margin-top: 20px;
+	width: 100%;
+	.modify{
+        .el-input__inner {
+           text-align: center;
+        }  
+    }
+	tbody {
+		margin: 20px 0;
+		padding: 0 20px;
+		width: 100%;
+		td {
+			background: #fff;
+			border-right: 1px solid #e5e5e5;
+		}
+		&::after {
+			content: "";
+			display: block;
+			height: 15px;
+			background: none;
+		}
+	}
+	thead {
+		background: #e5e5e5;
+		color: #5f5e8b;
+		td{
+			padding: 15px 0
+		}
+	}
+	td {
+		text-align: center;
+		padding: 10px 0;
+		p {
+			line-height: 20px;
+		}
+	}
+	tr {
+		border-bottom: 1px solid #e5e5e5;
+		width: 100%;
+	}
+
+	.more {
+		border-bottom: none;
+		td {
+			padding: 6px 0;
+			background: none;
+		}
+		span {
+			cursor: pointer;
+			color: #457ed8;
+			background: #fff;
+			padding: 5px 15px;
+			border-bottom-left-radius: 10px;
+			border-bottom-right-radius: 10px;
+		}
+	}
+
+	.itemHead {
+		td {
+			text-align: left;
+			padding: 10px;
+			border-right: none;
+		}
+		.type {
+			display: inline-block;
+			padding: 5px 15px 5px 10px;
+			color: #fff;
+			background: #457ed8;
+			border-top-right-radius: 8px;
+			border-bottom-right-radius: 8px;
+		}
+	}
+
+	.orange {
+		color: #f07845;
+	}
+	.green {
+		color: green;
+	}
+}

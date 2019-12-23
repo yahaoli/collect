@@ -1,0 +1,113 @@
+.el-dialog__body,
+.el-dialog__footer {
+    padding: 10px;
+}
+.dia_wrapper {
+    background: #fff;
+    padding: 15px;
+    .content_table {
+        margin-top: 20px;
+        border: 1px solid #e5e5e5;
+        padding: 10px;
+       
+    }
+    .dia_content {
+        border: 1px solid #e5e5e5;
+        .title {
+            padding: 10px;
+            color: #3dba3f;
+            font-size: 16px;
+            height: 30px;
+            line-height: 30px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .leftPart,
+        .rightPart {
+            h4 {
+                background: #f3f1f1;
+                padding: 0 10px;
+                font-weight: normal;
+                font-size: 12px;
+                height: 30px;
+                line-height: 30px;
+            }
+            width: 50%;
+            border-right: 1px solid #e5e5e5;
+            ul {
+                padding: 10px;
+                max-height:400px;
+                overflow-y: auto;
+            }
+            .operation {
+                cursor: pointer;
+                color:#457ed8;
+            }
+        }
+        .rightPart {
+            h4 {
+                background: #457ed8;
+                color: #fff;
+            }
+        }
+    }
+}
+
+.payStatusPop{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 101;
+    
+    transform: translate(-50%,-50%);
+    transition: all 0.3s;
+    background: #fff;
+    border-radius: 3px;
+    text-align: center;
+    .con{
+        padding: 20px 30px;
+    }
+    .el-icon-loading{ font-size: 24px;}
+    .el-icon-error,.el-icon-success{ font-size: 22px;}
+    .el-icon-error{ color: #e04d4d}
+    .el-icon-success{ color: #00b03a}
+    .t{ margin-left: 8px; font-size: 14px; line-height: 1.35; text-align: left}
+    .t.error{ color: #e04d4d}
+    .t.success{ color: #00b03a}
+    .closeBtn{
+        display: block;
+        height: 40px;
+        line-height: 40px;
+        cursor: pointer;
+        border-top: 1px solid #e5e5e5;
+    }
+}
+
+.payStatusMask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background: rgba(0,0,0,0.6);
+}
+.slidedown-enter-active{
+    opacity: 1;
+    margin-top: 0;
+    transition: all 0.3s;
+}
+.slidedown-leave-active{
+    opacity: 0;
+    margin-top: -40px;
+    transition: all 0.3s;
+}
+.slidedown-enter{
+    opacity: 0;
+    margin-top: -40px;
+}
+.fade-enter-active, .fade-leave-active{
+    transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to{
+    opacity: 0;
+}

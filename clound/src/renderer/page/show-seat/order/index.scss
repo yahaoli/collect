@@ -1,0 +1,270 @@
+#selectShowPage.ShowOrder{
+	height: auto;
+
+}
+#seatShowBookingPage{
+	position: relative;
+	height: auto;
+	.headTop{
+		.desc{
+			margin-left: 7px;
+			padding: 10px;
+			border: 1px solid #e5e5e5;
+			background: #fff;
+			border-radius: 3px;
+		}
+	}
+	.colLeft{
+		padding-bottom: 60px;
+	}
+
+
+	.cartListTable{
+		width: 100%;
+		margin-top: 10px;
+		text-align: center;
+		border-top-right-radius: 3px;
+		border-top-left-radius: 3px;
+		overflow: hidden;
+
+		thead{
+			background: #3d83de;
+		}
+		th{
+			font-weight: bold;
+			padding: 15px 0;
+			color: #fff;
+			&:nth-child(1),&:nth-child(4),&:nth-child(5){
+				padding-left: 10px;
+				padding-right: 10px;
+			}
+		}
+		td{
+			padding-top: 10px;
+			padding-bottom: 10px;
+			border-bottom: 1px solid #e5e5e5;
+			border-right: 1px solid #e5e5e5;
+			&:nth-child(1),&:nth-child(4),&:nth-child(5){
+				padding-left: 10px;
+				padding-right: 10px;
+			}
+		}
+		tbody{
+			border-left: 1px solid #e5e5e5;
+			background: #fff
+		}
+		.nameInp{
+			margin-right: 10px;
+			.el-input__inner{
+				text-align: center;
+				width: 110px;
+			}
+		}
+		.idcardInp .el-input__inner{
+			text-align: center;
+			width: 180px;
+		}
+		.el-select{
+			width: 100%;
+			.el-input__inner{ border: 0 none; background: transparent}
+		}
+		.removeBtn{
+			font-size: 22px;
+			color: red;
+			cursor: pointer;
+		}
+
+		.cartItem{
+			&.selected{
+				background: #f0feff
+			}
+		}
+
+	}
+
+	.condWrap{
+		display: flex;
+		flex-flow: row wrap;
+		border-top: 1px solid #e5e5e5;
+		border-left: 1px solid #e5e5e5;
+		margin-top: 10px;
+		.condBox{
+			flex: 0 0 50%;
+			box-sizing: border-box;
+			border-right: 1px solid #e5e5e5;
+			border-bottom: 1px solid #e5e5e5;
+			background: #fff;
+
+			& > div{
+				height: 40px;
+				padding-left: 10px;
+				input{
+					height: 100%;
+					border: 0 none;
+					padding: 0;
+
+				}
+				.textInp{
+					margin-left: 10px;
+				}
+			}
+		}
+	}
+
+
+	.colRig{
+		width: 240px;
+		height: 600px;
+		margin-left: 10px;
+		background: #fff;
+		.totalWrap{
+			padding: 15px;
+			border-bottom: 1px solid #e5e5e5;
+			.tr{
+				margin-top: 5px;
+				text-align: center;
+			}
+			.num{
+				font-size: 18px;
+				font-family: "arial";
+				margin-right: 3px;
+				&.count{ color: #3dba3f}
+				&.money{ color: #f45656; margin-left: 15px;}
+			}
+		}
+		.pay.crash{
+			padding: 25px 15px;
+			border-bottom: 1px solid #e5e5e5;
+		}
+	}
+
+}
+
+
+.ishowPaycodeDialog{
+	text-align: center;
+	.el-dialog__header{display: none}
+	.el-dialog__body{ padding-top: 40px;}
+	.el-dialog__footer{
+		border-top: 1px solid #e5e5e5;
+		padding: 18px 0;
+		text-align: center;
+		cursor: pointer;
+	}
+}
+
+
+
+.paycodePopDialog{
+	top: -83px;
+	height: 166px;
+	padding: 0;
+	text-align: center;
+	.el-dialog__header{
+		display: none
+	}
+	.el-dialog__body{
+		position: relative;
+		padding: 0;
+		.con{
+			padding: 50px 0;
+		}
+		.closeBtn{
+			position: absolute;
+			top: 0;
+			right: 0;
+			display: block;
+			width: 50px;
+			height: 50px;
+			line-height: 50px;
+			text-align: center;
+			cursor: pointer;
+			.el-icon-close{
+				color: #999;
+				font-size: 16px;
+			}
+			&:hover .el-icon-close{
+				color: #3d83de
+			}
+		}
+	}
+}
+
+
+.ticketUl {
+	margin-top: 15px;
+	.ticketItem {
+		position: relative;
+		display: inline-block;
+		width: 220px;
+		border: 1px solid #e5e5e5;
+		border-radius: 3px;
+		margin-right: 10px;
+		background: #fff;
+		margin-bottom: 10px;
+		overflow: hidden;
+		.line {
+			height: 40px;
+			line-height: 40px;
+			padding: 0 10px 0 10px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			&:first-child {
+				border-bottom: 1px solid #e5e5e5;
+			}
+			&:last-child{
+				font-size: 14px;
+			}
+		}
+		.triWrap{
+			display: none;
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 25px;
+			height: 25px;
+			.tri{
+				display: block;
+				width: 0;
+				height: 0;
+				border-top: 25px solid #3d83de;
+				border-left: 25px solid transparent;
+			}
+			i{
+				position: absolute;
+				top: 2px;
+				right: 2px;
+				color: #fff;
+			}
+		}
+		&.selected{
+			.triWrap{
+				display: block;
+				.tri{border-top-color: #00c800}
+			}
+		}
+		&.active {
+			.triWrap{
+				display: block;
+				top: 8px;
+				right: 8px;
+				width: 10px;
+				height: 10px;
+				background-color: #3d83de;
+				border-radius: 50%;
+				.tri,i{display: none};
+			}
+			border-color: #3d83de;
+			color: #3d83de;
+			.line:first-child {
+				border-color: #3d83de;
+			}
+		}
+	}
+	&.empty {
+		height: 150px;
+		line-height: 150px;
+		text-align: center;
+	}
+}

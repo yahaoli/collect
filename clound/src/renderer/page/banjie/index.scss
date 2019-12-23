@@ -1,0 +1,22 @@
+#banjieContainer{
+	position: relative;
+	.listTable{
+		margin-top: 20px;
+	}
+	.el-table__row .el-button .el-icon-loading{ display: none}
+	.el-table__row .el-button.is-loading .el-icon-loading{ display: inline-block}
+	.detailDialg{
+		table{
+			width: 100%;
+			text-align: left;
+			td,th{
+				border-bottom: 1px solid #e5e5e5;
+				padding: 10px 0
+			}
+			tr.empty td{ padding: 20px 0}
+		}
+		.el-dialog__body{
+			padding-top: 0;
+		}
+	}
+}

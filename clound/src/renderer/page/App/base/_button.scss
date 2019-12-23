@@ -1,0 +1,137 @@
+
+@import "./var";
+
+
+.e-button{
+    display: inline-block;
+    line-height: 1.5;
+    padding: 6px 22px;
+    border-radius: $border-radius;
+    border: 1px solid $border-color;
+    background : $white;
+    color: $gray;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover{
+        text-decoration: none;
+        border-color: darken($border-color,5%);
+        color: darken($gray,5%);
+    }
+
+    &.block{
+        display: block;
+        text-align: center;
+        padding: 6px 0;
+        width: 75px;
+    }
+
+    //蓝色实心按钮
+    &.blue{
+        background: $blue;
+        color: $white;
+        border-color: $blue;
+        &:hover{
+            background: lighten($blue,5%);
+        }
+    }
+
+    //镂空按钮
+    &.blank{
+        background: none;
+        //蓝色镂空按钮
+        &.blue{
+            background: none;
+            border-color: $blue;
+            color: $blue;
+            &:hover{
+                color: $white;
+                border-color: $blue;
+                background: $blue
+            }
+        }
+        //灰色镂空按钮
+        &.cancel,&.gray{
+            background: none;
+            border-color: $border-color;
+            color: darken($disable-bg,20%);
+            &:hover{
+                background: none;
+                color: $blue;
+                border-color: $blue;
+            }
+        }
+
+    }
+
+
+    //上传按钮 input:file
+    &.file-upload{
+        position: relative;
+        overflow: hidden;
+        input[type=file]{
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 900px;
+            font-size: 0;
+            visibility: hidden;
+        }
+    }
+
+
+
+
+
+
+    &.disable,&.loading{
+        background: $disable-bg!important;
+        color: $white!important;
+        cursor: not-allowed!important;
+        border-color: $disable-bg!important;
+        &:hover{
+            background: $disable-bg!important;
+            color: $white!important;
+            border-color: $disable-bg!important;
+        }
+    }
+
+    
+
+
+    &.loading{
+        position: relative;
+        padding-left: 28px;
+        &:after{
+            animation: spinAround 500ms infinite linear;
+            border: 2px solid #dbdbdb;
+            border-radius: 290486px;
+            border-right-color: transparent;
+            border-top-color: transparent;
+            content: "";
+            display: block;
+            height: 1em;
+            position: relative;
+            width: 1em;
+            position: absolute !important;
+            left: 0.625em;
+            top: 0.625em;
+        }
+    }
+
+
+
+
+}
+
+@keyframes spinAround {
+    from {
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(359deg);
+                transform: rotate(359deg);
+    }
+}

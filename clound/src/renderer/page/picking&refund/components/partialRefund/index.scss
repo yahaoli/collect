@@ -1,0 +1,53 @@
+.el-dialog__body,
+.el-dialog__footer {
+    padding: 10px;
+}
+.dia_wrapper {
+    background: #fff;
+    padding: 15px;
+    .content_table {
+        margin-top: 20px;
+        border: 1px solid #e5e5e5;
+        padding: 10px;
+       
+    }
+    .dia_content {
+        border: 1px solid #e5e5e5;
+        .title {
+            padding: 10px;
+            color: #3dba3f;
+            font-size: 16px;
+            height: 30px;
+            line-height: 30px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .leftPart,
+        .rightPart {
+            h4 {
+                background: #f3f1f1;
+                padding: 0 10px;
+                font-weight: normal;
+                font-size: 12px;
+                height: 30px;
+                line-height: 30px;
+            }
+            width: 50%;
+            border-right: 1px solid #e5e5e5;
+            ul {
+                padding: 10px;
+                max-height:400px;
+                overflow-y: auto;
+            }
+            .operation {
+                cursor: pointer;
+                color:#457ed8;
+            }
+        }
+        .rightPart {
+            h4 {
+                background: #457ed8;
+                color: #fff;
+            }
+        }
+    }
+}

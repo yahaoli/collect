@@ -1,0 +1,42 @@
+.log {
+	.searchBox {
+		background: #fff;
+		padding: 20px;
+		.searchWord {
+			width: 400px;
+			margin-right: 20px;
+			//border: 1px solid #457ED8;
+			border: none;
+		}
+		.dropdown {
+			margin-bottom: 20px;
+		}
+		.button {
+			border: 1px solid #457ED8;
+			color: #fff;
+			margin-left: 10px;
+			&.transparent {
+				color: #457ED8;
+			}
+			&.color {
+				background: #457ED8;
+			}
+		}
+	}
+	.table {
+		margin-top: 20px;
+		border-bottom: 1px solid transparent;
+		background: #fff;
+		font-size: 12px;
+		.el-table {
+			font-size: inherit;
+		}
+		.el-pagination {
+			margin: 20px auto 10px;
+			text-align: center;
+		}
+		.white-space-pre-warp * {
+			white-space: pre-wrap;
+		}
+	}
+}

@@ -1,0 +1,108 @@
+<div>
+    <!-- 表格 -->
+    <table class='keywordTable' style='width: 100%;'>
+        <thead>
+            <td>订单号</td>
+            <td>产品名称</td>
+            <td>单价（元） * 数量</td>
+            <td>金额（元）</td>
+            <td>状态</td>
+            <td>操作</td>
+        </thead>
+        <tbody v-if='orderData.length == 0'>
+            <tr>
+                <td colspan="10" style='text-align: center; padding: 50px;'>没有相关数据。</td>
+            </tr>
+        </tbody>
+
+        <tbody v-else v-for='item in orderData' :key='item.ordernum'>
+            <tr class='itemHead'>
+                <td colspan="1" style='padding-left:0;'>
+                    <span class='type' v-if='item.link_info.length>0'>{{item.p_type || '未知'}}联票</span>
+                    <span class='type' v-else>{{ item.p_type || '未知'}}</span>
+                </td>
+                <td colspan="2">下单时间： {{item.ordertime}}</td>
+                <td colspan="2">联系人： {{item.contact_name}} {{item.contact_tel?`/${item.contact_tel}`:''}}</td>
+                <td colspan="1" style='text-align: center'>支付状态：
+                    <em :class="item.pay_status.id == 1?'green':'orange' "> {{item.pay_status.name}} </em>
+                </td>
+            </tr>
+            <tr>
+                <td>{{item.ordernum}}</td>
+                <td>
+                    <p>{{item.tid.title}}</p>
+                    <p>{{item.lid.title}}</p>
+                </td>
+                <td class='orange'>{{item.sale_money |toyun}} * {{item.tnum}}</td>
+                <td class='orange'>{{$NP.times(item.sale_money,item.tnum) |toyun}}</td>
+                <td :style="`color:${toColor(item.status.id)};`">{{item.status.name}}</td>
+                <td>
+                    <el-button type="text" size="small" @click="showOrder(item)">查看</el-button>
+                    <el-button type="text" size="small" @click='partialRefund(item)' v-if='item.button.alter && item.pay_status.id != 2'>部分退票</el-button>
+                    <el-button type="text" size="small" @click='refund(item)' v-if='item.button.cancel'>取消</el-button>
+                    <el-button type="text" size="small" v-if='item.print.id == 1' @click='rePrint(item)'>重打印</el-button>
+                    <el-button type="text" size="small" @click='onInvoicePrintBtnClick(item)'>打印发票</el-button>
+                    <el-button type="text" size="small" @click='onReceiptPrintBtnClick(item)'>打印回执单</el-button>
+                </td>
+            </tr>
+            <!-- 套票 -->
+            <tr v-if='item.pack_info' v-for='son in item.pack_info' :key='son.ordernum'>
+                <td>{{son.ordernum}}</td>
+                <td>
+                    <p>{{son.tid.title}}</p>
+                    <p>{{son.lid.title}}</p>
+                </td>
+                <td class='orange'>{{son.sale_money |toyun}} * {{son.tnum}}</td>
+                <td class='orange'>{{$NP.times(son.sale_money,son.tnum) |toyun}}</td>
+                <td :style="`color:${toColor(son.status.id)};`">{{son.status.name}}</td>
+                <td>
+                    <el-button type="text" size="small" @click="showOrder(son)">查看</el-button>
+                    <el-button type="text" size="small" @click='partialRefund(son)' v-if='son.button.alter'>部分退票</el-button>
+                    <el-button type="text" size="small" @click='refund(son)' v-if='son.button.cancel'>取消</el-button>
+                    <el-button type="text" size="small" v-if='son.print.id == 1' @click='rePrint(son)'>重打印</el-button>
+                    <el-button type="text" size="small" @click='onInvoicePrintBtnClick(son)'>打印发票</el-button>
+                    <el-button type="text" size="small" @click='onReceiptPrintBtnClick(son)'>打印回执单</el-button>
+                </td>
+            </tr>
+            <!-- 联票 -->
+            <tr v-if='item.link_info' v-for='son in item.link_info' :key='son.ordernum'>
+                <td>{{son.ordernum}}</td>
+                <td>
+                    <p>{{son.tid.title}}</p>
+                    <p>{{son.lid.title}}</p>
+                </td>
+                <td class='orange'>{{son.sale_money |toyun}} * {{son.tnum}}</td>
+                <td class='orange'>{{$NP.times(son.sale_money,son.tnum) |toyun}}</td>
+                <td :style="`color:${toColor(son.status.id)};`">{{son.status.name}}</td>
+                <td>
+                    <el-button type="text" size="small" @click="showOrder(son)">查看</el-button>
+                    <el-button type="text" size="small" v-if='son.print.id == 1' @click='rePrint(son)'>重打印</el-button>
+                    <el-button type="text" size="small" @click='onInvoicePrintBtnClick(son)'>打印发票</el-button>
+                    <el-button type="text" size="small" @click='onReceiptPrintBtnClick(son)'>打印回执单</el-button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 部分退票 -->
+    <partial-refund :order-data='chooseOrderData' ref='partialRefund'></partial-refund>
+
+    <!-- 订单详情 -->
+    <el-dialog title="详细信息" :visible.sync="centerDialogVisible" width="80%">
+        <order-details :order="order" :ordernum="ordernum"></order-details>
+    </el-dialog>
+
+    <el-dialog title="提示" :visible.sync="modifyValue.visible" width="35%" class='modify'>
+        <p flex='main:center cross:center' v-if="modifyValue.type == 'invoice'">
+            <span>修改发票抬头：</span>
+            <el-input v-model="modifyValue.inputTitle" placeholder="不输入即采用原始发票抬头" style='width: 200px;'></el-input>
+        </p>
+        <p flex='main:center cross:center' style='margin-top:20px'>
+            <span>修改价格：</span>
+            <el-input v-model="modifyValue.inputMoney" placeholder="不输入即采用原始价格" style='width: 200px;'></el-input>
+        </p>
+        <p flex='main:right' style='margin:20px;'>
+            <el-button type="primary" @click='confirmPrint'>确认打印</el-button>
+        </p>
+    </el-dialog>
+</div>

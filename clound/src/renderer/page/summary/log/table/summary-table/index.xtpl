@@ -1,0 +1,82 @@
+<div>
+    <!-- 表格 -->
+    <table class='keywordTable' style='width: 100%;'>
+        <thead>
+            <td>订单号</td>
+            <td>操作类型</td>
+            <td>操作时间</td>
+            <td>销售对象</td>
+            <td>产品名称</td>
+            <td>单价（元） * 数量</td>
+            <td>金额（元）</td>
+            <td>票类状态</td>
+            <td>支付状态</td>
+            <!--
+            <td>操作</td>
+            -->
+        </thead>
+        <tbody v-if='orderData.length == 0'>
+            <tr>
+                <td colspan="10" style='text-align: center; padding: 50px;'>没有相关数据。</td>
+            </tr>
+        </tbody>
+
+        <tbody v-else v-for='item in orderData' :key='`${item.ordernum}-${item.time}-${item.action}`'>
+            <!-- <tr class='itemHead'>
+                <td colspan="1" style='padding-left:0;'>
+                    <span class='type'>{{item.p_type || '未知'}}</span>
+                </td>
+                <td colspan="4">订单号： {{item.ordernum}}</td>
+                <td colspan="4">联系人： {{item.orderName}} {{item.ordertel?`/${item.ordertel}`:''}}</td>
+            </tr> -->
+            <tr>
+                <td>{{item.ordernum}}</td>
+                <td class='orange'>{{item.action}}</td>
+                <td>{{item.time}}</td>
+                <td>{{item.member.dname}}</td>
+                <td>
+                    <p>{{item.tid.name}}</p>
+                    <p>{{item.lid.name}}</p>
+                </td>
+                <td class='orange'>{{item.price |toyun}} * {{item.tnum}}</td>
+                <td class='orange'>{{$NP.times(item.price,item.tnum) |toyun}}</td>
+                <td :style="`color:${toColor(item.status.id)};`">{{item.status.name}}</td>
+                <td>
+                    <em :class="item.payStatus.id == 1?'green':'orange' ">{{item.payStatus.name}}</em>
+                </td>
+                <!--
+                <td>
+                    <el-button type="text" size="small" @click="showOrder(item)">查看</el-button>
+                    <el-button type="text" size="small" @click='partialRefund(item)' v-if='item.alter == 1 && item.payStatus.id != 2'>部分退票</el-button>
+                    <el-button type="text" size="small" @click='refund(item)' v-if='item.cancel == 1'>取消</el-button>
+                    <el-button type="text" size="small" v-if='item.print.id == 1' @click='rePrint(item)'>重打印</el-button>
+                    <el-button type="text" size="small" @click='onInvoicePrintBtnClick(item)'>打印发票</el-button>
+                    <el-button type="text" size="small" @click='onReceiptPrintBtnClick(item)'>打印回执单</el-button>
+                </td>
+                -->
+            </tr>
+        </tbody>
+
+    </table>
+    <!-- 部分退票 -->
+    <partial-refund :order-data='chooseOrderData' ref='partialRefund'></partial-refund>
+
+    <!-- 订单详情 -->
+    <el-dialog title="详细信息" :visible.sync="centerDialogVisible" width="80%">
+        <order-details :order="order" :ordernum="ordernum"></order-details>
+    </el-dialog>
+
+    <el-dialog title="提示" :visible.sync="modifyValue.visible" width="35%" class='modify'>
+        <p flex='main:center cross:center' v-if="modifyValue.type == 'invoice'">
+            <span>修改发票抬头：</span>
+            <el-input v-model="modifyValue.inputTitle" placeholder="不输入即采用原始发票抬头" style='width: 200px;'></el-input>
+        </p>
+        <p flex='main:center cross:center' style='margin-top:20px'>
+            <span>修改价格：</span>
+            <el-input v-model="modifyValue.inputMoney" placeholder="不输入即采用原始价格" style='width: 200px;'></el-input>
+        </p>
+        <p flex='main:right' style='margin:20px;'>
+            <el-button type="primary" @click='confirmPrint'>确认打印</el-button>
+        </p>
+    </el-dialog>
+</div>

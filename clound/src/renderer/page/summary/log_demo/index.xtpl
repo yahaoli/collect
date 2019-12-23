@@ -1,0 +1,65 @@
+<main class="log">
+	<div class="searchBox">
+		<div flex='main:left cross:center'>
+			<el-date-picker v-model="searchValue"
+							type="daterange"
+							range-separator="至"
+							:editable="false"
+							:picker-options="pickerOptions"
+							value-format="yyyy-MM-dd"
+							start-placeholder="开始日期"
+							@change="init"
+							end-placeholder="结束日期">
+			</el-date-picker>
+			<el-button class='button color'
+					   @click='searchTime'>查询
+			</el-button>
+			<el-button class='button transparent'
+					   @click='exportExcel()'>导出excel
+			</el-button>
+		</div>
+	</div>
+
+	<div class="table">
+		<el-table :data="tableData"
+				  v-loading="loading"
+				  :cell-style="{'white-space':'pre-wrap'}"
+				  stripe>
+			<el-table-column prop="TrTime"
+							 align="center"
+							 min-width="150px"
+							 label="日期"/>
+			<el-table-column prop="OType"
+							 min-width="90"
+							 align="center"
+							 label="操作类型"/>
+			<el-table-column prop="TrMan"
+							 min-width="80"
+							 align="center"
+							 label="操作人"/>
+			<el-table-column prop="Orders"
+							 align="center"
+							 class-name="white-space-pre-warp"
+							 min-width="180"
+							 label="订单号"/>
+			<el-table-column prop="ProductName"
+							 min-width="130"
+							 label="产品"/>
+			<!-- 两项暂无 -->
+			<!--<el-table-column prop="ticket_title"
+							 label="票"/>
+			<el-table-column prop="tnum"
+							 label="操作票数"/>-->
+		</el-table>
+		<el-pagination layout="prev, pager, next"
+					   v-if="total > 10"
+					   :current-page.sync="pageNum"
+					   :total="total">
+		</el-pagination>
+		<!--@current-change="pageChage"-->
+		<!--<div class="block">
+			<span class="demonstration">页数较少时的效果</span>
+		</div>-->
+	</div>
+
+</main>

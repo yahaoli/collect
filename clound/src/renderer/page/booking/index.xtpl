@@ -1,0 +1,743 @@
+<div class="booking Page Page_Booking">
+	<div flex="box:last">
+		<div class="colLeft">
+			<div class="condWrap">
+				<div flex="box:mean">
+					<div class="left item" flex="cross:center box:first" style="padding-left: 0">
+						<span class="flag flag-plus">购票方</span>
+						<div v-clickoutside="resetRelation">
+							<el-select @click.native="resetRelation" @change="onRelationChange" @focus="resetRelation"
+									   :value="releationName" remote :remote-method="fetchRelationByKeyword"
+									   :loading="fetchRelationByKeywordLoading"
+									   filterable default-first-option placeholder="请选择">
+								<el-option v-for="(item,index) in relationList" :key="index" :label="item.dname"
+										   :value="item.mid">
+								</el-option>
+							</el-select>
+						</div>
+					</div>
+					<div class="right item" flex="cross:center box:first" style="padding-left: 0">
+						<span class="flag flag-plus">产品</span>
+						<el-select @change="onProductChange" :value="productID" filterable placeholder="请选择">
+							<el-option v-for="(item,index) in productList" :key="index" :label="item.title"
+									   :value="item.id">
+							</el-option>
+						</el-select>
+					</div>
+				</div>
+				<div flex="box:mean" v-if="setting.data.ticketGroup===1">
+					<div class="left item" flex="cross:center box:first">
+						<span class="flag">票类所属组：</span>
+						<div>
+							<el-select @change="onTicketGroupChange" :value="ticketGroupID" clearable placeholder="请选择">
+								<el-option style="width: 200px" v-for="(item,index) in ticketGroupList" :key="index"
+										   :label="item.grp_name"
+										   :value="item.id">
+								</el-option>
+							</el-select>
+						</div>
+					</div>
+					<div class="right item" flex="cross:center box:first">
+					</div>
+				</div>
+
+				<div v-if="showGuideSelect" flex="box:mean">
+					<div class="left item" flex="cross:center box:first">
+						<span class="flag">总社：</span>
+
+						<el-select v-if="setting.data.mainAssnSearch!==1" v-model="mainAssn" placeholder="请选择">
+							<el-option v-for="(item,index) in mainAssnList" :key="index" :label="item.dname"
+									   :value="item.mid">
+							</el-option>
+						</el-select>
+						<template v-else>
+							<div v-clickoutside="resetMainAssn">
+								<el-select @click.native="resetMainAssn" @focus="resetMainAssn" v-model="mainAssn"
+										   filterable placeholder="请选择" remote :remote-method="fetchMainAssnByKeyword"
+										   :loading="fetchMainAssnByKeywordLoading">
+									<el-option v-for="(item,index) in mainAssnList" :key="index" :label="item.dname"
+											   :value="item.mid">
+									</el-option>
+								</el-select>
+							</div>
+						</template>
+					</div>
+					<div class="right item" style="position:relative" flex="cross:center box:first">
+						<span class="flag">导游手机号：</span>
+						<div v-clickoutside="onGuideMobileSelectOut" style="position:relative">
+							<el-input type="number"
+									  id="guideMobileInp"
+									  class="guideInp mobile"
+									  clearable
+									  @focus="onGuideSelectFocus('mobile')"
+									  @input="onGuideMobileChange"
+									  v-model="guideMobile"
+									  style="width:100%" placeholder="导游手机号"/>
+							<transition name="el-zoom-in-top">
+								<div v-show="guideMobileSelectShow"
+									 class="customSelectBox mobile el-select-dropdown el-popper"
+									 x-placement="bottom-start">
+									<div class="con">
+										<div class="loading" v-if="guideMobileLoading" flex="cross:center main:center">
+											<i class="el-icon-loading"></i>
+											<span class="t">努力加载中...</span>
+										</div>
+										<div v-if="guideMobileList.length==0 && !guideMobileLoading" class="empty">
+											暂无数据..
+										</div>
+										<ul class="listUl" v-if="guideMobileList.length && !guideMobileLoading">
+											<li v-for="item in guideMobileList" @click="onGuideMobileOptionClick(item)"
+												:key="item.id" class="optionItem el-select-dropdown__item">
+												{{item.mobile}}
+											</li>
+										</ul>
+									</div>
+									<div x-arrow class="popper__arrow" style="left: 35px;"></div>
+								</div>
+							</transition>
+						</div>
+					</div>
+				</div>
+				<div flex="box:mean">
+					<div class="left item" flex="cross:center box:first">
+						<span class="flag">游玩日期：</span>
+						<el-date-picker class="playDateDatePicker" v-model="_playDate" format="yyyy-MM-dd"
+										:editable="false" :clearable="false" value-format="yyyy-MM-dd"
+										align="left" type="date" placeholder="选择日期" :picker-options="datePickerOption">
+						</el-date-picker>
+					</div>
+					<div class="right item roundItem"
+						 :class="{disabled:(ptype!=='H' || !roundList || roundList.length==0)}"
+						 flex="cross:center box:first">
+						<span class="flag roundFlag">场次：</span>
+						<el-select @change="onRoundChange" :disabled="ptype!='H' || !roundList || roundList.length==0"
+								   :value="roundName" filterable
+								   placeholder="请选择">
+							<el-option v-for="(item,index) in roundList" :key="index"
+									   :label="item.round_name + '（' + item.bt + ' - ' + item.et  + '）'"
+									   :value="item.id">
+							</el-option>
+						</el-select>
+					</div>
+				</div>
+				<div v-if="releationName==='0'" flex="box:mean">
+					<div v-if="isMobileInputShow" class="left item" flex="cross:center box:first">
+						<span class="flag">手机号：</span>
+						<div class="inpCon">
+							<input @blur="inputFocus" @focus="inputFocus" type="text" id="mobileInp" v-model="mobile"
+								   placeholder="请准确填写，以便接收订单短信">
+						</div>
+						<div style="text-align:right" v-if="setting.data.ticket_btn_send_open === 1">
+							<el-checkbox v-model="sendPhone" style="text-align: right;margin-right: 20px;">开具电子发票
+							</el-checkbox>
+						</div>
+						<!--
+                        <el-checkbox v-model="sendPhone" style="text-align: right;margin-right: 20px;">开具电子发票</el-checkbox>
+                        -->
+					</div>
+					<div class="right item" flex="cross:center box:first">
+						<span class="flag roundFlag">取票人：</span>
+						<div class="inpCon">
+							<input @blur="inputFocus" @focus="inputFocus" type="text" v-model="ordername" id="userInp"
+								   placeholder="取票人">
+						</div>
+					</div>
+				</div>
+				<div v-if="showGuideSelect" flex="box:mean">
+					<div class="left item" style="position:relative" flex="cross:center box:first">
+						<span class="flag">导游姓名：</span>
+						<div v-clickoutside="onGuideNameSelectOut" style="position:relative">
+							<el-input type="text"
+									  id="guideNameInp"
+									  class="guideInp name"
+									  clearable
+									  @focus="onGuideSelectFocus('name')"
+									  @input="onGuideNameChange"
+									  v-model="guideName"
+									  style="width:100%" placeholder="导游姓名"/>
+							<transition name="el-zoom-in-top">
+								<div v-show="guideNameSelectShow"
+									 class="customSelectBox name el-select-dropdown el-popper"
+									 x-placement="bottom-start">
+									<div class="con">
+										<div class="loading" v-if="guideNameLoading" flex="cross:center main:center">
+											<i class="el-icon-loading"></i>
+											<span class="t">努力加载中...</span>
+										</div>
+										<div v-if="guideNameList.length==0 && !guideNameLoading" class="empty">暂无数据..
+										</div>
+										<ul class="listUl" v-if="guideNameList.length && !guideNameLoading">
+											<li v-for="item in guideNameList" @click="onGuideNameOptionClick(item)"
+												:key="item.id" class="optionItem el-select-dropdown__item">
+												{{item.name}}
+											</li>
+										</ul>
+									</div>
+									<div x-arrow class="popper__arrow" style="left: 35px;"></div>
+								</div>
+							</transition>
+						</div>
+					</div>
+					<div class="right item" style="position:relative" flex="cross:center box:first">
+						<span class="flag">导游证号：</span>
+						<div v-clickoutside="onGuideNoSelectOut" style="position:relative">
+							<el-input type="text"
+									  id="guideNoInp"
+									  class="guideInp guideNo"
+									  clearable
+									  @focus="onGuideSelectFocus('guideNo')"
+									  @input="onGuideNoChange"
+									  v-model="guideNo"
+									  style="width:100%" placeholder="导游证号"/>
+							<transition name="el-zoom-in-top">
+								<div v-show="guideNoSelectShow"
+									 class="customSelectBox guideNo el-select-dropdown el-popper"
+									 x-placement="bottom-start">
+									<div class="con">
+										<div class="loading" v-if="guideNoLoading" flex="cross:center main:center">
+											<i class="el-icon-loading"></i>
+											<span class="t">努力加载中...</span>
+										</div>
+										<div v-if="guideNoList.length==0 && !guideNoLoading" class="empty">暂无数据..</div>
+										<ul class="listUl" v-if="guideNoList.length && !guideNoLoading">
+											<li v-for="item in guideNoList" @click="onGuideNoOptionClick(item)"
+												:key="item.id" class="optionItem el-select-dropdown__item">
+												{{item.guide_no}}
+											</li>
+										</ul>
+									</div>
+									<div x-arrow class="popper__arrow" style="left: 35px;"></div>
+								</div>
+							</transition>
+						</div>
+					</div>
+				</div>
+				<div flex="box:mean">
+					<div v-if="$store.state.setting.data.tickets_buy_insert.includes('touristDestination')"
+						 class="left item" flex="cross:center box:first">
+						<span class="flag">客源地：</span>
+						<div class="inpCon keyuandi">
+							<el-cascader filterable :options="originList" v-model="selectedOrigin"
+										 :props="originProps" :filter-method="pinyinSearch" clearable></el-cascader>
+							<el-cascader filterable :options="townList" v-model="townID"
+										 :props="townProps" :filter-method="pinyinSearch" clearable></el-cascader>
+						</div>
+					</div>
+					<div v-if="releationName!=='0'" class="right item" flex="cross:center box:first">
+						<span class="flag roundFlag"></span>
+						<div class="inpCon">
+
+						</div>
+					</div>
+				</div>
+				<div flex="box:mean">
+					<div v-if="isTicketNoInputShow" class="left item" flex="cross:center box:first">
+						<span class="flag">票面流水号：</span>
+						<div class="inpCon">
+							<input @blur="inputFocus" @focus="inputFocus" type="text" v-model="liushui" id="piaoLxInp"
+								   placeholder="票面流水号">
+						</div>
+					</div>
+					<div v-if="isMemoInputShow" class="right item" flex="cross:center box:first">
+						<span class="flag roundFlag">备注：</span>
+						<div class="inpCon">
+							<input @blur="inputFocus" @focus="inputFocus" type="text" v-model="memo" id="memoInp"
+								   placeholder="备注">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="travelItinerary" flex="cross:center" v-if="showTravelItinerary">
+				<div class="el-form demo-form-inline el-form--inline">
+					<div class="el-form-item">
+						<label class="el-form-item__label">行程单</label>
+						<img @click="travelItineraryClick(4)" class="switch-img" src="../../assets/image/switch.png"
+							 alt="">
+						<div v-if="travelItinerarySweepCode" class="el-form-item__content">
+							<el-input v-model="travelItineraryCode" style="width: 250px"
+									  placeholder="请扫描行程单条形码" size="medium" clearable></el-input>
+						</div>
+						<div v-else class="el-form-item__content">
+							<el-input v-model="travelItineraryInput.number" size="medium" style="width: 135px"
+									  placeholder="8位行程单编号" clearable></el-input>
+							<el-input v-model="travelItineraryInput.code" size="medium" style="width: 135px"
+									  placeholder="6位团队验证码" clearable></el-input>
+						</div>
+					</div>
+					<div class="el-form-item">
+						<div class="el-form-item__content">
+							<el-button type="primary" @click="travelItineraryClick(1)" size="small">查询</el-button>
+						</div>
+					</div>
+				</div>
+				<template v-if="travelItineraryDetail">
+					<div class="divider"></div>
+					<div class="el-form demo-form-inline el-form--inline">
+						<div class="el-form-item">
+							<label class="el-form-item__label">当前购票行程单</label>
+							<div class="el-form-item__content">
+								{{travelItineraryDetail.bianhao}}
+							</div>
+						</div>
+						<div class="el-form-item">
+							<label class="el-form-item__label">团队人数</label>
+							<div class="el-form-item__content">
+								{{travelItineraryDetail.team_num}}
+							</div>
+						</div>
+						<div class="el-form-item">
+							<div class="el-form-item__content">
+								<el-button @click="travelItineraryClick(2)" type="warning" size="small">清除</el-button>
+								<el-button @click="travelItineraryClick(3)" type="primary" size="small">查看</el-button>
+							</div>
+						</div>
+					</div>
+				</template>
+			</div>
+			<ul v-if="ticketList && ticketList.length>0" id="ticketUl" class="ticketUl">
+				<li @click="onTicketItemClick($event,productID,ticket.tid)" class="ticketItem"
+					:class="{active:ticket.tid==tid,selected:(ticket.selected==1 && ticket.tid!=tid)}"
+					v-for="(ticket,ticketIndex) in ticketList">
+					<div>
+						<div v-if="shortcutKeys(ticketIndex,1)" class="shortcutKeys">
+							{{shortcutKeys(ticketIndex,1)}}
+						</div>
+						<div class="line">
+							{{ticket.title}}{{ticket | groupAge}}
+						</div>
+						<div class="line">
+							价格：{{releationName==="0" ? ticket.tprice : ticket.jsprice}}元 /
+							库存：{{ticket.storage==$MAX_STORAGE_NUM ? '不限' : ticket.storage}}
+						</div>
+					</div>
+					<span class="triWrap">
+                        <span class="tri"></span>
+                        <i class="el-icon-check"></i>
+                    </span>
+				</li>
+			</ul>
+			<div class="ticketUl empty" v-if="!ticketList || ticketList.length==0">该产品没有对应日期的可售票类..</div>
+			<div id="ticketSelectedContainer" class="ticketSelectedContainer">
+				<table class="title" border="0">
+					<colgroup>
+						<col width="20%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="15%">
+						<col width="30%">
+						<col width="5%">
+					</colgroup>
+					<thead>
+					<tr>
+						<th class="col col_1">门票</th>
+						<th>库存</th>
+						<th>单价（元）</th>
+						<th>总额（元）</th>
+						<th>数量</th>
+						<th>姓名 / 身份证</th>
+						<th>
+							<a @click="onClearAllCartBtnClick" class="clearAllCartBtn">
+								<i class="el-icon-delete"></i>
+							</a>
+						</th>
+						</th>
+					</tr>
+					</thead>
+				</table>
+				<table class="list" v-for="prod in cart" style="margin-bottom: 10px;">
+					<colgroup>
+						<col width="20%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="15%">
+						<col width="30%">
+						<col width="5%">
+					</colgroup>
+					<thead>
+					<tr>
+						<th class="prod" colspan="7">
+							<span>{{prod.title}}</span>
+							<span class="roundFlag"
+								  v-if="prod.ptype=='H'">{{prod.roundName}} （{{prod.roundTime}}）</span>
+						</th>
+					</tr>
+					</thead>
+					<tbody>
+					<template v-for="item in prod.ticket">
+						<tr @click="onTrClick($event,item)" v-for="(idcardInfo,index) in item.idcardInfo"
+							:key="item.tid+'_'+index" :data-key="item.tid+'_'+index"
+							:class="{selected:item.tid==tid}">
+							<td v-if="index==0" :rowspan="item.idcardInfo.length" class="col col_1">{{item.title}}</td>
+							<td v-if="index==0" :rowspan="item.idcardInfo.length">{{item.storage==$MAX_STORAGE_NUM ?
+								'不限' : item.storage}}
+							</td>
+							<td v-if="index==0" :rowspan="item.idcardInfo.length">
+								{{releationName==='0' ? item.tprice : item.jsprice}}
+								<span v-if="setting.data.option.includes('tickets_order_out')"
+									  @click="onModifyPrice($event,prod.id,item.tid)" class="modifyBtn btn">修改</span>
+								<span v-if="setting.data.option.includes('tickets_order_out')"
+									  @click="onResetPrice($event,prod.id,item.tid)" class="resetBtn btn">还原</span>
+							</td>
+							<td v-if="index==0" :rowspan="item.idcardInfo.length">{{releationName==='0' ?
+								$NP.strip(item.tprice*item.count) : $NP.strip(item.jsprice*item.count)}}
+							</td>
+							<td v-if="index==0" :rowspan="item.idcardInfo.length">
+								<div class="countBox" flex="main:center cross:center">
+									<a class="countBtn minuBtn minu" :class="{disabled:item.count*1<=0}"
+									   @click="onMinuBtnClick(prod.id,item.tid)">-</a>
+									<input type="text" class="e-input countInp"
+										   @input="onCountInpChange($event,prod.id,item.tid)" :value="item.count"
+										   placeholder="数量">
+									<!-- <input type="text" class="e-input countInp" :readonly="item.tourist_info==2" @change="onCountInpChange($event,prod.id,item.tid)"
+                                        :value="item.count" placeholder="数量"> -->
+									<a class="countBtn addBtn add"
+									   :class="{disabled:item.count*1>=item.storage*1 && item.storage*1!=-1}"
+									   @click="onAddBtnClick(prod.id,item.tid)">+</a>
+								</div>
+							</td>
+							<td v-if="item.tourist_info==0">
+								<input type="text" readonly class="e-input nameInp disabled" placeholder="无须填写">
+								<input type="text" readonly class="e-input idcardInp disabled" placeholder="无须填写">
+							</td>
+							<td v-else>
+								<input type="text" class="e-input nameInp" :value="idcardInfo.name"
+									   :data-name="idcardInfo.name"
+									   @change="onNameInpChange($event,prod.id,item.tid,index)"
+									   placeholder="请输入姓名">
+								<input type="text" class="e-input idcardInp" :value="idcardInfo.idcard"
+									   :data-needid="item.tourist_info" :data-idcard="idcardInfo.idcard"
+									   @change="onIDCardInpChange($event,prod.id,item.tid,index)" placeholder="请输入身份证号">
+							</td>
+							<td>
+                                    <span class="removeBtn" @click.stop="onDeleteBtnClick(prod.id,item.tid,index)">
+                                        <i class="el-icon-close"></i>
+                                    </span>
+							</td>
+						</tr>
+					</template>
+					</tbody>
+				</table>
+			</div>
+			<div id="recentOrderList">
+				<div class="tit" flex="cross:center box:last">
+					<span class="t">最新售票</span>
+					<span @click="onRefreshBtnClick" class="refreshBtn">
+						<i style="font-size:16px;" class="el-icon-refresh"></i>
+						<span class="t">刷新</span>
+					</span>
+				</div>
+				<div class="empty" v-if="recentOrderList.length===0">暂无最新售票数据...</div>
+				<table v-if="recentOrderList.length>0">
+					<thead>
+					<tr>
+						<th class="col col_1">购票方</th>
+						<th class="col col_2">购票信息</th>
+						<th class="col col_3">订单号</th>
+						<th class="col col_4">凭证号</th>
+						<th class="col col_5">支付方式</th>
+						<th class="col col_6">购票时间</th>
+						<th class="col col_7">操作</th>
+					</tr>
+					</thead>
+					<tbody>
+					<template v-for="(shop,shopIndex) in recentOrderList">
+						<tr v-for="(order,index) in shop">
+							<td class="col td col_1" style="font-size: 14px;">{{order.member.dname}}</td>
+							<td class="col td col_2">
+								<div class="land">{{order.lid.name}}</div>
+								<div class="ticket">
+									<span class="tname">{{order.tid.name}}</span>
+									<span class="star">*</span>
+									<span class="tnum">{{order.tnum}}张</span>
+									<span class="star">*</span>
+									<span class="tnum">
+											<i class="yen">&yen;</i>{{order.price | toyun}}</span>
+								</div>
+							</td>
+							<td class="col td col_3">{{order.ordernum}}</td>
+							<td class="col td col_4">{{order.code}}</td>
+							<td class="col td col_5">{{order.payMode.name}}</td>
+							<td class="col td col_6">
+								<div class="op">{{account}}</div>
+								<div class="time">{{order.time}}</div>
+							</td>
+							<td class="col td col_7">
+								<a @click="onRePrintBtnClick(order.ordernum,order.lid.id,order.apply_did || '')"
+								   class="btn">重打印</a>
+								<a @click="onInvoicePrintBtnClick(order)" class="btn">打印发票</a>
+								<a @click="onReceiptPrintBtnClick(order)" class="btn">打印回执单</a>
+							</td>
+						</tr>
+						<tr style="height: 10px"></tr>
+					</template>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="colRig">
+			<template v-if="visibleTicketparty&&setting.data.memberSet===1">
+				<el-row class='mainNumber'>
+					<el-input v-model="memberCode" placeholder="手机号/会员账号" class="searchValue"></el-input>
+					<el-button type="primary" class="searchBtn" @click="searchBtn">搜索</el-button>
+				</el-row>
+				<div class="memberInfo">
+					<span style="font-weight: 800;">当前身份:{{levelName}}</span>
+					<el-form :inline="true" class="demo-form-inline memberName" v-if="memberDiologVisable">
+						<el-form-item>
+							<img src="../../assets/vip.png" alt="">
+						</el-form-item>
+						<el-form-item style="line-height: 30px;">
+							{{nickname}}
+						</el-form-item>
+						<el-form-item style="float: right;">
+							<el-button type="warning" class="clearSearchBtn" size="mini" @click="clearBtn">清除
+							</el-button>
+						</el-form-item>
+					</el-form>
+					<el-form label-position="left" inline class="demo-table-expand infoValue memberinfo"
+							 v-if="memberDiologVisable">
+						<el-form-item label="等级:">
+							<span>{{levelName}}</span>
+						</el-form-item>
+						<el-form-item label="折扣:">
+							<span>{{couponValue}}</span>
+						</el-form-item>
+						<el-form-item label="积分:">
+							<span>{{pointNum}}</span>
+						</el-form-item>
+						<el-form-item label="余额:">
+							<span>--</span>
+						</el-form-item>
+					</el-form>
+				</div>
+			</template>
+
+			<template v-if=' _subtotal.subtotalText.length > 0'>
+				<div class="relation">
+					<p>当前购票方</p>
+					<h1>{{relationText}}</h1>
+				</div>
+				<div class='subtotal'>
+					<h4>小计：</h4>
+					<el-row class='subtotalLine' v-for='(item,index) in _subtotal.subtotalText' :key='index'>
+						<el-col :span="12" style="text-align:left">{{item.title}}</el-col>
+						<el-col :span="6" style="text-align:center">
+							<span style="position:relative;top:3px;margin-right:3px;">*</span>{{item.count}}
+						</el-col>
+						<el-col :span="6" style="text-align:right">{{$NP.times(item.count,releationName==='0' ?
+							item.tprice :
+							item.jsprice)}}元
+						</el-col>
+					</el-row>
+				</div>
+			</template>
+			<el-row class='mainNumber'>
+				<el-col :span="12" flex='dir:top cross:center'>
+					<span class='label'>票数</span>
+					<span class='ticketNumber'>{{_subtotal.ticketNum}}</span>
+				</el-col>
+				<el-col :span="12" flex='dir:top cross:center'>
+					<span class='label'>需支付（元）</span>
+					<span class='needMoney'>{{_subtotal.totalMoney}}</span>
+				</el-col>
+			</el-row>
+			<!--
+                        <div class="orderForm">
+                            <div class='subtotal' v-if=' _subtotal.subtotalText.length > 0'>
+                                &lt;!&ndash;<h4>小计：</h4>&ndash;&gt;
+                                <el-row class='subtotalLine' v-for='(item,index) in _subtotal.subtotalText' :key='index'>
+                                    <el-col :span="12" style="text-align:left">{{item.title}}</el-col>
+                                    <el-col :span="6" style="text-align:center">
+                                        <span style="position:relative;top:3px;margin-right:3px;">*</span>{{item.count}}
+                                    </el-col>
+                                    <el-col :span="6" style="text-align:right">{{$NP.times(item.count,releationName==='0' ? item.tprice : item.jsprice)}}元</el-col>
+                                </el-row>
+                            </div>
+                            <el-row class='mainNumber' style="padding: 20px 0">
+                                <el-col :span="12" style="text-align:left;font-weight: 800;">小计</el-col>
+                                <el-col :span="6" style="text-align:center">
+                                    <el-input v-model="Num" type="text" style="display: none;"></el-input>
+                                    {{_subtotal.ticketNum}}
+                                </el-col>
+                                <el-col :span="6" style="text-align:right" id="totalMoney">￥{{_subtotal.totalMoney}}</el-col>
+                            </el-row>
+                            <el-form label-position="left" inline class="demo-table-expand memberDiscount" v-if="memberDiologVisable" style="border-bottom: 1px solid #e5e5e5;padding-bottom: 15px;">
+                                <el-form-item>
+                                    会员折扣
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-input v-model="couponValue" v-if="false" id="couponValue"></el-input>
+                                    {{couponValue ==1?"":couponValue*10}}折
+                                </el-form-item>
+                                <el-form-item class="moneyNum">
+                                    -￥{{(_subtotal.totalMoney*(1-couponValue)).toFixed(2)}}
+                                </el-form-item>
+                                <el-form-item>
+                                    积分抵现
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-input-number
+                                        size="mini" ref="saveTagInput"
+                                        class="point"
+                                        controls-position="right"
+                                        v-model="jifen"
+                                        :step="100"
+                                        :min = "0"
+                                        :max="point"
+                                        :disabled = "pointShow"
+                                        v-if="inputVisible">
+                                    </el-input-number>
+                                    <el-button v-else class="button-new-tag" size="small" @click="showInput">使用积分</el-button>
+                                </el-form-item>
+                                <el-form-item class="moneyNum">
+                                    -￥{{jifenNum}}
+                                </el-form-item>
+                            </el-form>
+                            <el-row>
+                                <el-col :span="24" style="text-align: right;padding-top: 20px;font-weight: 700;"><div class="grid-content bg-purple-dark">
+                                    总计<span style="color: #F55656;padding: 10px;">￥{{totalmoney}}</span>
+                                </div></el-col>
+
+                            </el-row>
+                        </div>
+            -->
+			<div class='payMoney'>
+				<div v-if="$store.getters.checkStatus('pay_type','cash')&&setting.data.changeMoney===1">
+					<div flex='main:center cross:center'>
+						<label>付款：￥</label>
+						<el-input ref="payInput" class='input' v-model='_payMoney'></el-input>
+					</div>
+					<div style="margin-top: 7px;" flex='main:center cross:center'>
+						<label>找零：￥</label>
+						<el-input class='input' v-model='_changeMoney'></el-input>
+					</div>
+				</div>
+				<div>
+					<a v-if="$store.getters.checkStatus('pay_type','cash')" ref="cashPay"
+					   @click="onSubmitOrder($event,1,'crash',0)" class='submitBtn button crash'
+					   data-paymode="1">现金支付{{shortcutKeys(0,2)}}</a>
+					<a @click="onSubmitOrder($event,2,'credit',0)" class='submitBtn button credit iconBtn'
+					   v-if="releationName!=='0'" data-paymode="2">
+						<img src="~@/assets/image/shouxin.png" alt="">
+						<span class="t">授信支付{{shortcutKeys(1,2)}}</span>
+					</a>
+					<a v-if="(Number($store.getters.checkStatus('pay_type','alipay')) + Number($store.getters.checkStatus('pay_type','wx')) + Number($store.getters.checkStatus('pay_type','couldpay')))>1"
+					   @click="onSubmitOrder($event,1,'alipay',0)"
+					   class='submitBtn button alipay' data-paymode="1">
+						<span class="t">移动支付{{shortcutKeys(2,2)}}</span>
+					</a>
+					<a v-if="$store.getters.checkStatus('pay_type','alipay') && !$store.getters.checkStatus('pay_type','wx') && !$store.getters.checkStatus('pay_type','couldpay')"
+					   @click="onSubmitOrder($event,1,'alipay',0)"
+					   class='submitBtn button alipay iconBtn' data-paymode="1">
+						<img src="~@/assets/image/zhifubao.png" alt="">
+						<span class="t">支付宝{{shortcutKeys(2,2)}}</span>
+					</a>
+					<a v-if="$store.getters.checkStatus('pay_type','wx') && !$store.getters.checkStatus('pay_type','alipay') && !$store.getters.checkStatus('pay_type','couldpay')"
+					   @click="onSubmitOrder($event,1,'wx',0)"
+					   class='submitBtn button wx iconBtn' data-paymode="1">
+						<img src="~@/assets/image/weixin.png" alt="">
+						<span class="t">微信{{shortcutKeys(2,2)}}</span>
+					</a>
+					<a v-if="$store.getters.checkStatus('pay_type','couldpay') && !$store.getters.checkStatus('pay_type','alipay') && !$store.getters.checkStatus('pay_type','wx')"
+					   @click="onSubmitOrder($event,1,'couldpay',0)"
+					   class='submitBtn button couldpay iconBtn' data-paymode="1">
+						<img src="~@/assets/image/couldpay.png" style="width:36px;margin-top: 10px;" alt="">
+						<span class="t" style="top: -4px;">云闪付{{shortcutKeys(2,2)}}</span>
+					</a>
+					<a v-if="$store.getters.checkStatus('pay_type','tlpos')" @click="onSubmitOrder($event,1,'tlpos',0)"
+					   class='submitBtn button tlpos' data-paymode="1">
+						<span class="t">银行卡支付{{shortcutKeys(3,2)}}</span>
+					</a>
+					<a @click="onSubmitOrder($event,1,'yuyue',0)" class='submitBtn button yuyue iconBtn'
+					   v-if="$store.getters.navShow('tickets_order_out')">
+						<img src="~@/assets/image/yuyue.png" alt="">
+						<span class="t">预约出票{{shortcutKeys(4,2)}}</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<transition name="slidedown">
+		<div class="payStatusPop" v-show="orderStatusPopShow">
+			<div v-if="orderStatus==100 || orderStatus==202" flex="cross:center" class="con">
+				<i class="el-icon-loading"></i>
+				<span class="t" v-if="orderStatus==100">正在提交订单，请稍后..</span>
+				<span class="t" v-if="orderStatus==202">正在支付，请稍后..</span>
+			</div>
+			<div v-else-if="orderStatus==400">
+				<div flex="cross:center" class="con error">
+					<i class="el-icon-error"></i>
+					<span class="t error">{{orderStatusText}}</span>
+				</div>
+				<a @click="closeStatusPop(orderStatus)" class="closeBtn">关闭</a>
+			</div>
+			<div v-else-if="orderStatus==201">
+				<div flex="cross:center" class="con error">
+
+					<img v-if="payTypeDialogs=='tlpos'" src="~@/assets/image/pay_pos_code.png" alt=""
+						 style="height:40px;">
+					<img v-else src="~@/assets/image/pay_run_code.gif" alt="">
+
+					<span v-if="payTypeDialogs=='tlpos'" class="t" style="margin-left:15px;">等待刷卡，请勿关闭此窗口</span>
+					<span v-else class="t" style="margin-left:15px;">等待扫描付款码，请勿关闭此窗口</span>
+				</div>
+				<a @click="crossCheck(orderStatus)" class="closeBtn">取消</a>
+			</div>
+			<!--取消再确认-->
+			<div v-else-if="orderStatus == 500">
+				<p style="font-weight: 800;text-align: left;padding: 15px 20px;">温馨提示：<i
+					class="el-message-box__close el-icon-close" style="float: right;"
+					@click="closeStatusPop(orderStatus)"></i>
+				</p>
+				<div class="con" style="width:400px;;line-height: 1.5">
+					<p style="text-align: left;">支付失败：<span style="color: red">{{posErrTitle || "支付取消"}}</span></p>
+					<p style="width: 100%;text-align: left;">是否继续支付?</p>
+				</div>
+				<span @click="payAgain(orderStatus)" class="okBtn">继续支付</span>
+				<span @click="closeStatusPop(orderStatus)" class="cancelBtn">放弃支付</span>
+			</div>
+			<!--再次支付窗口-->
+			<div v-else-if="orderStatus == 501" class="checkAgain">
+				<p>选择支付方式<i class="el-icon-close"
+							style="float: right;line-height: 50px;font-size: 24px;margin-right: 20px;"
+							@click="closeStatusPop(orderStatus)"></i></p>
+				<span v-if="$store.getters.checkStatus('pay_type','cash')" class="cashW"
+					  @click="onSubmitOrder($event,1,'crash',1)">现金支付</span>
+				<span
+					v-if="(Number($store.getters.checkStatus('pay_type','alipay')) + Number($store.getters.checkStatus('pay_type','wx')) + Number($store.getters.checkStatus('pay_type','couldpay')))>1"
+					class="moblieW" @click="onSubmitOrder($event,1,'alipay',1)">移动支付</span>
+				<span v-if="$store.getters.checkStatus('pay_type','tlpos')" class="bankCardW"
+					  @click="onSubmitOrder($event,1,'tlpos',1)">银行卡支付</span>
+				<span v-if="releationName!=='0'" class="authorizationW"
+					  @click="onSubmitOrder($event,1,'credit',1)">授信支付</span>
+			</div>
+		</div>
+	</transition>
+	<transition name="fade">
+		<div class="payStatusMask" v-show="orderStatusPopShow"></div>
+	</transition>
+
+	<el-dialog :title="invoiceTitle" :visible.sync="modifyValue.visible" @close="printInvoiceList" width="35%"
+			   class='modify'>
+		<div @keyup.enter="confirmPrint">
+			<p flex='main:center cross:center' v-if="modifyValue.type == 'invoice'">
+				<span>修改发票抬头：</span>
+				<el-input ref="invoiceInput" v-model="modifyValue.inputTitle" placeholder="不输入即采用原始发票抬头"
+						  style='width: 200px;'></el-input>
+			</p>
+			<p flex='main:center cross:center' style='margin-top:20px'>
+				<span>修改价格：</span>
+				<el-input v-model="modifyValue.inputMoney" placeholder="不输入即采用原始价格" style='width: 200px;'></el-input>
+			</p>
+			<p flex='main:right' style='margin:20px'>
+				<el-button type="primary" @click='confirmPrint'>确认打印</el-button>
+			</p>
+		</div>
+	</el-dialog>
+	<el-dialog title="行程单详情" :visible.sync="travelItineraryVisible" width="900px" class='modify'>
+		<travel-itinerary v-if="travelItineraryDetail" :itinerary="travelItineraryDetail"></travel-itinerary>
+	</el-dialog>
+</div>

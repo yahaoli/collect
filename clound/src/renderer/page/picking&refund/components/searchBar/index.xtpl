@@ -1,0 +1,11 @@
+<div class='searchBox'>
+    <el-select v-model="scenicValue" filterable placeholder="请选择" popper-class='productList'>
+        <el-option v-for="item in scenicList" :key="item.id" :label="item.title" :value="item.id">
+        </el-option>
+    </el-select>
+    <div flex='main:left cross:center' style='margin-top:20px'>
+        <el-input class='searchWord' v-model='queryWord' placeholder='凭证号/手机号/身份证/订单号'></el-input>
+        <el-button class='button' style='background:#457ED8' @click='searchByCode'>凭证号查单</el-button>
+        <el-button class='button' style='color:#457ED8' @click='searchByOther'>其他条件查单</el-button>
+    </div>
+</div>

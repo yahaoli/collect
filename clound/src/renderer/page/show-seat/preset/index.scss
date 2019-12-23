@@ -1,0 +1,155 @@
+#selectShowPage.ShowPreset{
+	height: auto;
+
+}
+.appContainer.ShowPreset{
+	position: relative;
+	margin-top: 60px;
+	margin-left: 116px;
+	margin-right: 0;
+	height: auto;
+
+}
+#selectShowPreset{
+	position: relative;
+	height: auto;
+	.vhidden{visibility: hidden;}
+	.filterWrap{
+		display: flex;
+		flex-flow: row wrap;
+		padding: 15px 25px 0;
+		background: #fff;
+
+		.filterItem{
+			flex: 0 0 33%;
+			box-sizing: border-box;
+			padding-right: 20px;
+			padding-bottom: 15px;
+			&:last-child{
+				padding-right: 0;
+			}
+		}
+		.playDateDatePicker .el-date-editor.el-input{
+			width: auto
+		}
+	}
+
+	.tableWrap{
+		margin:25px;
+		table{
+			width: 100%;
+			text-align: left;
+
+			th{
+				padding: 15px 0 15px 15px;
+				background: #dfe5ed;
+				border-top-left-radius: 3px;
+				border-top-right-radius: 3px;
+				&:last-child{
+					text-align: center;
+				}
+			}
+			td{
+				padding: 10px 0 10px 15px;
+				border-right: 1px solid #e5e5e5;
+				border-bottom: 1px solid #e5e5e5;
+				background: #fff;
+				line-height: 1.4;
+				&:last-child{
+					text-align: center;
+				}
+			}
+
+			.seatSpanWrap{
+				max-width: 320px;
+			}
+
+			.seatSpan{
+				display: inline-block;
+				margin-right: 10px;
+				margin-top: 5px;
+				border: 1px solid #457ed8;
+				padding: 0 3px;
+				border-radius: 3px;
+				color: #457ed8;
+				&:last-child{
+					margin-right: 0;
+				}
+				&.used{ color: #bfbfbf; border-color: #bfbfbf}
+			}
+
+			.btn{
+				padding:8px 15px;
+			}
+
+			.disabled{
+				td{
+					background: #f3f1f1
+				}
+			}
+
+
+
+		}
+	}
+
+	.emptyWrap{
+		height: 250px;
+		line-height: 250px;
+		margin:25px;
+		text-align: center;
+		background: #fff;
+		color: #999
+	}
+
+
+
+}
+
+
+.orderDialog{
+	.el-dialog__header{
+		padding-top: 15px;
+		padding-bottom: 15px;
+		border-bottom: 1px solid #e5e5e5;
+		.el-dialog__title{
+			font-size: 16px;
+			line-height: 1;
+		}
+	}
+	.el-dialog__body{
+		padding-left: 25px;
+		border-bottom: 1px solid #e5e5e5
+	}
+	.selectedRoundCountInp.el-input-number--medium{
+		width: 150px;
+	}
+	.el-dialog__footer{
+		padding-top: 15px;
+		padding-bottom: 15px;
+	}
+	.con{
+		max-height: 300px;
+		overflow-y: auto;
+		margin-top: 20px;
+	}
+	.seatBox.el-checkbox {
+		height: 28px;
+		margin-right: 0px;
+		padding: 3px 10px 3px 10px;
+		margin-left: 0;
+		.el-checkbox__label{
+			padding-left: 5px;
+		}
+		&:first-child{
+			margin-right: 10px;
+		}
+	}
+
+	.el-checkbox.is-bordered+.el-checkbox.is-bordered{
+		margin-left: 0;
+		margin-right: 10px;
+	}
+
+
+}

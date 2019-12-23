@@ -1,0 +1,117 @@
+<div id="selectShowPreset" v-loading="loading">
+	<div class="filterWrap">
+		<div class="filterItem">
+			<div flex="cross:center box:first">
+				<span class="lt">演<i class="vhidden">演</i></i>出：</span>
+				<el-select @change="onProdChange" size="medium" v-model="filter.lid" filterable placeholder="请选择">
+					<el-option v-for="(item,index) in productList" :key="index" :label="item.title" :value="item.lid"></el-option>
+				</el-select>
+			</div>
+		</div>
+		<div class="filterItem">
+			<div flex="cross:center box:first">
+				<span class="flag">游玩日期：</span>
+				<el-date-picker size="medium" @change="onDateChange" class="playDateDatePicker" v-model="filter.date" format="yyyy-MM-dd" :editable="false" :clearable="false" value-format="yyyy-MM-dd"
+					align="left" type="date" placeholder="选择日期" :picker-options="datePickerOption">
+				</el-date-picker>
+			</div>
+		</div>
+		<div class="filterItem">
+			<div flex="cross:center box:first">
+				<span class="flag">场次：</span>
+				<el-select @change="onRoundChange" size="medium" v-model="filter.roundID" filterable placeholder="请选择">
+					<el-option v-for="(item,index) in roundList" :key="index" :label="item.round_name" :value="item.round_id"></el-option>
+				</el-select>
+			</div>
+		</div>
+		<div class="filterItem">
+			<div flex="cross:center box:first">
+				<span class="lt">联系人：</span>
+				<el-input clearable size="medium" v-model="filter.contactName" placeholder="联系人姓名，非必填"></el-input>
+			</div>
+		</div>
+		<div class="filterItem">
+			<div flex="cross:center box:first">
+				<span class="lt">手机号：<i class="vhidden">号</i></span>
+				<el-input clearable size="medium" v-model="filter.contactMobile" placeholder="手机号，非必填"></el-input>
+			</div>
+		</div>
+		<div class="filterItem">
+			<el-checkbox size="medium" v-model="filter.isIssueTicket">显示已出票的记录</el-checkbox>
+			<el-button v-loading="loading" @click="onSearchYuList" style="margin-left: 15px;" size="medium" type="primary">查 询</el-button>
+		</div>
+	</div>
+	<div class="emptyWrap" v-if="!yuList || yuList.length==0">查无匹配的预留信息...</div>
+	<div v-if="yuList && yuList.length>0" class="tableWrap">
+		<table>
+			<thead>
+				<tr>
+					<th>联系人</th>
+					<th>场次</th>
+					<th>座位</th>
+					<th>操作人/预留时间</th>
+					<th>备注</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="item in yuList" :class="{disabled:item.record_status==2}">
+					<td>{{item.contact_name || "--"}} {{item.contact_mobile}}</td>
+					<td>{{item.round_name + " " + item.bt+" - "+item.et}}</td>
+					<td class="seatSpanWrap">
+						<div>
+							{{item.zone_name}}，
+							预留：{{item.seat_list.seat_used.length+item.seat_list.seat_using.length}}，
+							已出售：{{item.seat_list.seat_used.length}}
+						</div>
+						<div>
+							<span class="unuse seatSpan" v-for="seat in item.seat_list.seat_using" :key="seat.seat_id">{{seat.seat_name | seatName}}</span>
+							<span class="used seatSpan" v-for="seat in item.seat_list.seat_used" :key="seat.seat_id">{{seat.seat_name | seatName}}</span>
+						</div>
+					</td>
+					<td>
+						<div>{{item.op_name}}</div>
+						<div>{{item.reserve_time | unixToDate}}</div>
+					</td>
+					<td>{{item.desc || "--"}}</td>
+					<td>
+						<el-button v-if="item.record_status!=2" @click="onOrderBtnClick(item)" class="order btn" size="medium" type="danger" plain>出票</el-button>
+						<el-button v-if="item.record_status!=2" @click="onCancelResBtnClick(item)" class="cancel btn" size="medium" plain>取消</el-button>
+						<span v-if="item.record_status==2">--</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<el-dialog
+		v-if="!!selectedRound"
+		title="出票"
+		:visible.sync="dialogShow"
+		custom-class="orderDialog"
+		:close-on-click-modal="false"
+		:close-on-press-escape="false"
+		:show-close="false"
+		append-to-body>
+
+		<div>
+			<div class="top">
+				{{selectedRound.round_name}}，
+				已选：<el-input-number @change="onSelectedRoundCountChange" class="selectedRoundCountInp" v-model="selectedRound.count" :min="1" :max="selectedRound.seat_list.seat_using.length" size="medium" label="输入整数"></el-input-number>
+				共：{{selectedRound.seat_list.seat_using.length}}座
+				<el-checkbox style="margin-left: 20px;" size="medium" v-model="selectedRound.resolve">释放剩余座位</el-checkbox>
+			</div>
+			<div class="con">
+				<el-checkbox-group v-model="selectedRound.checkedSeat" :min="1" :max="selectedRound.seat_list.seat_using.length">
+					<el-checkbox @change="onSeatCheckboxChange" class="seatBox" :label="item.seat_id" v-for="item in selectedRound.seat_list.seat_using" border size="medium" :key="item.seat_id">{{item.seat_name | seatName}}</el-checkbox>
+				</el-checkbox-group>
+			</div>
+		</div>
+
+
+		<div slot="footer" class="dialog-footer">
+			<el-button @click="onDialogCancel" size="medium">取 消</el-button>
+			<el-button @click="onSubmitTicket" v-loading="releaseReserveSeatsLoading" type="primary" size="medium">确定购票</el-button>
+		</div>
+
+	</el-dialog>
+</div>

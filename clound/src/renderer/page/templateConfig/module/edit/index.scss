@@ -1,0 +1,211 @@
+.tplContainer{
+	.el-icon-edit{
+		font-size: 18px;
+		display: inline-block;
+		margin-left: 20px;
+		cursor: pointer;
+	}
+	h1{
+		padding: 20px;
+		font-size: 25px;
+		font-weight: normal;
+	}
+
+	.buttonBox,.current{
+		padding: 20px 20px 10px 20px;
+	}
+	
+	.toolContainer{
+		float: left;
+		user-select:none;
+		box-sizing: border-box;
+		border:  1px dashed #999 ;
+		border-bottom: none;
+		width: 200px;
+		z-index: 2;
+		.toolPart{
+			padding: 10px;
+			border-bottom:  1px dashed #999 ;
+			h4{
+				margin-bottom: 15px;
+			}
+		}
+		.toolItem{
+			// display: block;
+			display: inline-block;
+			background: #fff;
+			padding: 10px;
+			margin-bottom: 5px;
+			margin-right: 5px;
+			border: 1px solid #ddd;
+			cursor: move;
+			user-select:none;
+			text-align: center;
+		}
+	}
+	.itemBackground{
+		padding: 10px;
+		box-sizing: border-box;
+		border:  1px dashed #999 ;
+		height: 400px;
+		width: 200px;
+		z-index: 1;
+		position: absolute;
+	}
+	.contentContainer{
+		float: left;
+		margin-left: 20px;
+		border:  1px solid #999 ;
+		height: 400px;
+		width: 600px;
+		position: relative;
+		overflow: hidden;
+		.default{
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		.table{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			background: #fff;
+			text-align: center;
+			padding: 20px;
+			box-sizing: border-box;
+			cursor:move;
+			user-select:none;
+		}
+		.text{
+			position: absolute;
+			left: 0;
+			top: 0;
+			display: inline-block;
+			background: #fff;
+			padding: 5px;
+			border: 1px solid #ddd;
+			cursor: move;
+			user-select:none;
+		}
+		.qrcode{
+			position: absolute;
+			left: 0;
+			top: 0;
+			display: inline-block;
+			background: #fff;
+			padding: 5px;
+			border: 1px solid #ddd;
+			cursor: move;
+			user-select:none;
+			.content{
+				width: 40px;
+				height: 40px;
+			}
+		}
+		.barcode{
+			position: absolute;
+			left: 0;
+			top: 0;
+			display: inline-block;
+			background: #fff;
+			padding: 5px;
+			border: 1px solid #ddd;
+			cursor: move;
+			user-select:none;
+			.content{
+				width: 200px;
+				height: 40px;
+			}
+		}
+		.dashed{
+			position: absolute;
+			left: 0;
+			top: 0;
+			display: inline-block;
+			background: #fff;
+			padding-bottom:5px; 
+			cursor: move;
+			user-select:none;
+			.content{
+				padding: 0;
+				border: 1px dashed #ddd;
+				width: 200px;
+				height: 0px;
+			}
+		}
+	}
+	.copyContainer{
+		margin-left: 20px;
+		border:  1px solid #999 ;
+		height: 400px;
+		width: 600px;
+		position: relative;
+		.default{
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		.table{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			background: #fff;
+			text-align: center;
+			padding: 20px;
+			box-sizing: border-box;
+			user-select:none;
+		}
+		.text{
+			position: absolute;
+			left: 0;
+			top: 0;
+			display: inline-block;
+			background: #fff;
+			padding: 10px;
+			margin-bottom: 5px;
+			border: 1px solid #ddd;
+			user-select:none;
+		}
+		.qrcode{
+			position: absolute;
+			left: 0;
+			top: 0;
+			display: inline-block;
+			background: #fff;
+			padding: 10px;
+			margin-bottom: 5px;
+			border: 1px solid #ddd;
+			user-select:none;
+			.content{
+				width: 40px;
+				height: 40px;
+			}
+		}
+	}
+
+	.default{
+		display: inline-block;
+		background: #fff;
+		padding: 5px;
+		margin-bottom: 5px;
+		border: 1px solid #ddd;
+		cursor: move;
+		user-select:none;
+	}
+	.content{
+		display: inline-block;
+		padding: 5px;
+		background: #e9e9e9;
+		color:#999;
+		border: 1px solid #ddd;
+		cursor: move;
+		user-select:none;
+		box-sizing: border-box;
+	}
+}
+
+.el-form-item{
+	margin-bottom: 5px!important;
+}

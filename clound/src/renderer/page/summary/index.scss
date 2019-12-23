@@ -1,0 +1,21 @@
+.summaryNav{
+	padding: 10px 20px;
+	background: #fff;
+	border-bottom: 1px solid #dfe5ed;
+	ul{
+		li{
+			padding: 10px 20px;
+			border: 1px solid #dfe5ed;
+			background: #fff;
+			cursor: pointer;
+			user-select: none;
+			&.router-link-exact-active.router-link-active{
+				background: #dfe5ed;
+				color: #457ed8;
+			}
+			&:not(:first-child){
+				margin-left: 20px;
+			}
+		}
+	}
+}

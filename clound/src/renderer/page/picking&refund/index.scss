@@ -1,0 +1,17 @@
+.ticketList {
+	margin-top: 20px;
+	font-size: 14px;
+	width: 100%;
+	.list {
+		overflow: hidden;
+		min-width: 35rem;
+		margin-right: 1.5rem;
+	}
+}
+
+.emptyText {
+	padding: 20px;
+	font-size: 22px;
+	color: #ed7e48;
+	padding-left: 60px;
+}

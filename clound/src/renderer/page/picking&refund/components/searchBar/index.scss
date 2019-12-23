@@ -1,0 +1,22 @@
+.searchBox {
+	background: #fff;
+	padding: 20px;
+	.searchWord {
+		width: 400px;
+		margin-right: 20px;
+		border: 1px solid #457ed8;
+	}
+	.dropdown {
+		margin-bottom: 20px;
+	}
+	.button {
+		border: 1px solid #457ed8;
+		color: #fff;
+	}
+}
+
+.productList {
+	.el-select-dropdown__item {
+		max-width: 400px !important;
+	}
+}

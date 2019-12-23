@@ -1,0 +1,74 @@
+<el-dialog :title="type == 'refund' ? '部分退票' : '撤改' " :visible="dialogVisible" width="65%" :before-close='toggle'>
+	<div class='dia_wrapper' v-if='orderData&&dialogVisible'>
+		<!-- 只有退票且有返回身份证列表且验证方式需要一票一身份证才显示 -->
+		<div class='dia_content' v-if="orderData.idCardArray&&orderData.idCardArray.length >1 ">
+			<p class='title'>{{type == 'refund' ?'选择需要退票的身份证':'选择需要撤改的身份证'}}</p>
+			<div flex='main:justify'>
+				<div class='leftPart'>
+					<h4 flex='main:justify cross:center'>
+						<span>订单游客信息：</span>
+						<span class='operation' @click='chooseAll'>全选</span>
+					</h4>
+					<ul>
+						<li v-for='item in orderData.idCardArray' flex='main:justify cross:center'
+							:style="willRefundList.includes(item.id) ||item[type === 'refund'?'check_state':'is_change'] != 0  ?'opacity:0.5;pointer-events:none;':''">
+							<span>{{item.tourist}}：{{item.idcard}}</span>
+							<span>{{computedCheckState(item.check_state)}}</span>
+							<span class='operation' @click='pickRefundOne(item.id)'>选择</span>
+						</li>
+					</ul>
+				</div>
+				<div class='rightPart'>
+					<h4>退票的游客：</h4>
+					<ul>
+						<li flex='main:justify cross:center' v-for='item in willRefundData'>
+							<span>{{item.tourist}}：{{item.idcard}}</span>
+							<i class="el-icon-close operation" @click='pickRevokeOne(item.id)'
+							   style='color:#F95137'></i>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+
+		<ul class='content_table'>
+			<li flex='main:justify cross:center'>
+				<span>{{orderData.title}}</span>
+				<span>
+                    <span>单价：</span>
+                    <span style='color:#FA7737'>{{orderData.tprice | toyun}}元</span>
+                </span>
+				<span v-if="type == 'refund'">未使用票数：{{orderData.origin_num - orderData.verified_num -orderData.refund_num}}</span>
+				<span v-else>可撤改票数：{{orderData.verified_num}}</span>
+				<span>
+                    <label for="">退票数：</label>
+					<!-- 部分退票可操作数量 -->
+                    <el-input-number v-if="type == 'refund'" v-model.number='num' :min="0"
+									 :max="parseInt(orderData.origin_num - orderData.verified_num -orderData.refund_num)"
+									 size='small' :disabled='orderData.idCardArray.length > 1'></el-input-number>
+					<!-- 撤改可操作数量 -->
+					<el-input-number v-else v-model.number='num' :min="0" :max="parseInt(orderData.verified_num)"
+									 size='small' :disabled='orderData.idCardArray.length > 1'></el-input-number>
+                </span>
+				<span>
+                    <span>收取手续费:</span>
+                    <span style='color:#FA7737'>
+                        {{ $NP.times(num,orderData.serverFee) | toyun}}元
+                    </span>
+                </span>
+				<span>
+                    <span>应退金额：</span>
+                    <span style='color:#FA7737'>{{$NP.times(num,$NP.minus(orderData.tprice||0,orderData.serverFee)) | toyun}}元</span>
+                </span>
+				</span>
+			</li>
+		</ul>
+
+	</div>
+	<span slot="footer" class="dialog-footer">
+        <el-button v-if="type == 'refund'" style='color:#fff;background:#F95137' @click='doRefund'>退 票</el-button>
+        <el-button v-else style='color:#fff;background:#F95137' @click='doRevoke'>撤 改</el-button>
+        <el-button @click="dialogVisible = false">取 消</el-button>
+    </span>
+</el-dialog>

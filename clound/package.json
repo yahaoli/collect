@@ -1,0 +1,139 @@
+{
+	"name": "Clund_Manager",
+	"updateUrl": {
+		"pft": "http://static.12301dev.com/assets/clund_manager_update/",
+		"sunriver": "http://static.xisland.cn/assets/clund_manager_update/"
+	},
+	"version": "1.6.4",
+	"author": "pft",
+	"description": "An electron-vue project",
+	"license": null,
+	"main": "./dist/electron/main.js",
+	"scripts": {
+		"dev:l:sun": "cross-env ORIGIN=sunriver DEPLOY_ENV=local node .electron-vue/dev-runner.js",
+		"dev:t:sun": "cross-env ORIGIN=sunriver DEPLOY_ENV=test node .electron-vue/dev-runner.js",
+		"dev:r:sun": "cross-env ORIGIN=sunriver DEPLOY_ENV=release node .electron-vue/dev-runner.js",
+		"dev:p:sun": "cross-env ORIGIN=sunriver DEPLOY_ENV=prod node .electron-vue/dev-runner.js",
+		"build:r:sun": "cross-env BUILD_TARGET=win32 ORIGIN=sunriver DEPLOY_ENV=release node .electron-vue/build.js && electron-builder --dir --win --ia32",
+		"build:p:sun": "cross-env BUILD_TARGET=win32 ORIGIN=sunriver DEPLOY_ENV=prod node .electron-vue/build.js && electron-builder --dir --win --ia32",
+		"pack:t:sun": "cross-env BUILD_TARGET=win32 ORIGIN=sunriver DEPLOY_ENV=test node .electron-vue/build.js && electron-builder --win --ia32 -p always",
+		"pack:r:sun": "cross-env BUILD_TARGET=win32 ORIGIN=sunriver DEPLOY_ENV=release node .electron-vue/build.js && electron-builder --win --ia32 -p always",
+		"pack:p:sun": "cross-env BUILD_TARGET=win32 ORIGIN=sunriver DEPLOY_ENV=prod node .electron-vue/build.js && electron-builder --win --ia32 -p always",
+		"et": "node_modules/.bin/et -w"
+	},
+	"build": {
+		"productName": "Clund_Manager",
+		"appId": "org.pft.electron-vue",
+		"publish": [
+			{
+				"provider": "generic",
+				"url": "http://static.xisland.cn/assets/clund_manager_update/"
+			}
+		],
+		"releaseInfo": {
+			"releaseNotes": "新增销售汇总支持产品多选"
+		},
+		"directories": {
+			"output": "build"
+		},
+		"files": [
+			"extra/service/**/*",
+			"dist/electron/**/*"
+		],
+		"asarUnpack": [
+			"extra"
+		],
+		"dmg": {
+			"contents": [
+				{
+					"x": 410,
+					"y": 150,
+					"type": "link",
+					"path": "/Applications"
+				},
+				{
+					"x": 130,
+					"y": 150,
+					"type": "file"
+				}
+			]
+		},
+		"mac": {
+			"icon": "build/icons/icon.icns"
+		},
+		"win": {
+			"icon": "build/icons/xy.ico"
+		},
+		"linux": {
+			"icon": "build/icons"
+		}
+	},
+	"dependencies": {
+		"axios": "^0.16.1",
+		"draggabilly": "^2.2.0",
+		"electron-updater": "^2.18.2",
+		"element-ui": "^2.12.0",
+		"file-saver": "^1.3.8",
+		"html2canvas": "^1.0.0-alpha.12",
+		"jquery": "^3.3.1",
+		"js-md5": "^0.7.3",
+		"lodash": "^4.17.5",
+		"moment": "^2.22.2",
+		"nedb": "^1.8.0",
+		"number-precision": "^1.2.0",
+		"onfire.js": "^1.0.6",
+		"pinyin-match": "^1.0.9",
+		"qs": "^6.5.1",
+		"vue": "^2.3.3",
+		"vue-electron": "^1.0.6",
+		"vue-router": "^2.5.3",
+		"vuex": "^2.3.1",
+		"xscroll": "3.1.3",
+		"zrender": "^4.0.4"
+	},
+	"devDependencies": {
+		"babel-core": "^6.25.0",
+		"babel-loader": "^7.1.1",
+		"babel-plugin-component": "^1.1.1",
+		"babel-plugin-transform-runtime": "^6.23.0",
+		"babel-preset-env": "^1.6.0",
+		"babel-preset-stage-0": "^6.24.1",
+		"babel-register": "^6.24.1",
+		"babili-webpack-plugin": "^0.1.2",
+		"cfonts": "^1.1.3",
+		"chalk": "^2.1.0",
+		"circular-json": "^0.5.3",
+		"copy-webpack-plugin": "^4.0.1",
+		"cross-env": "^5.0.5",
+		"css-loader": "^0.28.9",
+		"del": "^3.0.0",
+		"devtron": "^1.4.0",
+		"electron": "^1.7.5",
+		"electron-builder": "19.52.1",
+		"electron-debug": "^1.4.0",
+		"electron-devtools-installer": "^2.2.0",
+		"element-theme": "^2.0.1",
+		"element-theme-chalk": "^2.12.0",
+		"extract-text-webpack-plugin": "^3.0.0",
+		"file-loader": "^0.11.2",
+		"html-loader": "0.4.3",
+		"html-webpack-plugin": "^2.30.1",
+		"http-proxy-middleware": "^0.18.0",
+		"mockjs": "^1.0.1-beta3",
+		"multispinner": "^0.2.1",
+		"node-loader": "^0.6.0",
+		"node-sass": "^4.7.2",
+		"postcss-loader": "^2.1.0",
+		"sass-loader": "^6.0.6",
+		"style-loader": "^0.18.2",
+		"url-loader": "^0.5.9",
+		"vue-html-loader": "^1.2.4",
+		"vue-loader": "^13.0.5",
+		"vue-style-loader": "^3.0.1",
+		"vue-template-compiler": "^2.4.2",
+		"vuex-persist": "^1.1.3",
+		"webpack": "^3.5.2",
+		"webpack-dev-server": "^2.7.1",
+		"webpack-hot-middleware": "^2.18.2"
+	}
+}

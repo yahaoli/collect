@@ -1,0 +1,86 @@
+<div class="seatStageContainer" style="height: auto;padding-bottom: 50px">
+		<div style="height: 100%" flex="dir:top box:justify">
+			<div class="stageTop" flex="cross:center main:center">
+				<span class="title">舞台方向</span>
+				<div class="xtCon">
+					<div flex="cross:center">
+						<img :src="hasSaleSrc" alt="">已售{{computedTotal ? ("（"+computedTotal.saled+"）") : ""}}
+						<img :src="unableSaleSrc" alt="">不可售{{computedTotal ? ("（"+computedTotal.unAbleSale+"）") : ""}}
+
+						<img :src="disableSrc" alt=""/>锁定{{computedTotal ? ("（"+computedTotal.lock+"）") : ""}}
+						<img :src="yunliuSrc" alt="">预留{{computedTotal ? ("（"+computedTotal.yu+"）") : ""}}
+					</div>
+				</div>
+				<div class="rxtCon">
+					<div flex="cross:center">
+						<img :src="unSelectSrc" alt="">可选
+						<img :src="selectSrc" alt="">已选
+						<span v-if="computedTotal" class="lsts">实时库存：{{computedTotal.store}}</span>
+						<!-- <a v-if="computedTotal" @click="refreshStore" class="refreshStoreBtn">刷新</a> -->
+					</div>
+				</div>
+			</div>
+			<div v-loading="loading" style="height:auto">
+				<div id="stageWrap" class="stageWrap" flex="dir:left box:first">
+					<div id="seatStageLeftBarWrap" class="seatStageLeftBarWrap">
+						<div class="xs-container">
+							<ul id="seatStageLeftBar" class="leftBar xs-content"></ul>
+						</div>
+					</div>
+					<div id="seatScrollWrap" class="seatScrollWrap">
+						<div class="xs-container">
+							<div id="seatStageMainContainer" class="xs-content seatStageMainContainer"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="stageFootBar">
+				<div style="height: 50px" flex="cross:center box:last">
+					<div id="stageFootBar_LeftCol" class="stageFootBar_LeftCol">
+						<span id="stageFootBar_LeftCol_leftText" class="leftText">
+							{{zoneName}} /
+							<span class="selectedCount">{{selectedList.length}}</span> 位
+						</span>
+						<span id="seatBoxListWrap" class="seatBoxListWrap">
+							<span :style="{width:selectedBoxWidth+'px'}" class="seatBox" v-if="index<=maxSelectedShowCount-1" v-for="(seat,index) in selectedList">
+								<span class="con" :style="{width:selectedBoxWidth-5+'px'}">
+									<span class="t">{{seat.customNum | seatName}}</span>
+									<span class="remoteBtn">
+										<img @click="deleteSelectedSeat(seat)" src="~@/assets/image/delete_s.png" alt="">
+									</span>
+								</span>
+							</span>
+						</span>
+						<el-popover v-if="selectedList.length>maxSelectedShowCount && maxSelectedShowCount>0" placement="top" width="550" trigger="hover">
+							<div class="seatPopoverContainer">
+								<span class="hoverSeatBox" v-for="seat in selectedList.slice(maxSelectedShowCount)">
+									<span class="t">{{seat.customNum | seatName}}</span>
+									<span class="remoteBtn">
+										<img @click="deleteSelectedSeat(seat)" src="~@/assets/image/delete_s.png" alt="">
+									</span>
+								</span>
+							</div>
+							<i id="dotSpan" slot="reference" class="el-icon-more dotSpan"></i>
+						</el-popover>
+					</div>
+					<div>
+						<a @click="deleteAllSelectedSeat" class="btn cancel" v-if="selectedList.length>=2" style="margin-right: 10px;">全部取消</a>
+						<a v-if="enAbleYuliu" @click="yuliuDialogShow=true" class="btn yunlu" style="margin-right: 10px;" :class="{disable:selectedList.length==0}">预留</a>
+						<a @click="onSubmitClick" class="btn submit" :class="{disable:selectedList.length==0}">确定，下一步</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<el-dialog title="预留座位" :visible.sync="yuliuDialogShow" width="600px" :close-on-click-modal="false" custom-class="yuliuDialog" append-to-body>
+			<el-form label-width="80px" :model="form" :rules="formRules" ref="yuliuForm">
+				<el-form-item label="联系人" prop="name"><el-input v-model="form.name" auto-complete="off" placeholder="联系人"></el-input></el-form-item>
+				<el-form-item label="手机号" prop="mobile"><el-input v-model="form.mobile" auto-complete="off" placeholder="手机号"></el-input></el-form-item>
+				<el-form-item label="备 注"><el-input v-model="form.memo" auto-complete="off" placeholder="备注"></el-input></el-form-item>
+			</el-form>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="yuliuDialogShow=false">取 消</el-button>
+				<el-button @click="onYuliuClick('yuliuForm')" :loading="yuliuLoading" type="primary">确 定</el-button>
+			</span>
+		</el-dialog>
+	</div>

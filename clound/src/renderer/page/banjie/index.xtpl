@@ -1,0 +1,82 @@
+<div id="banjieContainer" class="banjieContainer">
+	<div class="filterWrap">
+		<span>售票日期：</span>
+		<el-date-picker v-model="curDateTime" type="datetimerange" align="left" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd hh:mm:ss"
+		 :unlink-panels=true :default-time="['00:00:00', '23:59:59']">
+		</el-date-picker>
+		<el-button @click="onSearchBtnClick" :loading="isSearching" style="margin-left:20px;" type="primary" icon="el-icon-search">查询</el-button>
+		<el-button @click="onBanjeBtnClick" :loading="isBanjeLoaing" type="primary" plain>发起班结</el-button>
+	</div>
+
+	<el-table class="listTable" v-loading="isSearching" :data="list">
+		<el-table-column label="班结时间">
+			<template slot-scope="scope">
+				{{scope.row.btime}} - {{scope.row.etime}}
+			</template>
+		</el-table-column>
+		<el-table-column label="操作">
+			<template slot-scope="scope">
+				<button type="button" @click="onExportExcel($event,scope.row.id)" class="el-button el-button--default is-plain">
+					<i class="el-icon-loading"></i>
+					<span class="text">导出Excel</span>
+				</button>
+				<button type="button" @click="onPrint($event,scope.row.id)" class="el-button el-button--default is-plain">
+					<i class="el-icon-loading"></i>
+					<span class="text">打印</span>
+				</button>
+				<button type="button" @click="onDetail($event,scope.row.id)" class="el-button el-button--default is-plain">
+					<i class="el-icon-loading"></i>
+					<span class="text">查看</span>
+				</button>
+			</template>
+		</el-table-column>
+	</el-table>
+
+	<el-pagination v-if="totalPage>1" :page-size="pageSize" :total="totalCount" :page-count="totalPage" @current-change="onPageChange"
+	 background layout="prev, pager, next" style="margin-top:10px;text-align:right">
+	</el-pagination>
+	<el-dialog width="90%" top="10vh" :close-on-click-modal="false" custom-class="detailDialg" title="班结报表查看" :visible.sync="detailDialogShow">
+		<div style="padding-right:10px">
+			<table>
+				<colgroup>
+					<col width="12%">
+					<col width="12%">
+					<col width="13%">
+					<col width="8%">
+					<col width="8%">
+					<col width="8%">
+					<col width="8%">
+					<col width="8%">
+					<col width="8%">
+					<col width="5%">
+					<col width="5%">
+				</colgroup>
+				<thead>
+					<th v-for="item in detailTableData[0]">{{item}}</th>
+				</thead>
+			</table>
+		</div>
+		<div style="height: 60vh;overflow-y: scroll" class="tableBodyWrap">
+			<table>
+				<colgroup>
+					<col width="12%">
+					<col width="12%">
+					<col width="13%">
+					<col width="8%">
+					<col width="8%">
+					<col width="8%">
+					<col width="8%">
+					<col width="8%">
+					<col width="8%">
+					<col width="5%">
+					<col width="5%">
+				</colgroup>
+				<tbody>
+					<tr :class="{empty:item.every((td)=>td=='')}" v-for="item in detailTableData.slice(1)">
+						<td v-for="(title,index) in detailTableData[0]">{{item[index]}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</el-dialog>
+</div>

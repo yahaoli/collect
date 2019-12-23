@@ -1,0 +1,153 @@
+<div v-loading="loading" id="seatShowBookingPage" class="seatShowBookingPage">
+	<div flex="cross:top box:last">
+		<div class="colLeft">
+			<div class="headTop" flex="cross:center box:first">
+				<el-button size="small" @click="onGoBackClick" type="primary"><i class="el-icon-arrow-left"></i>返回上一步</el-button>
+				<div class="desc">{{headTopDesc}}</div>
+			</div>
+			<div class="condWrap">
+				<div class="condBox">
+					<div flex="cross:center box:first">
+						<span class="lt">购票方：</span>
+						<el-select @change="onRelationChange" v-model="relationId" remote :remote-method="fetchRelationByKeyword" :loading="fetchRelationByKeywordLoading" filterable placeholder="请选择" style="margin-left: 10px;">
+							<el-option v-for="(item,index) in relationList" :key="index" :label="item.dname" :value="item.mid"></el-option>
+						</el-select>
+					</div>
+				</div>
+				<div v-if="isOriginInputShow" class="condBox">
+					<div flex="cross:center box:first">
+						<span class="lt">客源地：</span>
+						<el-cascader :options="originList" v-model="originSelected" @active-item-change="onOriginChange" :clearable="true" :props="originProps" placeholder="  客源地"></el-cascader>
+					</div>
+				</div>
+				<div class="condBox">
+					<div flex="cross:center box:first">
+						<span class="lt">取票人：</span>
+						<input type="text" class="textInp" v-model="ordername" placeholder="取票人姓名">
+					</div>
+				</div>
+				<div v-if="isMobileInputShow" class="condBox">
+					<div flex="cross:center box:first">
+						<span class="lt">手机号：</span>
+						<input type="text" class="textInp" v-model="mobile" placeholder="手机号">
+					</div>
+				</div>
+				<div v-if="isTicketNoInputShow" class="condBox">
+					<div flex="cross:center box:first">
+						<span class="lt">票面流水号：</span>
+						<input type="text" class="textInp" v-model="liushui" placeholder="如：SN100001">
+					</div>
+				</div>
+				<div v-if="isMemoInputShow" class="condBox">
+					<div flex="cross:center box:first">
+						<span class="lt">备注：</span>
+						<input type="text" class="textInp" v-model="memo" placeholder="备注">
+					</div>
+				</div>
+
+			</div>
+			<ul  v-if="seatList.length&&seatList[0].ticketList && Object.keys(seatList[0].ticketList).length > 1 "   class="ticketUl">
+				<li @click="onTicketChangeList(item.tid)"
+					v-for="item in seatList[0].ticketList"
+					class="ticketItem"
+					:class="{active:item.tid==seatList[0]['selectedTicket']['tid']}"
+				>
+					<div>
+						<div class="line">
+							{{ item.title }}
+						</div>
+						<div class="line">
+							价格：{{relationId=="0" ? item.tprice : item.jsprice}}元
+						</div>
+					</div>
+					<span class="triWrap">
+						<span class="tri"></span>
+						<i class="el-icon-check"></i>
+					</span>
+				</li>
+			</ul>
+			<table class="cartListTable">
+				<thead>
+					<tr>
+						<th>座位</th>
+						<th>姓名/身份证</th>
+						<th>票类</th>
+						<th>金额(元)</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr @click="onCartItemClick(item)" :class="{selected:item.id==curSelectedSeatID}" v-for="item in seatList" :key="item.id" class="cartItem">
+						<td>{{item.seat}}</td>
+						<td>
+							<div flex="box:justify main:center">
+								<el-input :disabled="(!item.selectedTicket || item.selectedTicket.tourist_info==0)" class="nameInp" width="80" size="medium" v-model="item.name" placeholder="请输入姓名"></el-input>
+								<el-input :disabled="(!item.selectedTicket || item.selectedTicket.tourist_info==0)" class="idcardInp" size="medium" v-model="item.idcard" placeholder="请输入身份证"></el-input>
+							</div>
+						</td>
+						<td>
+							<span style="margin: 0 15px;" v-if="item.ticketList && item.ticketList.length==0"> -- </span>
+							<span style="margin: 0 15px;" v-if="item.ticketList && item.ticketList.length==1">{{item.ticketList[0].title}}</span>
+							<el-select v-if="item.ticketList && item.ticketList.length>1" disabled  size="medium" @change="onTicketChange($event,item.id)" :value="item.selectedTicket.tid" placeholder="请选择票类">
+								<el-option
+									v-for="ticket in item.ticketList"
+									:key="ticket.tid"
+									:label="ticket.title"
+									:value="ticket.tid">
+								</el-option>
+							</el-select>
+						</td>
+						<td>{{getPrice(item)}}</td>
+						<td><i @click="onRemoveSeat(item.id,item.seat)" class="removeBtn el-icon-close"></i></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="colRig">
+			<div class="totalWrap">
+				<div>合计</div>
+				<div class="tr">
+					<span><i class="num count">{{totalCount}}</i><i class="t count">人</i></span>
+					<span><i class="num money">{{totalMoney}}</i><i class="t money">元</i></span>
+				</div>
+			</div>
+			<div class="pay crash" v-if="$store.getters.checkStatus('pay_type','cash')">
+				<!--<div flex="cross:center box:first">-->
+					<!--<span class="lt">收款：</span>-->
+					<!--<el-input class="shouInp" size="medium" v-model="vTotalMoney" placeholder="收款"></el-input>-->
+				<!--</div>-->
+				<!--<div style="margin-top: 10px;" flex="cross:center box:first">-->
+					<!--<span class="lt">找零：</span>-->
+					<!--<el-input class="shouInp" size="medium" :disabled="true" v-model="absMoney" placeholder="找零"></el-input>-->
+				<!--</div>-->
+				<el-button @click="submitOrder($event,1,'crash')" style="width: 100%; margin-top: 15px;" v-if="$store.getters.checkStatus('pay_type','cash')" size="medium" type="danger">现金支付</el-button>
+			</div>
+			<div style="padding: 0 15px;">
+				<el-button @click="submitOrder($event,2,'credit')" v-if="relationId!=0" style="width: 100%; margin-top: 15px;margin-left: 0" size="medium" type="danger">授信支付</el-button>
+				<el-button @click="submitOrder($event,1,'alipay')" v-if="$store.getters.checkStatus('pay_type','alipay') && $store.getters.checkStatus('pay_type','wx')" style="width: 100%; margin-top: 15px;margin-left: 0" size="medium" type="primary">移动支付</el-button>
+				<el-button @click="submitOrder($event,1,'alipay')" v-if="$store.getters.checkStatus('pay_type','alipay') && !$store.getters.checkStatus('pay_type','wx')" style="width: 100%; margin-top: 15px;margin-left: 0" size="medium" type="primary">支付宝</el-button>
+				<el-button @click="submitOrder($event,1,'wx')" v-if="$store.getters.checkStatus('pay_type','wx') && !$store.getters.checkStatus('pay_type','alipay')" style="width: 100%; margin-top: 15px;margin-left: 0" size="medium" type="success">微信</el-button>
+			</div>
+		</div>
+	</div>
+
+	<el-dialog
+		:visible.sync="paycodePopShow"
+		modal-append-to-body
+		append-to-body
+		lock-scroll
+		custom-class="paycodePopDialog"
+		top="50vh"
+		:close-on-click-modal="false"
+		:close-on-press-escape="false"
+		:show-close="false"
+		width="500px">
+		<div flex="cross:center main:center" class="con error">
+			<img src="~@/assets/image/pay_run_code.gif" alt="">
+			<span class="t" style="margin-left:15px;">等待扫描支付宝或微信付款码，请勿关闭此窗口</span>
+		</div>
+		<a @click="closePaycodePop" class="closeBtn"><i class="el-icon-close"></i></a>
+	</el-dialog>
+
+
+</div>

@@ -1,0 +1,40 @@
+<div id="selectShowOnline" flex="dir:top box:first">
+	<div>
+		<div class="filterWrap" flex="box:last cross:bottom">
+			<div>
+				<div flex="box:mean cross:bottom" style="border-bottom: 1px solid #e5e5e5;">
+					<div class="right item" flex="cross:center box:first">
+						<span class="flag">产品：</span>
+						<el-select @change="onProductChange" :value="prodName" filterable placeholder="请选择">
+							<el-option v-for="(item,index) in prodList" :key="index" :label="item.title" :value="item.lid">
+							</el-option>
+						</el-select>
+					</div>
+					<div class="left item" flex="cross:center box:justify">
+						<span class="flag">游玩日期：</span>
+						<el-date-picker class="playDateDatePicker" v-model="date" format="yyyy-MM-dd" :editable="false" :clearable="false" value-format="yyyy-MM-dd"
+							align="left" type="date" placeholder="选择日期" :picker-options="datePickerOption">
+						</el-date-picker>
+						<i class="el-icon-date"></i>
+					</div>
+					<div class="right item" flex="cross:center box:first">
+						<span class="flag">场次：</span>
+						<el-select @change="onRoundChange" :value="roundName" filterable placeholder="请选择">
+							<el-option v-for="(item,index) in roundList" :key="index" :label="item.round_name" :value="item.round_id">
+							</el-option>
+						</el-select>
+					</div>
+					<div class="right item" flex="cross:center box:first">
+						<span class="flag">区域：</span>
+						<el-select @change="onZoneChange" :value="zoneName" filterable placeholder="请选择">
+							<el-option v-for="(item,index) in zoneList" :key="index" :label="item.zone_name" :value="item.zone_id">
+							</el-option>
+						</el-select>
+					</div>
+				</div>
+			</div>
+			<a @click="onRefreshBtnClick" :class="{disable:(!venueID || !roundID || !zoneID)}" class="refreshBtn">刷新座位</a>
+		</div>
+	</div>
+	<seat-stage style="margin-top: 7px;" ref="seatStage"/>
+</div>

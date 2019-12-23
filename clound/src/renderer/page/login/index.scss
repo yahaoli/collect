@@ -1,0 +1,25 @@
+html.login,body.login,body.login #app,body.login #app > div,.appContainer.login,.Page_Login{ height: 100%;}
+.Page_Login{
+    .loginBox{
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        box-shadow: 0px 0px 2px rgba(0,0,0,0.1);
+        border-radius: 3px;
+        overflow: hidden;
+        .con{
+            width: 300px;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+
+        .errorTip{
+            height: 32px;
+            line-height: 32px;
+            padding-left: 8px;
+            padding-right: 8px;
+            .t{ color: red;}
+        }
+
+    }
+}

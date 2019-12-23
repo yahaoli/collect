@@ -1,0 +1,144 @@
+<div class='salesSummaryContainer'>
+	<div class='filterBar longtime' flex='main:start cross:center'>
+		<label>时间区间：</label>
+		<el-date-picker v-model="timeRange" :editable="false" :clearable="false" @change="getScenicList(true)" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期"
+		:picker-options='pickerOptions' end-placeholder="结束日期"></el-date-picker>
+		<label>产品：</label>
+		<el-select v-model="scenicValue" filterable multiple collapse-tags placeholder="请选择"  @change="selectAll" popper-class='productList'>
+			<el-option v-for="item in scenicList" :key="item.id" :label="item.title" :value="item.id">
+			</el-option>
+		</el-select>
+		<el-button class='button' style='background:#457ED8;color:#fff;margin-left:30px;' @click='fecthSummary'>统计</el-button>
+		<!-- <el-button class='button' @click='exprotCsv'>导出数据</el-button> -->
+		<el-button id='reportPrint' @click='reportPrint'> 打印售票员报表</el-button>
+	</div>
+
+	<ul class='cardContainer' id='summaryReport' flex='main:left' v-if='summary'>
+		<li class='cardItem'>
+			<div flex='main:justify' class='cardHead'>
+				<p class='title'>售票</p>
+				<p flex='dir:top cross:bottom'>
+					<span class='num'>{{ fetchTotal(summary.order_summary).ticket}}张</span>
+					<span class='money'>{{fetchTotal(summary.order_summary).money | toyun}}元</span>
+				</p>
+			</div>
+			<div class='cardBody'>
+				<el-row class='thead'>
+					<el-col :span="12">支付方式</el-col>
+					<el-col :span="6">票数</el-col>
+					<el-col :span="6">金额(元)</el-col>
+				</el-row>
+				<el-row v-for='item in summary.order_summary' v-if="item.name!=='折扣抵扣'&&item.name!=='积分抵扣'" :key='item.name' class='line'>
+					<el-col :span="12">{{item.name}}</el-col>
+					<el-col :span="6">{{item.ticket}}</el-col>
+					<el-col :span="6">{{item.money | toyun}}</el-col>
+				</el-row>
+			</div>
+		</li>
+		<li class='cardItem'>
+			<div flex='main:justify' class='cardHead'>
+				<p class='title'>退票</p>
+				<p flex='dir:top cross:bottom'>
+					<span class='num'>{{ fetchTotal(summary.cancel_summary).ticket}}张</span>
+					<span class='money'>{{fetchTotal(summary.cancel_summary).money | toyun}}元</span>
+				</p>
+			</div>
+			<div class='cardBody'>
+				<el-row class='thead'>
+					<el-col :span="12">支付方式</el-col>
+					<el-col :span="6">票数</el-col>
+					<el-col :span="6">金额(元)</el-col>
+					<!-- <el-col :span="6">手续费(元)</el-col> -->
+				</el-row>
+				<el-row v-for='item in summary.cancel_summary' :key='item.name' v-if="item.name!=='折扣抵扣'&&item.name!=='积分抵扣'" class='line'>
+					<el-col :span="12">{{item.name}}</el-col>
+					<el-col :span="6">{{item.ticket}}</el-col>
+					<el-col :span="6">{{item.money | toyun}}</el-col>
+					<!-- <el-col :span="6">{{$NP.divide(item.sxf,100)}}</el-col> -->
+				</el-row>
+			</div>
+		</li>
+		<li class='cardItem'>
+			<div flex='main:justify' class='cardHead'>
+				<p class='title'>应收</p>
+				<p flex='dir:top cross:bottom'>
+					<span class='num' style='color:#F95137'>{{fetchTotal(summary.receivable).ticket}}张</span>
+					<span class='money' style='color:#F95137'>{{fetchTotal(summary.receivable).money | toyun}}元</span>
+				</p>
+			</div>
+			<div class='cardBody'>
+				<el-row class='thead'>
+					<el-col :span="12">支付方式</el-col>
+					<el-col :span="6">票数</el-col>
+					<el-col :span="6">金额(元)</el-col>
+				</el-row>
+				<el-row v-for='item in summary.receivable' v-if="item.name!=='折扣抵扣'&&item.name!=='积分抵扣'" :key='item.name' class='line'>
+					<el-col :span="12">{{item.name}}</el-col>
+					<el-col :span="6">{{item.ticket}}</el-col>
+					<el-col :span="6">{{item.money | toyun }}</el-col>
+				</el-row>
+			</div>
+		</li>
+		<li class='cardItem'>
+			<div flex='main:justify' class='cardHead'>
+				<p class='title'>打印纸票</p>
+				<p flex='dir:top cross:bottom'>
+					<span class='num'>{{fetchTotal(summary.print_summary).ticket}}张</span>
+					<span class='money' style='visibility:hidden'>0元</span>
+				</p>
+			</div>
+			<div class='cardBody'>
+				<el-row class='thead'>
+					<el-col :span="18">操作</el-col>
+					<el-col :span="6">票打印数</el-col>
+				</el-row>
+				<el-row v-for='item in summary.print_summary' :key='item.name' class='line'>
+					<el-col :span="18">{{item.name}}</el-col>
+					<el-col :span="6">{{item.ticket}}</el-col>
+				</el-row>
+			</div>
+		</li>
+	</ul>
+
+	<div style="margin-top: 30px;background-color: #fff;">
+		<table border="0" class="Sale_table" style="">
+			<thead>
+			  <tr  class="head">
+				  <th  v-for="(head, key) in summaryList[0]" :key="key">
+					  {{head}}
+				  </th>
+			  </tr>
+			</thead>
+			<tbody>
+				<template v-for="(val, key) in summaryList.slice(1)">
+					<tr  :key="key">
+						<td v-for="(body,bodyIndex) in val" :key="bodyIndex" class="sale_table_td">{{body}}</td>
+					</tr>
+				</template>
+			</tbody>
+		</table>
+
+
+		<!--
+		<el-table :data="summaryListComputed" class='table' v-if='summaryList' style='width:100%' :cell-style="{'white-space':'pre-wrap'}"
+		 stripe>
+			<el-table-column prop="pay_mode" label="支付方式" align='left'></el-table-column>
+			<el-table-column prop="land_name" label="产品名称" align='left'></el-table-column>
+			<el-table-column prop="ticket_name" label="门票名称" align='left'></el-table-column>
+			<el-table-column prop="order_ticket" label="收款数量" align='center'></el-table-column>
+			<el-table-column prop="order_price" label="收款金额（元）" align='center'></el-table-column>
+			<el-table-column prop="cancel_ticket" label="退款数量" align='center'></el-table-column>
+			<el-table-column prop="cancel_price" label="退票金额（元）" align='center'></el-table-column>
+			<el-table-column prop="cancel_server" label="退票手续费（元）" align='center'></el-table-column>
+		</el-table>
+		-->
+
+
+		<!-- 分页器 -->
+		<!--
+		<el-pagination background layout="prev, pager, next" :total="total" :page-size='SIZE' @current-change='changePage' v-if='total >1'></el-pagination>
+		-->
+		<!-- <div v-if='showEmptyText' class='emptyText'>没有找到相关数据！</div> -->
+	</div>
+
+</div>

@@ -1,0 +1,46 @@
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote,dl, dt, dd, ul, ol, li, pre,fieldset, lengend, button, input, textarea, th, td {  margin: 0;padding: 0;}
+body,button, input, select, textarea { /* for ie */
+    /*font: 12px/1 Tahoma, Helvetica, Arial, "宋体", sans-serif;*/
+    /*font: 12px/1 Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif; *//* 用 ascii 字符表示，使得在任何编码下都无问题 */
+    font: 16px/1 Microsoft Yahei, Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+    color:#606060;
+}
+h1 { font-size: 18px; color:#333}
+h2 { font-size: 16px; color:#333}
+h3 { font-size: 14px; color:#333}
+h4, h5, h6 { font-size: 100%; }
+address, cite, dfn, em, var { font-style: normal; }
+code, kbd, pre, samp, tt { font-family: "Courier New", Courier, monospace; }
+small { font-size: 12px; }
+ul, ol { list-style: none; }
+a { text-decoration: none; color:#2A98DA}
+a:hover{ text-decoration:none;}
+abbr[title], acronym[title] { border-bottom: 1px dotted; cursor: help;}
+i,em{ font-style:normal}
+q:before, q:after { content: ''; }
+legend { color: #000; }
+fieldset, img { border: none; }
+button, input, select, textarea {font-size: 100%; }
+table { border-collapse: collapse;border-spacing: 0;}
+hr {border: none;height: 1px;}
+textarea{ outline:0}
+.clearfix:after {content: ".";display: block;height: 0;clear: both;visibility: hidden;}
+.clearfix {display: inline-block;}
+* html .clearfix {height: 1%;}
+html { -webkit-tap-highlight-color: rgba(0,0,0,0); }
+.clearfix {display: block;}
+input:focus,button:focus{outline:none}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+
+.ui-blue{ color:#258cc9}
+.ui-bg-blue{ background-color:#258cc9}
+.ui-orange{ color:#f37138}
+.ui-bg-orange{ background-color:#f37138}
+.ui-green{ color:#258cc9}
+.ui-bg-green{ background-color:#258cc9}
+.ui-bg-gray{ background-color:#f8f6f7}
+.ui-border-gray{ background-color:#e5e5e5}
+.ui-disable{ background-color:#8c8c8c}
+.ui-tip{ color:#999}

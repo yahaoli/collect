@@ -1,0 +1,13 @@
+<div>
+	<nav class="summaryNav">
+		<ul flex="main:left">
+			<router-link v-for="(item,index) in navList"
+						 v-if="$store.getters.navShow(item.link)"
+						 :to="item.router" tag="li"
+						 :key="index">
+				{{item.navName}}
+			</router-link>
+		</ul>
+	</nav>
+	<router-view/>
+</div>

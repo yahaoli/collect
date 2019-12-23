@@ -1,0 +1,15 @@
+<div class="pickingRefundPage">
+    <div>
+        <search-bar v-on:search='orderQuery'  :scenic-list='scenicList' :type='$route.path.substring(1)'></search-bar>
+    </div>
+    <el-row class='ticketList' flex='main:left'>
+        <div class='list' v-if='listB' flex='dir:top cross:top' role='listB'>
+            <ticket-item v-for='item,index in listB' :type='$route.path.substring(1)' :order-data='item' :position-index='index*2' :key='index'></ticket-item>
+        </div>
+        <div class='list' v-if='listA' flex='dir:top cross:top' role='listA'>
+            <ticket-item v-for='item,index in listA' :type='$route.path.substring(1)' :order-data='item' :position-index='index*2+1' :key='index'></ticket-item>
+        </div>
+    </el-row>
+
+    <div v-if='showEmptyText' class='emptyText'>未能找到相关订单！</div>
+</div>

@@ -1,0 +1,56 @@
+<div class='InvoiceContainer'>
+    <div class='filterBar'>
+		<h1 style='margin-top:0;'>关键字查询：</h1>
+        <div flex='main:left' class='line'>
+            <div flex='main:center box:first' class='field'>
+                <label>关键字：</label>
+                <el-input v-model='key_word'  placeholder="订单号/手机号/凭证号/身份证/联系人姓名"></el-input>
+            </div>
+            <el-button slot="suffix" style='background:#457ED8;color:#fff;margin-left:10px;' @click="plantInvoiceSearch(1)">凭证号查询</el-button>
+            <el-button style='background:#457ED8;color:#fff;margin-left:10px;' @click="plantInvoiceSearch(2)">其他条件查询</el-button>
+        </div>
+	 	<h1>发票查询:</h1>
+        <div flex='main:left' style='margin-bottom:20px;margin-top:20px;'>
+            <el-button class='timeButton' @click='chooseToday'>今天</el-button>
+            <el-button class='timeButton' @click='chooseYesterday'>昨天</el-button>
+            <el-button class='timeButton' @click='chooseWeek'>本周</el-button>
+            <el-button class='timeButton' @click='chooseMonth'>本月</el-button>
+            <el-date-picker style='margin-left:10px;' v-model="timeRange" type="datetimerange" align="right" start-placeholder="开始日期"
+                 end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']">
+            </el-date-picker>
+            </el-date-picker>
+        </div>
+		<div flex='main:left' class='line'>
+			<div flex='main:center box:first' class='field'>
+                <label>购票方：</label>
+                <el-select @change="onRelationChange" :value="releationName" remote :remote-method="fetchRelationByKeyword" :loading="fetchRelationByKeywordLoading"
+                    filterable placeholder="请选择">
+                    <el-option v-for="(item,index) in relationList" :key="index" :label="item.dname" :value="item.mid">
+                    </el-option>
+                </el-select>
+            </div> 
+			<div flex='main:center box:first' class='field'>
+                <label>开票状态：</label>
+                <el-select @change="InvoiceStatusChange"  :value="InvoiceName"  placeholder="请选择" >
+                    <el-option label="全部" value=""> </el-option>
+                    <el-option
+						v-for="(item,index) in InvoiceStatus"
+						:key="index"
+						:label="item.title"
+						:value="item.status">
+					</el-option>
+                </el-select>
+            </div> 
+        </div>
+        <div flex='main:left' class='line'>
+            <div style="margin:10px auto 0">
+                <el-button style='background:#457ED8;color:#fff;width:98px' @click="InvoiceSearch()">查  询</el-button>
+            </div> 
+        </div>
+	</div>
+
+	<keyword-table v-if='InvoiceData' :order-data='InvoiceData'></keyword-table>
+	 <!-- 分页器 -->
+    <el-pagination layout="prev, pager, next" :total="parseInt(total)" v-if='total' :page-size='PAGE_SIZE' @current-change='changePage'></el-pagination>
+
+</div>

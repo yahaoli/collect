@@ -1,0 +1,90 @@
+<div>
+    <!-- 表格 -->
+    <table class='keywordTable' style='width: 100%;'>
+        <thead>
+            <td>订单号</td>
+            <td>产品名称</td>
+            <td>单价（元） * 数量</td>
+            <td>金额（元）</td>
+            <td>订单状态</td>
+            <td>开票状态</td>
+            <td>开票时间</td>
+            <td>操作</td>
+        </thead>
+        <tbody v-if='orderData.length == 0'>
+            <tr>
+                <td colspan="10" style='text-align: center; padding: 50px;'>没有相关数据。</td>
+            </tr>
+        </tbody>
+
+        <tbody v-else v-for='item in orderData' :key='item.ordernum'>
+            <tr class='itemHead'>
+                <td colspan="1" style='padding-left:0;'>
+                    <span class='type' v-if='item.link_info.length>0'>{{item.p_type || '未知'}}联票</span>
+                    <span class='type' v-else>{{ item.p_type || '未知'}}</span>
+                </td>
+                <td colspan="2">下单时间： {{item.ordertime}}</td>
+                <td colspan="2">分销商：{{item.split_list}}</td>
+                <td colspan="3" style='text-align: center'>支付状态:
+                    <em :class="item.pay_status.id == 1?'green':'orange' "> {{item.pay_status.name}} </em>
+                </td>
+            </tr>
+            <tr>
+                <td>{{item.ordernum}}</td>
+                <td>
+                    <p>{{item.tid.title}}</p>
+                    <p>{{item.lid.title}}</p>
+                </td>
+                <td class='orange'>{{item.sale_money |toyun}} * {{item.tnum}}</td>
+                <td class='orange'>{{$NP.times(item.sale_money,item.tnum) |toyun}}</td>
+                <td :style="`color:${toColor(item.status.id)};`">{{item.status.name}}</td>
+                <td>{{ item.pack_info.length > 0 ? '--' : invoice(item.invoice_status) }}</td>
+                <td>{{item.invoice_time_end}}</td>
+                <td v-if="item.pack_info.length > 0 || item.status.id ==='3' || item.invoice_status === '2' || item.invoice_status === '5' || item.invoice_status === '6'">
+                    --  
+                </td>
+                <td v-else>
+                    <el-button type="text" size="small"  @click="openInvoice(item)">开具纸质发票</el-button>
+                </td>
+            </tr>
+            <!-- 套票 -->
+            <tr v-if='item.pack_info' v-for='son in item.pack_info' :key='son.ordernum'>
+                <td>{{son.ordernum}}</td>
+                <td>
+                    <p>{{son.tid.title}}</p>
+                    <p>{{son.lid.title}}</p>
+                </td>
+                <td class='orange'>{{son.sale_money |toyun}} * {{son.tnum}}</td>
+                <td class='orange'>{{$NP.times(son.sale_money,son.tnum) |toyun}}</td>
+                <td :style="`color:${toColor(item.status.id)};`">{{item.status.name}}</td>
+                <td>{{invoice(son.invoice_status)}}</td>
+                <td>{{son.invoice_time_end}}</td>
+                <td v-if="son.invoice_status === '2' || item.status.id ==='3' || son.invoice_status === '5' || son.invoice_status === '6'">
+                    --  
+                </td>
+                <td v-else>
+                    <el-button type="text" size="small"  @click="openInvoice(son)">开具纸质发票</el-button>
+                </td>
+            </tr>
+            <!-- 联票 -->
+            <tr v-if='item.link_info' v-for='son in item.link_info' :key='son.ordernum'>
+                <td>{{son.ordernum}}</td>
+                <td>
+                    <p>{{son.tid.title}}</p>
+                    <p>{{son.lid.title}}</p>
+                </td>
+                <td class='orange'>{{son.sale_money |toyun}} * {{son.tnum}}</td>
+                <td class='orange'>{{$NP.times(son.sale_money,son.tnum) |toyun}}</td>
+                <td :style="`color:${toColor(item.status.id)};`">{{item.status.name}}</td>
+                <td>{{invoice(son.invoice_status)}}</td>
+                <td>{{son.invoice_time_end}}</td>
+                <td v-if="son.invoice_status === '2' || item.status.id ==='3' || son.invoice_status === '5' || son.invoice_status === '6'">
+                    --  
+                </td>
+                <td v-else>
+                    <el-button type="text" size="small"  @click="openInvoice(son)">开具纸质发票</el-button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
