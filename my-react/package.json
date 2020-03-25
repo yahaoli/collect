@@ -10,7 +10,8 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "vant": "^2.5.3"
   },
   "scripts": {
     "start": "react-app-rewired start",

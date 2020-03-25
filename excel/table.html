@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>****工作平台</title>
+    <!--Handsontable的引用-->
+    <script src="https://handsontable.com/static/node_components/handsontable/handsontable.full.min.js?v=84"></script>
+    <link href="https://handsontable.com/static/node_components/handsontable/handsontable.full.min.css?v=84" rel="stylesheet" media="screen">
+    <script src="./zh-CN.js"></script>
+    <!--自己的js和css-->
+</head>
+<body class="no-skin">
+<!--handsontable开始的地方-->
+<div id="example"></div>
+</body>
+<script>
+    window.onload=function (ev) {
+        var data = [
+            ["", "Ford", "Tesla", "Toyota", "Honda"],
+            ["2017", 10, 11, 12, 13],
+            ["2018", 20, 11, 14, 13],
+            ["2019", 30, 15, 12, 13]
+        ];
+        var container = document.getElementById('example');
+        var hot = new Handsontable(container, {
+            data: data,
+            rowHeaders: true,
+            colHeaders: true,
+            filters: true,
+            contextMenu: true,
+            language: 'zh-CN',
+            dropdownMenu: true,
+            mergeCells:true,
+            manualColumnResize: true, //列可拖拽 调大小
+            manualRowResize: true, //
+            beforePaste:function () {
+                console.log(1111);
+            }
+        });
+    }
+</script>
+</html>
