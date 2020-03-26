@@ -6,7 +6,7 @@ js方面:
     * 宏任务广义上指所有代码，微任务跟宏任务的进入队列是同步执行，狭义宏任务放到宏任务eventqueue，微任务放到微任务队列
     * 所有同步代码执行完毕后再依次取出微任务和宏任务执行
 * promise实现（promise的实现原理，promise.all，promise.finally的实现原理）
-* 判断类型 typeof instanceof String.prototype.toString() isArray
+* 判断类型 typeof,instanceof,Object.prototype.toString(),isArray
     * typeof:
         * 能判断基本类型（除null，null会返回Object，详细原因请百度），Object，Function
     * instanceof:
