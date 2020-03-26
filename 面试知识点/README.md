@@ -26,10 +26,11 @@ js方面:
 * js设计模式 单例 工厂
 * tcp发包原理 慢启动 拥塞避免 快重传 快恢复
 * AMD，CMD，COMMON.JS，import
+* 订阅者，发布者模式
 
 vue方面:
 * vue的异步操作是Promise>MutationObserver>setTimeOut
-* 父子组件通信
+* 父子生命周期顺序
     * 一、加载渲染过程
         * 父beforeCreate->父created->父beforeMount->子beforeCreate->子created->子beforeMount->子mounted->父mounted
     * 二、子组件更新过程
@@ -46,6 +47,16 @@ vue方面:
 * virtual DOM 理解与算法
 * key的作用
 
+react方面：
+* 生命周期（挂载过程，更新过程，销毁过程）
+* 创建组建的几种方法（class，function，createReactClass）
+* 父子组件生命周期顺序
+* 组件性能优化（shouldComponentUpdate生命周期）
+* redux react-redux 及 redux异步
+* 函数组件的hook
+* createElement 和 cloneElement 区别
+* [React Element 和 React Component](https://segmentfault.com/a/1190000011413614)
+
 css方面:
 * flex
 * 盒布局
@@ -53,6 +64,7 @@ css方面:
 * 1px的问题
 * 瀑布流
 * 垂直居中
+
 其他方面:
 * 大数据10万条：
     * 采用现在虚拟列表页面保存一般3页（防止滚动空白问题）数据上拉替换当前dom增加高度控制位高度来撑开滚动条，下拉替换当前dom
