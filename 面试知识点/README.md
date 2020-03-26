@@ -1,5 +1,5 @@
 js方面:
-* js继承（6种继承方式）  
+* [js继承（6种继承方式）](https://www.cnblogs.com/ranyonsue/p/11201730.html)  
 * js执行原理 
     * 微任务：Promise,process.next,MutationObserver,Object.defineProperty,Proxy 优先级：process.nextTick > Promise > MutationObserver
     * 宏任务：setImmediate,setTimeOut，setInterval,MessageChannel,dom点击事件，http请求 优先级：主代码块 > setImmediate > MessageChannel > setTimeout / setInterval
@@ -67,5 +67,5 @@ css方面:
 
 其他方面:
 * 大数据10万条：
-    * 采用现在虚拟列表页面保存一般3页（防止滚动空白问题）数据上拉替换当前dom增加高度控制位高度来撑开滚动条，下拉替换当前dom
+    * 采用现在虚拟列表页面保存一般3页（防止滚动空白问题）数据上拉替换当前dom增加高度控制位的高度来撑开滚动条，下拉替换当前dom减少高度控制位的高度来缩减滚动条
     * 算法采用二分查找法，详细请百度js虚拟列表
