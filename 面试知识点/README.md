@@ -6,12 +6,16 @@ js方面:
     * 宏任务广义上指所有代码，微任务跟宏任务的进入队列是同步执行，狭义宏任务放到宏任务eventqueue，微任务放到微任务队列
     * 所有同步代码执行完毕后再依次取出微任务和宏任务执行
 * promise实现（promise的实现原理，promise.all，promise.finally的实现原理）
-* 判断类型 typeof,instanceof,Object.prototype.toString(),isArray
+* 判断类型 typeof,instanceof,Object.prototype.toString,isArray
     * typeof:
         * 能判断基本类型（除null，null会返回Object，详细原因请百度），Object，Function
     * instanceof:
         * 基于原型链判断
         * 递归查找left.__proto__直到等于null返回false或等于right.prototype返回true
+    * isArray:
+        * es6判断是否是数组的方法
+    * Object.prototype.toString
+        * 终极无敌方法（详情请百度）
 * 闭包
 * call，apply，bind的区别
 * http1 1.1 2 3
