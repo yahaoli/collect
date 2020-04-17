@@ -1,0 +1,49 @@
+.admin-con {
+  height: 100%;
+  .admin-head {
+    background-color: #304156;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 3;
+    font-size: 16px;
+    height: 50px;
+    .admin-dropdown{
+      float: right;
+      height: 50px;
+      line-height: 50px;
+    }
+    .el-dropdown-link{
+      color: white;
+      cursor: pointer;
+    }
+  }
+  .admin-aside {
+    position: fixed;
+    padding-top: 50px;
+    left: 0;
+    box-sizing: border-box;
+    background-color: #304156;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 180px;
+    z-index: 2;
+    .el-menu{
+      border-right: none;
+    }
+  }
+  .admin-main {
+    position: relative;
+    box-sizing: border-box;
+    padding: 50px 20px 30px 200px;
+    .title{
+      padding: 15px 0;
+      border-bottom: 1px solid #e6e6e6;
+      margin-bottom: 15px;
+    }
+  }
+}

@@ -27,7 +27,7 @@ js方面:
 * tcp发包原理 慢启动 拥塞避免 快重传 快恢复
 * AMD，CMD，COMMON.JS，import
 * 订阅者，发布者模式
-
+* js里的valueOf，toString以及es6中Symbol.toStringTag、Symbol.toPrimitive
 vue方面:
 * vue的异步操作是Promise>MutationObserver>setTimeOut
 * 父子生命周期顺序
