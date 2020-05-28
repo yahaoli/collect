@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<div class="container">
+    <div class="left"></div>
+    <div class="right"></div>
+</div>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    .container {
+        width: 600px;
+        height: 300px;
+        display: flex;
+    }
+    .left {
+        /* 285 */
+        flex: 1 2 500px;
+        background: red;
+    }
+    .right {
+        /* 314 */
+        flex: 2 1 400px;
+        background: blue;
+    }
+</style>
+</body>
+1. 总权重  500 * 2 + 400 * 1 = 1400 <br />
+2. 需要缩小的宽度 <br />
+left (500 * 2 / 1400) * 300 = 214.285714286<br />
+right (400 * 1 / 1400) * 300 = 85.714285714<br />
+3. 最后的宽度<br />
+left 500 - 214.285714286 = 285.714285714<br />
+right 400 - 85.714285714 = 314.285714286  <br />
+</html>
