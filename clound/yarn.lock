@@ -2016,7 +2016,7 @@ compressible@~2.0.13:
 
 compression@^1.5.2:
   version "1.7.2"
-  resolved "http://registry.npmjs.org/compression/-/compression-1.7.2.tgz#aaffbcd6aaf854b44ebb280353d5ad1651f59a69"
+  resolved "https://registry.npmjs.org/compression/-/compression-1.7.2.tgz#aaffbcd6aaf854b44ebb280353d5ad1651f59a69"
   dependencies:
     accepts "~1.3.4"
     bytes "3.0.0"
@@ -2853,9 +2853,9 @@ electron@^1.7.5:
     electron-download "^3.0.1"
     extract-zip "^1.0.3"
 
-element-theme-chalk@^2.4.6:
-  version "2.4.11"
-  resolved "http://registry.npm.taobao.org/element-theme-chalk/download/element-theme-chalk-2.4.11.tgz#e2407389b8ef34dcbb406458ddc80d3c97352b93"
+element-theme-chalk@^2.12.0:
+  version "2.13.2"
+  resolved "https://registry.yarnpkg.com/element-theme-chalk/-/element-theme-chalk-2.13.2.tgz#27488b5a4b6cb46c5a41a0fadc5d46102be146a1"
 
 element-theme@^2.0.1:
   version "2.0.1"
@@ -2870,9 +2870,9 @@ element-theme@^2.0.1:
     ora "^0.3.0"
     run-sequence "^1.2.2"
 
-element-ui@^2.4.8:
-  version "2.4.11"
-  resolved "http://registry.npm.taobao.org/element-ui/download/element-ui-2.4.11.tgz#db6a2d37001b8fe5fff9f176fb58bb3908cfa9c9"
+element-ui@^2.12.0:
+  version "2.13.2"
+  resolved "https://registry.yarnpkg.com/element-ui/-/element-ui-2.13.2.tgz#582bf47aaaaaafe23ea1958fae217a687ad06447"
   dependencies:
     async-validator "~1.8.1"
     babel-helper-vue-jsx-merge-props "^2.0.0"
@@ -6082,7 +6082,7 @@ once@~1.3.0:
 
 onetime@^1.0.0:
   version "1.1.0"
-  resolved "http://registry.npmjs.org/onetime/-/onetime-1.1.0.tgz#a1f7838f8314c516f05ecefcbc4ccfe04b4ed789"
+  resolved "https://registry.npmjs.org/onetime/-/onetime-1.1.0.tgz#a1f7838f8314c516f05ecefcbc4ccfe04b4ed789"
 
 onfire.js@^1.0.6:
   version "1.0.6"
@@ -6399,6 +6399,10 @@ pinkie-promise@^2.0.0:
 pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.npmjs.org/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
+
+pinyin-match@^1.0.9:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/pinyin-match/-/pinyin-match-1.1.1.tgz#b13000800e4c0c2f22904ecf4a07423ddf9c1023"
 
 pkg-dir@^2.0.0:
   version "2.0.0"
@@ -8691,8 +8695,8 @@ websocket-driver@>=0.5.1:
     websocket-extensions ">=0.1.1"
 
 websocket-extensions@>=0.1.1:
-  version "0.1.3"
-  resolved "https://registry.npmjs.org/websocket-extensions/-/websocket-extensions-0.1.3.tgz#5d2ff22977003ec687a4b87073dfbbac146ccf29"
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.4.tgz#7f8473bc839dfd87608adb95d7eb075211578a42"
 
 whet.extend@~0.9.9:
   version "0.9.9"
