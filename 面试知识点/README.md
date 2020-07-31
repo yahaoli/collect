@@ -28,6 +28,17 @@ js方面:
 * AMD，CMD，COMMON.JS，import
 * 订阅者，发布者模式
 * js里的valueOf，toString以及es6中Symbol.toStringTag、Symbol.toPrimitive
+* js defineProperty 数据描述符和存取描述符（便于理解方法属性eg：Array.push）
+    * 公共属性
+        * configurable：是否可以删除目标属性或是否可以再次修改属性的特性
+        * enumerable：此属性是否可以被枚举（使用for...in或Object.keys()）。设置为true可以被枚举；设置为false，不能被枚举。默认为false。
+    * 数据描述符
+        * writable： 属性的值是否可以被重写。设置为true可以被重写；设置为false，不能被重写。默认为false
+        * value： 属性对应的值,可以使任意类型的值，默认为undefined
+    *  存取描述符
+        * getter ：是一种获得属性值的方法
+        * setter：是一种设置属性值的方法。
+    
 vue方面:
 * vue的异步操作是Promise>MutationObserver>setTimeOut
 * 父子生命周期顺序
