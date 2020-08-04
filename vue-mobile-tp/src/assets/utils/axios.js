@@ -1,9 +1,11 @@
 import axios from "axios";
 import {Toast} from "vant";
+const defaultContentType = 'application/x-www-form-urlencoded;charset=UTF-8';
+import Qs from 'qs';
 
 window.$axios = axios.create({
   timeout: 10000
-  //headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" }
+  //headers: defaultContentType
 });
 window.$axios.interceptors.request.use(requestBefore, requestBeforeError);
 // 添加响应拦截器
@@ -20,6 +22,9 @@ window.$upload.interceptors.response.use(requestAfter, requestAfterError);
 function requestBefore(config) {
   // 在发送请求之前做些什么
   //添加自定义loading来判断是否要出现蒙版加载
+  if (config.method === 'post' && config.headers['Content-Type'] === defaultContentType) {
+    config.data = Qs.stringify(config.data, { arrayFormat: 'repeat' });
+  }
   config.loading && (config.loading = Toast.loading({
     message: "加载中...",
     forbidClick: true,
