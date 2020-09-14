@@ -1,22 +1,14 @@
 <template>
   <div >
-    <template v-for="(item) in menuList" :index="item.path">
-      <el-submenu v-if="item.children&&item.children.length"  :key="item.path">
-          <template  slot="title"><span>{{getTitle(item)}}</span></template>
-          <template v-for="item1 in item.children">
-            <template v-if="item1.children&&item1.children.length">
-              <left :menu-list="[item1]" :key="item1.path"></left>
-            </template>
-            <template v-else>
-              <el-menu-item :index="item1.path" :key="item1.path">{{getTitle(item1)}}</el-menu-item>
-            </template>
-          </template>
+    <template v-for="(item) in menuList">
+      <el-submenu v-if="item.children&&item.children.length" :key="item.path" :index="item.path">
+        <template slot="title"><span>{{getTitle(item)}}</span></template>
+        <sidebar-item :menu-list="item.children"></sidebar-item>
       </el-submenu>
       <template v-else>
         <el-menu-item :index="item.path" :key="item.path">{{getTitle(item)}}</el-menu-item>
       </template>
     </template>
-
   </div>
 </template>
 
