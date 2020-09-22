@@ -61,7 +61,6 @@
 
 <script>
   export default {
-    name: "goodsManage",
     data() {
       return {
         form: {

@@ -16,42 +16,26 @@
                      active-text-color="#409EFF"
                      :default-active="$route.path"
                      router>
-                <sidebar-item :menuList="menuList"></sidebar-item>
+                <sidebar-item :menu-list="$router.options.routes"></sidebar-item>
             </el-menu>
         </div>
         <div class='admin-main'>
-            <div class="title">{{$route.meta?$route.meta.title:""}}</div>
+            <div v-if="$route.meta&&$route.meta.title" class="title">{{$route.meta.title}}</div>
             <transition name="fade-transform" mode="out-in">
                 <router-view/>
             </transition>
-
         </div>
-
     </div>
 </template>
 
 <script>
-    import sidebarItem from "@/components/sidebarItem.vue";
+  import sidebarItem from "@/components/sidebarItem.vue";
 
-    export default {
-        name: "admin",
-        components: {
-            sidebarItem
-        },
-        data() {
-            let routes = this.$router.options.routes, menuList = [];
-            for (let i = 0; i < routes.length; i++) {
-                if (routes[i].path === "/admin") {
-                    menuList = routes[i].children;
-                    break;
-                }
-            }
-            return {
-                menuList: menuList,
-                show: true
-            };
-        }
-    };
+  export default {
+    components: {
+      sidebarItem
+    }
+  };
 </script>
 
 <style lang="scss">

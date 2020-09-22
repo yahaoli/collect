@@ -26,7 +26,6 @@
 
 <script>
     export default {
-        name: "orderManage",
         data() {
             return {
                 form: {
