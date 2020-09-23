@@ -6,18 +6,15 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "admin",
     redirect: "/admin",
     menuHidden: true
   },
   {
     path: "/admin",
-    name: "admin",
     component: () => import( "@/views/admin"),
     menuHidden: true
   },
   {
-    name: "admin-fanManage",
     path: "/admin/fanManage",
     component: () => import( "@/views/admin"),
     children: [
@@ -29,7 +26,6 @@ const routes = [
     ]
   },
   {
-    name: "admin-userManage",
     path: "/admin/userManage",
     component: () => import( "@/views/admin"),
     children: [
@@ -41,19 +37,16 @@ const routes = [
     ]
   },
   {
-    name: "admin-systemManage",
     path: "/admin/systemManage",
     meta: {title: "系统配置"},
     component: () => import( "@/views/admin"),
     children: [
       {
-        name: "admin-systemManage-dictType",
         path: "dictType",
         component: () => import( "@/views/systemManage/dictType"),
         meta: {title: "字典类型"}
       },
       {
-        name: "admin-systemManage-dict",
         path: "dict",
         component: () => import( "@/views/systemManage/dict"),
         meta: {title: "字典"}
@@ -61,7 +54,6 @@ const routes = [
     ]
   },
   {
-    name: "admin-warningManage",
     path: "/admin/warningManage",
     component: () => import( "@/views/admin"),
     children: [
@@ -73,19 +65,16 @@ const routes = [
     ]
   },
   {
-    name: "admin-reportFormManage",
     path: "/admin/reportFormManage",
     component: () => import( "@/views/admin"),
     meta: {title: "报表管理"},
     children: [
       {
-        name: "admin-fanManage-fanMonth",
         path: "fanMonth",
         component: () => import( "@/views/reportFormManage/fanMonth"),
         meta: {title: "风机日报表"}
       },
       {
-        name: "admin-fanManage-fanDay",
         path: "fanDay",
         component: () => import( "@/views/reportFormManage/fanDay"),
         meta: {title: "风机月报表"}
@@ -93,19 +82,16 @@ const routes = [
     ]
   },
   {
-    name: "admin-logManage",
     path: "/admin/logManage",
     component: () => import( "@/views/admin"),
     meta: {title: "日志管理"},
     children: [
       {
-        name: "admin-logManage-loginLog",
         path: "loginLog",
         component: () => import( "@/views/logManage/loginLog"),
         meta: {title: "登录日志"}
       },
       {
-        name: "admin-logManage-operationLog",
         path: "operationLog",
         component: () => import( "@/views/logManage/operationLog"),
         meta: {title: "操作日志"}
@@ -114,7 +100,6 @@ const routes = [
   },
   {
     path: "/login",
-    name: "login",
     component: () => import( "@/views/login"),
     menuHidden: true
   }
