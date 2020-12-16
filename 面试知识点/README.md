@@ -1,4 +1,8 @@
 js方面:
+* 代码实现发布订阅模式
+* es5代码实现es6中的class
+* jsonp原理
+* 链式调用
 * [js继承（6种继承方式）](https://www.cnblogs.com/ranyonsue/p/11201730.html)  
 * js执行原理 
     * 微任务：Promise,process.next,MutationObserver,Object.defineProperty,Proxy 优先级：process.nextTick > Promise > MutationObserver
@@ -38,7 +42,13 @@ js方面:
     *  存取描述符
         * getter ：是一种获得属性值的方法
         * setter：是一种设置属性值的方法。
-    
+        
+算法方面:
+* 柯西加法
+* 实现版本号比大小  
+* JS实现一个带并发限制的异步调度器Scheduler，保证同时运行的任务最多有两个
+* 判断同花顺,取5-7张牌，判断其中是否有同花顺
+ 
 vue方面:
 * vue的异步操作是Promise>MutationObserver>setTimeOut
 * 父子生命周期顺序
@@ -80,3 +90,5 @@ css方面:
 * 大数据10万条：
     * 采用现在虚拟列表页面保存一般3页（防止滚动空白问题）数据上拉替换当前dom增加高度控制位的高度来撑开滚动条，下拉替换当前dom减少高度控制位的高度来缩减滚动条
     * 算法采用二分查找法，详细请百度js虚拟列表
+* 前端工程化理解
+* [微前端-阿里框架](https://qiankun.umijs.org/)
