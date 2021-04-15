@@ -1,4 +1,5 @@
 js方面:
+* 函数的防抖节流
 * 代码实现发布订阅模式
 * es5代码实现es6中的class
 * jsonp原理
@@ -21,6 +22,7 @@ js方面:
     * Object.prototype.toString
         * 终极无敌方法（详情请百度）
 * 闭包
+* bind，apply的实现
 * call，apply，bind的区别
 * http1 1.1 2 3
 * tcp udp
