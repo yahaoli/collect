@@ -1,0 +1,38 @@
+{
+  "name": "auto-sale-admin",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve --port 3030",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "core-js": "^3.6.5",
+    "element-ui": "^2.13.2",
+    "js-cookie": "^2.2.1",
+    "moment": "^2.29.1",
+    "node-sass": "^4.14.1",
+    "normalize.css": "^8.0.1",
+    "nprogress": "^0.2.0",
+    "path-to-regexp": "^6.2.0",
+    "resize-detector": "^0.2.2",
+    "sass-loader": "^10.0.2",
+    "vue": "^2.6.12",
+    "vue-router": "^3.4.3",
+    "vuex": "^3.5.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.4",
+    "@vue/cli-plugin-eslint": "~4.5.4",
+    "@vue/cli-plugin-router": "~4.5.4",
+    "@vue/cli-plugin-vuex": "~4.5.4",
+    "@vue/cli-service": "~4.5.4",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.8.1",
+    "eslint-plugin-vue": "^6.2.2",
+    "svg-sprite-loader": "^6.0.6",
+    "vue-template-compiler": "^2.6.12"
+  }
+}
