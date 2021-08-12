@@ -2016,7 +2016,7 @@ compressible@~2.0.13:
 
 compression@^1.5.2:
   version "1.7.2"
-  resolved "http://registry.npmjs.org/compression/-/compression-1.7.2.tgz#aaffbcd6aaf854b44ebb280353d5ad1651f59a69"
+  resolved "https://registry.npmjs.org/compression/-/compression-1.7.2.tgz#aaffbcd6aaf854b44ebb280353d5ad1651f59a69"
   dependencies:
     accepts "~1.3.4"
     bytes "3.0.0"
@@ -2853,9 +2853,9 @@ electron@^1.7.5:
     electron-download "^3.0.1"
     extract-zip "^1.0.3"
 
-element-theme-chalk@^2.4.6:
-  version "2.4.11"
-  resolved "http://registry.npm.taobao.org/element-theme-chalk/download/element-theme-chalk-2.4.11.tgz#e2407389b8ef34dcbb406458ddc80d3c97352b93"
+element-theme-chalk@^2.12.0:
+  version "2.15.5"
+  resolved "https://registry.yarnpkg.com/element-theme-chalk/-/element-theme-chalk-2.15.5.tgz#c1b7f8b35f3f1d573dd7d3064a0171d2049e1e8e"
 
 element-theme@^2.0.1:
   version "2.0.1"
@@ -2870,9 +2870,9 @@ element-theme@^2.0.1:
     ora "^0.3.0"
     run-sequence "^1.2.2"
 
-element-ui@^2.4.8:
-  version "2.4.11"
-  resolved "http://registry.npm.taobao.org/element-ui/download/element-ui-2.4.11.tgz#db6a2d37001b8fe5fff9f176fb58bb3908cfa9c9"
+element-ui@^2.12.0:
+  version "2.15.5"
+  resolved "https://registry.yarnpkg.com/element-ui/-/element-ui-2.15.5.tgz#dfb376dc5cd60adab21c991bd4fac3e67e5300f4"
   dependencies:
     async-validator "~1.8.1"
     babel-helper-vue-jsx-merge-props "^2.0.0"
@@ -3555,6 +3555,10 @@ fsevents@^1.1.2:
   dependencies:
     nan "^2.9.2"
     node-pre-gyp "^0.10.0"
+
+fsevents@~2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
 
 fstream@^1.0.0, fstream@^1.0.2:
   version "1.0.11"
@@ -6082,7 +6086,7 @@ once@~1.3.0:
 
 onetime@^1.0.0:
   version "1.1.0"
-  resolved "http://registry.npmjs.org/onetime/-/onetime-1.1.0.tgz#a1f7838f8314c516f05ecefcbc4ccfe04b4ed789"
+  resolved "https://registry.npmjs.org/onetime/-/onetime-1.1.0.tgz#a1f7838f8314c516f05ecefcbc4ccfe04b4ed789"
 
 onfire.js@^1.0.6:
   version "1.0.6"
@@ -6322,13 +6326,9 @@ path-key@^2.0.0:
   version "2.0.1"
   resolved "https://registry.npmjs.org/path-key/-/path-key-2.0.1.tgz#411cadb574c5a140d3a4b1910d40d80cc9f40b40"
 
-path-parse@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.npmjs.org/path-parse/-/path-parse-1.0.5.tgz#3c1adf871ea9cd6c9431b6ea2bd74a0ff055c4c1"
-
-path-parse@^1.0.6:
-  version "1.0.6"
-  resolved "http://registry.npm.taobao.org/path-parse/download/path-parse-1.0.6.tgz#d62dbb5679405d72c4737ec58600e9ddcf06d24c"
+path-parse@^1.0.5, path-parse@^1.0.6:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.7.tgz#fbc114b60ca42b30d9daf5858e4bd68bbedb6735"
 
 path-root-regex@^0.1.0:
   version "0.1.2"
@@ -6399,6 +6399,12 @@ pinkie-promise@^2.0.0:
 pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.npmjs.org/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
+
+pinyin-match@^1.0.9:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/pinyin-match/-/pinyin-match-1.2.2.tgz#24a60a5bce89fb2903f33f37492782d3f8e34eeb"
+  dependencies:
+    rollup "^2.44.0"
 
 pkg-dir@^2.0.0:
   version "2.0.0"
@@ -7305,6 +7311,12 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
   dependencies:
     hash-base "^3.0.0"
     inherits "^2.0.1"
+
+rollup@^2.44.0:
+  version "2.56.2"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.56.2.tgz#a045ff3f6af53ee009b5f5016ca3da0329e5470f"
+  optionalDependencies:
+    fsevents "~2.3.2"
 
 run-queue@^1.0.0, run-queue@^1.0.3:
   version "1.0.3"
