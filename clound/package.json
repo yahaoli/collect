@@ -78,7 +78,7 @@
 		"jquery": "^3.3.1",
 		"js-md5": "^0.7.3",
 		"lodash": "^4.17.5",
-		"moment": "^2.22.2",
+		"moment": "^2.29.4",
 		"nedb": "^1.8.0",
 		"number-precision": "^1.2.0",
 		"onfire.js": "^1.0.6",
