@@ -11,7 +11,7 @@
   "license": "ISC",
   "devDependencies": {
     "font-carrier": "0.0.12",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-iconfont": "^10.0.2",
     "gulp-iconfont-css": "^2.3.0",
     "gulp-template": "^5.0.0"
