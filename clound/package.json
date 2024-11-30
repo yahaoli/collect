@@ -69,7 +69,7 @@
 		}
 	},
 	"dependencies": {
-		"axios": "^0.16.1",
+		"axios": "^0.21.1",
 		"draggabilly": "^2.2.0",
 		"electron-updater": "^2.18.2",
 		"element-ui": "^2.12.0",
